@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("/member")
-public class MemberController {
+@RequestMapping("/hospital")
+public class HospitalController {
 }

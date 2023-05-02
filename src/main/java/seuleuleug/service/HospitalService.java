@@ -3,11 +3,11 @@ package seuleuleug.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import seuleuleug.domain.MemberEntityRepository;
+import seuleuleug.domain.HospitalEntityRepository;
 
 @Service
 @Slf4j
-public class MemberService {
+public class HospitalService {
     @Autowired
-    private MemberEntityRepository memberEntityRepository;
+    private HospitalEntityRepository hospitalEntityRepository;
 }
