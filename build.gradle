@@ -1,0 +1,57 @@
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.10'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+// ----------- 그레이들 한글 인코딩 ----------------
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+// --------------------------------------------
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'   // 스프링 부트
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'  // 스프링 부트 테스터
+    compileOnly 'org.projectlombok:lombok'          // 롬복
+    annotationProcessor 'org.projectlombok:lombok'  // 롬복
+    runtimeOnly 'com.mysql:mysql-connector-j'       // mysql 드라이버
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA [ application.properties DB연동 필수 ]
+    implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // Oauth2
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+/* 스프링부트 빌드시 리액트도 같이 빌드  */
+def frontendDir = "$projectDir/src/main/frontend" // 리액트 프로젝트 경로
+// def frontendDir = "$projectDir/src/main/{리액트프로젝트명}"
+
+sourceSets {    // 리액트 빌드후 빌드된 파일을 저장할 경로 설정
+    main {
+        // /src/main/resources 해당 경로가 스프링이 view 매핑 하는 기본 경로 이기 때문에
+        resources { srcDirs = ["$projectDir/src/main/resources"]
+        }
+    }
+}
+// 빌드된 리액트 파일을 복사해서 위에서 설정한 경로에 저장
+processResources { dependsOn "copyReactBuildFiles" }
