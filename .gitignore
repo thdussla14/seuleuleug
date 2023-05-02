@@ -40,3 +40,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### 직접한 제외한 파일/폴더 ###
+/src/main/resources/static/static/
+/.idea/
