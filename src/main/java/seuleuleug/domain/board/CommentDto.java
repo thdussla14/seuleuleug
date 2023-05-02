@@ -1,9 +1,6 @@
-package seuleuleug.domain;
+package seuleuleug.domain.board;
 
 import lombok.*;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Getter
 @Setter

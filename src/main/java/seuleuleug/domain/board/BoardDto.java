@@ -1,4 +1,4 @@
-package seuleuleug.domain;
+package seuleuleug.domain.board;
 
 import lombok.*;
 
