@@ -14,9 +14,9 @@ public class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mno;            //회원번호
-    @Column
+    @Column(nullable = false)
     private String memail;       //회원이메일
-    @Column
+    @Column(nullable = false)
     private String mphone;       //회원전화번호
 
     public MemberDto toDto() {

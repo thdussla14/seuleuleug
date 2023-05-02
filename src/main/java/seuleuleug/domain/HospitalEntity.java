@@ -14,9 +14,9 @@ public class HospitalEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int hno;                    //병원 번호
-    @Column
+    @Column(nullable = false)
     private String hname;               //병원 이름
-    @Column
+    @Column(nullable = false)
     private String hcertification;      //병원 사업자등록증
 
     public HospitalDto toDto(){
