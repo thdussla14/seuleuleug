@@ -1,4 +1,4 @@
-package seuleuleug.domain;
+package seuleuleug.domain.hospital;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

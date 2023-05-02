@@ -1,4 +1,4 @@
-package seuleuleug.domain;
+package seuleuleug.domain.hospital;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

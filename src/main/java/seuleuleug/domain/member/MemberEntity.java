@@ -1,18 +1,26 @@
-package seuleuleug.domain;
+package seuleuleug.domain.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
 @Data@AllArgsConstructor@NoArgsConstructor@Builder
-public class MemberDto {
+@Entity
+@Table(name = "member")
+public class MemberEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mno;            //회원번호
+    @Column(nullable = false)
     private String memail;       //회원이메일
+    @Column(nullable = false)
     private String mphone;       //회원전화번호
 
-    public MemberEntity toEntity() {
-        return MemberEntity.builder()
+    public MemberDto toDto() {
+        return MemberDto.builder()
                 .mno(this.mno)
                 .memail(this.memail)
                 .mphone(this.mphone)
