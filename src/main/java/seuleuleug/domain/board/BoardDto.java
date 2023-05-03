@@ -19,7 +19,12 @@ public class BoardDto {
     private String      bpassword;      //게시물 비밀번호   => 게시물 열람시 필요
     private String      blegion ;       //작성자 지역     => 필수?
     public  LocalDateTime bdate;        //게시물 작성시간
-    public  BoardEntity toBoardEntity() {
+
+    private int         cno;
+    private String      cname;
+
+
+    public  BoardEntity toboardEntity() {
         return BoardEntity.builder()
                 .bno(this.bno)
                 .btitle(this.btitle)
@@ -29,10 +34,6 @@ public class BoardDto {
                 .blegion(this.blegion)
                 .bdate(this.bdate)
                 .build();
-
-
     }
-
-
 
 }
