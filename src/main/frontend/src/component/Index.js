@@ -6,6 +6,7 @@ import DashBoard from './admin/DashBoard';
 import Write from './board/Write';
 import SignUp from './chatting/SignUp';
 import HsignUp from './chatting/HsignUp';
+import HospitalList from './hospital/HospitalList';
 
 
 export default function Index(props) {
@@ -19,6 +20,8 @@ export default function Index(props) {
 
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/hsignup" element={<HsignUp />} />
+
+                <Route path="/hospital/hospitallist" element={<HospitalList />} />
             </Routes>
         </BrowserRouter>
     </>)

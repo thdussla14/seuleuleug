@@ -16,13 +16,22 @@ public class HospitalEntity {
     private int hno;                    //병원 번호
     @Column(nullable = false)
     private String hname;               //병원 이름
-    @Column(nullable = false)
-    private String hcertification;      //병원 사업자등록증
+    @Column
+    private String hnum;                // 병원 전화번호
+    @Column
+    private String haddr;               // 병원 주소
+    @Column
+    private String hurl;                // 병원 홈페이지
+    @Column
+    private String hcertification;      //제휴 여부
 
     public HospitalDto toDto(){
         return HospitalDto.builder()
                 .hno(this.hno)
                 .hname(this.hname)
+                .hnum(this.hnum)
+                .haddr(this.haddr)
+                .hurl(this.hurl)
                 .hcertification(this.hcertification)
                 .build();
 
