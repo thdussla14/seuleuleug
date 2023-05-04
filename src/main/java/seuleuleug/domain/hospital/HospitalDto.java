@@ -7,14 +7,20 @@ import lombok.NoArgsConstructor;
 
 @Data@AllArgsConstructor@NoArgsConstructor@Builder
 public class HospitalDto {
-    private int hno;       //병원 번호
-    private String hname;      //병원 이름
-    private String hcertification;    //병원 사업자등록증
+    private  int hno;
+    private String hname;
+    private String hnum;
+    private String haddr;
+    private String hurl;
+    private String hcertification;
 
     public HospitalEntity toEntity(){
         return HospitalEntity.builder()
                 .hno(this.hno)
                 .hname(this.hname)
+                .hnum(this.hnum)
+                .haddr(this.haddr)
+                .hurl(this.hurl)
                 .hcertification(this.hcertification)
                 .build();
     }

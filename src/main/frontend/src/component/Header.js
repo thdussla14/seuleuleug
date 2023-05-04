@@ -7,6 +7,7 @@ export default function Header(props) {
     <Container>
         <div>
             <a href="/" > Home </a>
+            <a href="/hospital/hospitallist" > Hospital </a>
         </div>
     </Container>
     )
