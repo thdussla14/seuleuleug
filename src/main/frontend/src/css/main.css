@@ -1,0 +1,29 @@
+Container{
+    align:center;
+}
+.header{
+    width :390px;
+    height:100px;
+}
+.Main{
+    width :390px;
+    height:844px;
+    text-align: center;
+}
+.fortune{
+    width :370px;
+    height:500px;
+    margin:10px;
+    text-align:center;
+    background-color: yellow;
+}
+.btnBox{
+    display:flex;
+    justify-content:space-between;
+    margin:20px;
+}
+.bwrite, .MY {
+    width :150px;
+    height:150px;
+    background-color: yellow;
+}

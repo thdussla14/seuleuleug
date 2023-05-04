@@ -9,6 +9,7 @@ import seuleuleug.domain.fortune.WordEntityRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -27,9 +28,12 @@ public class WordService {
     // 랜덤 글귀 출력
     public WordDto getWord() {
         List<WordEntity> entityList = wordEntityRepository.findAll();
+        // 난수 생성
         Random random = new Random();
-
-
+        Optional<WordEntity> WordEntity = wordEntityRepository.findById(random.nextInt(entityList.size()+1));
+        if(WordEntity.isPresent()){
+            return WordEntity.get().toWordDto();
+        }
         return null;
     }
 }

@@ -40,6 +40,8 @@ public class BoardEntity {
                 .bno(this.bno)
                 .btitle(this.btitle)
                 .bcontent(this.bcontent)
+                .cno(this.categoryEntity.getCno())
+                .cname(this.categoryEntity.getCname())
                 .build();
     }
 }
