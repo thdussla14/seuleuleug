@@ -16,7 +16,7 @@ export default function Index(props) {
                 <Route path="/"                 element={<Main />} />
                 <Route path="/admin/dashboard"  element={<DashBoard />} />
                 <Route path="/board/write"      element={<Write />} />
-                <Route path="/" element={<Main />} />
+
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/hsignup" element={<HsignUp />} />
             </Routes>
