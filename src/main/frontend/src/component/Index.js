@@ -3,6 +3,7 @@ import {BrowserRouter , Routes , Route } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import SignUp from './chatting/SignUp';
+import HsignUp from './chatting/HsignUp';
 
 
 export default function Index(props) {
@@ -12,6 +13,7 @@ export default function Index(props) {
             <Routes >
                 <Route path="/" element={<Main />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/hsignup" element={<HsignUp />} />
             </Routes>
         </BrowserRouter>
     </>)

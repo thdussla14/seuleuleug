@@ -19,6 +19,7 @@ public class MemberController {
 
     @PostMapping("/singup")
     public boolean signup(@RequestBody MemberDto memberDto){
+        log.info("signup dto: " + memberDto);
         return memberService.signup(memberDto);
     }
 }

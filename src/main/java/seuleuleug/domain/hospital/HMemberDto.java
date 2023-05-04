@@ -16,4 +16,15 @@ public class HMemberDto {
 
     private int hno;                    // 소속 병원 번호
 
+    public HMemberEntity toEntity(){
+        return HMemberEntity.builder()
+                .hmno(this.hmno)
+                .hmemail(this.hmemail)
+                .hmname(this.hmname)
+                .hmphone(this.hmphone)
+                .hmcertification(this.hmcertification)
+                .hmstate(this.hmstate)
+                .build();
+    }
+
 }
