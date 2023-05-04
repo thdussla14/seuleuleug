@@ -18,8 +18,13 @@ public class BoardDto {
     private String      bemail;         //작성자 이메일   => 내가 적은 게시물 목록 호출시 사용 , 답글 작성시 알람 메일로 전달?
     private String      bpassword;      //게시물 비밀번호   => 게시물 열람시 필요
     private String      blegion ;       //작성자 지역     => 필수?
-    public  LocalDateTime bdate;        //게시물 작성시간
-    public  BoardEntity toBoardEntity() {
+    public  String      bdate;          //게시물 작성시간
+
+    private int         cno;
+    private String      cname;
+
+
+    public  BoardEntity toboardEntity() {
         return BoardEntity.builder()
                 .bno(this.bno)
                 .btitle(this.btitle)
@@ -27,12 +32,8 @@ public class BoardDto {
                 .bemail(this.bemail)
                 .bpassword(this.bpassword)
                 .blegion(this.blegion)
-                .bdate(this.bdate)
+                .bdate(LocalDateTime.now())
                 .build();
-
-
     }
-
-
 
 }
