@@ -14,7 +14,6 @@ import java.util.UUID;
 @Slf4j
 @RequestMapping("/hmember")
 public class HMemberController {
-
     @Autowired
     private HMemberService hMemberService;
 
