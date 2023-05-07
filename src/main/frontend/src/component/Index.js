@@ -7,6 +7,7 @@ import Write from './board/Write';
 import SignUp from './chatting/SignUp';
 import HsignUp from './chatting/HsignUp';
 import HospitalList from './hospital/HospitalList';
+import GovernmentInfo from './info/GovernmentInfo';
 
 
 export default function Index(props) {
@@ -22,6 +23,8 @@ export default function Index(props) {
                 <Route path="/hsignup" element={<HsignUp />} />
 
                 <Route path="/hospital/hospitallist" element={<HospitalList />} />
+
+                <Route path="/government/info" element={<GovernmentInfo />} />
             </Routes>
         </BrowserRouter>
     </>)
