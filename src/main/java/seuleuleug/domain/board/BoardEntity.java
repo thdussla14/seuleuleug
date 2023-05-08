@@ -38,6 +38,8 @@ public class BoardEntity {
     public BoardDto toBoardDto() {
         return BoardDto.builder()
                 .bno(this.bno)
+                .bemail(this.bemail)
+                .bpassword(this.bpassword)
                 .btitle(this.btitle)
                 .bcontent(this.bcontent)
                 .cno(this.categoryEntity.getCno())

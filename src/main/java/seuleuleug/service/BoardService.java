@@ -48,7 +48,28 @@ public class BoardService {
 
         // 게시물 저장
         BoardEntity boardEntity = boardEntityRepository.save(boardDto.toboardEntity());
-
+        boardEntity.setCategoryEntity(categoryEntity);
         return 4;
     }
+    // 이메일 확인
+    public boolean checkemail(String bemail){
+        List<BoardEntity> boardEntities = boardEntityRepository.findByBemail(bemail);
+        if(boardEntities.size()>0){ return true;}
+        return false;
+    }
+    // 내가 쓴 게시물 목록 출력
+    public List<BoardDto> getMyBoardList(String bemail){
+        log.info("myboardList"+bemail);
+        List<BoardEntity> boardEntities = boardEntityRepository.findByBemail(bemail);
+        List<BoardDto> myboardList = new ArrayList<>();
+        if(boardEntities.size()>0){
+            boardEntities.forEach((b)->{
+                myboardList.add(b.toBoardDto());
+            });
+            log.info("myboardList"+myboardList);
+            return myboardList;}
+        return null;
+    }
+
+
 }

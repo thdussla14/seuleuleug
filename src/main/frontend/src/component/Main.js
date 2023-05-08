@@ -19,7 +19,7 @@ export default function Main(props) {
                 </div>
                 <div className="btnBox">
                     <div className="bwrite"> <a href="/board/write">  글쓰기 </a> </div>
-                    <div className="MY">     <a href="#"> MY </a>  </div>
+                    <div className="MY">     <a href="/board/checkemail"> MY </a>  </div>
                 </div>
             </div>
         </Container>

@@ -17,8 +17,8 @@ export default function Write(props) {
     const setBoard = () =>{
         let info = {
             cno       : cno,
-            legion    : document.querySelector('#legion').value,
-            email     : document.querySelector('#email').value,
+            blegion   : document.querySelector('#blegion').value,
+            bemail    : document.querySelector('#bemail').value,
             bpassword : document.querySelector('#bpassword').value,
             btitle    : document.querySelector('#btitle').value,
             bcontent  : document.querySelector('#bcontent').value
@@ -37,10 +37,10 @@ export default function Write(props) {
     return(<Container>
         <h3>  게시글 작성 페이지 </h3>
         <CategoryList categoryChange= {categoryChange} />
-        <TextField fullWidth className="legion"    id="legion"     label="지역"      variant="standard" /> <br />
-        <TextField fullWidth className="email"     id="email"      label="이메일"    variant="standard" /> <br />
+        <TextField fullWidth className="blegion"   id="blegion"    label="지역"      variant="standard" /> <br />
+        <TextField fullWidth className="bemail"    id="bemail"     label="이메일"    variant="standard" /> <br />
         <TextField fullWidth className="bpassword" id="bpassword"  label="비밀번호"  variant="standard" /> <br />
-        <TextField fullWidth className="btitle"    id="btitle"     label="제목"      variant="standard" /> <br />
+        <TextField fullWidth className="btitle"    id="btitle"     label="제목"     variant="standard" /> <br />
         <TextField fullWidth style={{marginTop:'20px'}}
           className="bcontent"
           id="bcontent"

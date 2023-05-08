@@ -35,5 +35,18 @@ public class BoardController {
         log.info("boardDto"+boardDto);
         return   boardService.writeBoard(boardDto);
     }
+    // 이메일 확인
+    @GetMapping("/check")
+    public boolean checkemail(@RequestParam String bemail) {
+        log.info("check boardDto"+bemail);
+        return  boardService.checkemail(bemail);
+    }
+    // 내가 쓴 게시물 목록 출력
+    @GetMapping("/mylist")
+    public List<BoardDto> getMyBoardList(@RequestParam String bemail){
+        log.info("mylist boardDto"+ bemail);
+        return  boardService.getMyBoardList(bemail);
+    }
+
 
 }
