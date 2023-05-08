@@ -30,6 +30,11 @@ public class HMemberController {
         return hMemberService.files(multipartFile);
     }
 
+    @GetMapping("/hlogin")
+    public HMemberDto hlogin(@RequestParam("hmemail") String hmemail , @RequestParam("hpassword") String hpassword){
+        log.info("hlogin : " + hmemail + " / " + hpassword);
+        return hMemberService.hlogin(hmemail , hpassword);
+    }
 
 
 
