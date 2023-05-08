@@ -1,70 +1,119 @@
 .card-box {
-  margin: 10px;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  font-family: 'Noto Sans KR', sans-serif;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .card-tag {
-  display: inline-block;
-  margin-bottom: 10px;
+    display: inline-block;
+    margin-bottom: 10px;
 }
 
 .chip {
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 20px;
-  background-color: #5c6ac4;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 700;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: #5c6ac4;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .card-head {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .card-title {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #222;
-  text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+    text-decoration: none;
 }
 
 .card-desc {
-  margin: 0;
-  font-size: 14px;
-  color: #777;
+    margin: 0;
+    font-size: 14px;
+    color: #777;
 }
 
 .card-body {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .card-cont {
-  padding-left: 0;
-  list-style: none;
+    padding-left: 0;
+    list-style: none;
 }
 
 .card-list {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
 }
 
 .card-sub {
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 14px;
-  color: #555;
-  width: 60px;
+    display: inline-block;
+    position: relative;
+    padding-left: 11px;
+    font-size: 15px;
+    line-height: 23px;
+    color: #666;
+    vertical-align: middle;
 }
 
 .card-text {
-  font-size: 14px;
-  color: #777;
+    display: inline-block;
+    width: calc(100% - 100px);
+    font-size: 15px;
+    color: #666;
+    line-height: 23px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+/*----------------------------------------*/
+.serchBox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.tab-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tab-list {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.tab-list:hover {
+  color: #fff;
+  background-color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
