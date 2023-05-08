@@ -6,6 +6,7 @@ import SignUp from './chatting/SignUp';
 import HsignUp from './chatting/HsignUp';
 import Hlogin from './chatting/Hlogin';
 import Login from './chatting/Login';
+import Chat from './chatting/Chat';
 
 
 export default function Index(props) {
@@ -18,6 +19,7 @@ export default function Index(props) {
                 <Route path="/hsignup" element={<HsignUp />} />
                 <Route path="/hlogin" element={<Hlogin />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/chatting" element={<Chat />} />
             </Routes>
         </BrowserRouter>
     </>)
