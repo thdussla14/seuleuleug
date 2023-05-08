@@ -2,11 +2,13 @@ import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 // ----------------------------------------------------------------
 import Container from '@mui/material/Container';
-import { Paper , Stack , styled , Typography , IconButton } from '@mui/material';
+import { Paper, Box, Stack, styled, Typography, Pagination, IconButton } from '@mui/material';
+import { Input, InputLabel, InputAdornment } from '@mui/material';
+import { FormControl, MenuItem, Select } from '@mui/material';
 import SvgIcon from "@mui/material/SvgIcon";
 import { SvgIconComponent } from "@mui/icons-material";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Pagination from '@mui/material/Pagination';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 
@@ -16,6 +18,7 @@ export default function HospitalList( props ) {
     let [ pageInfo , setPageInfo ] = useState( { 'page' : 1 , 'key' : '' , 'keyword' : '' } );
     let [ totalPage , setTotalPage ] = useState( 1 );
     let [ totalCount , setTotalCount ] = useState( 1 );
+    const [selected, setSelected] = useState("");
 
     // 서버에게 요청하기[ 컴포넌트가 처음 생성 되었을때 ]
     useEffect( ()=>{
@@ -59,25 +62,41 @@ export default function HospitalList( props ) {
 
     // 검색
     const onSearch = ()=>{
-        pageInfo.key = document.querySelector('.key').value
-        pageInfo.keyword = document.querySelector('.keyword').value
+        pageInfo.key = selected
+        pageInfo.keyword = document.querySelector('#keyword').value
         pageInfo.page = 1 // 검색했을때 첫페이지 이동
         setPageInfo( {...pageInfo} );
     }
 
-
+    let handleChange = (event: SelectChangeEvent) => {
+        setSelected(event.target.value);
+    };
 
     return(<>
         <Container>
-            <div style={{ display : 'flex', justifyContent : 'center', margin : '40px 0px' }} className="searchBox">
-                <select className="key">
-                    <option value="hname"> 병원명 </option>
-                    <option value="haddr"> 주소 </option>
-                    <option value="hnum"> 전화번호 </option>
-                </select>
-                <input type="text" className="keyword" />
-                <button type="button" onClick={ onSearch } > 검색 </button>
-            </div>
+            <Box sx={{ display: 'flex', alignItems: 'center' }} >
+                <div style={{ width: '30%'}}>
+                    <FormControl fullWidth sx={{ mt : 1 }} size="small">
+                        <Select id="key" onChange={handleChange}>
+                            <MenuItem value="hname">병원명</MenuItem>
+                            <MenuItem value="haddr">주소</MenuItem>
+                            <MenuItem value="hnum">전화번호</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+                <div style={{ width: '70%'}}>
+                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                        <InputLabel>Search</InputLabel>
+                        <Input type="text" id="keyword" endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton onClick={ onSearch }>
+                                    <SearchIcon />
+                                </IconButton>
+                            </InputAdornment>}
+                        />
+                    </FormControl>
+                </div>
+            </Box>
             { Hospitals }
             <div style={{ display : 'flex', justifyContent : 'center', margin : '40px 0px' }}>
                 <Pagination count={ totalPage } color="primary" onClick={ selectPage } />
