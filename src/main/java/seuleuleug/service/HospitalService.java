@@ -21,9 +21,9 @@ public class HospitalService {
     @Autowired
     private HospitalEntityRepository hospitalEntityRepository;
 
-    public PageDto get(int page){
-        Pageable pageable = PageRequest.of(page-1,6, Sort.by(Sort.Direction.DESC, "hno"));
-        Page<HospitalEntity> entityPage = hospitalEntityRepository.findAll(pageable);
+    public PageDto get(PageDto pageDto) {
+        Pageable pageable = PageRequest.of(pageDto.getPage()-1,6, Sort.by(Sort.Direction.ASC, "hno"));
+        Page<HospitalEntity> entityPage = hospitalEntityRepository.findBySearch( pageDto.getKey() , pageDto.getKeyword() , pageable);
         List<HospitalDto> hospitalDtoList = new ArrayList<>();
         entityPage.forEach((h)->{hospitalDtoList.add(h.toDto());});
 
@@ -31,7 +31,7 @@ public class HospitalService {
                 .hospitalDtoList(hospitalDtoList)
                 .totalCount(entityPage.getTotalElements())
                 .totalPage(entityPage.getTotalPages())
-                .page(page)
+                .page(pageDto.getPage())
                 .build();
     }
 }

@@ -22,8 +22,8 @@ public class HospitalController {
 
     // 병원리스트 출력
     @GetMapping("/list")
-    public PageDto get(@RequestParam int page){
-        PageDto result = hospitalService.get(page);
+    public PageDto get(PageDto pageDto) {
+        PageDto result = hospitalService.get(pageDto);
         return result;
     }
 }
