@@ -7,11 +7,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import CommentList from './CommentList';
+import Comwrite from './Comwrite';
 
 export default function MyBoard(props) {
 
-    console.log('MyBoard')
+    console.log('HBoard')
     const [ searchParams , setSearchParams ]  = useSearchParams();
     const [ item , setItem ] = useState({});
 
@@ -37,12 +37,9 @@ export default function MyBoard(props) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small"> 삭제 </Button>
           </CardActions>
         </Card>
-        <div>
-            <CommentList bno={ searchParams.get("bno")} />
-        </div>
+        <Comwrite bno={item.bno}/>
     </>)
 
 }

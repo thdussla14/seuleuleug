@@ -11,6 +11,7 @@ export default function Header(props) {
             <a href="/" > Home </a>
             <a href="/admin/dashboard" > 관리자 </a>
             <a href="/hospital/hospitallist" > Hospital </a>
+            <a href="/board/boardlist" > 고민글 보기 </a>
         </div>
     </Container>
     )

@@ -35,6 +35,18 @@ public class BoardEntity {
     @ToString.Exclude //해당 필드는  @ToString 제외 필드 [ 단방향은 선택 ]
     private CategoryEntity categoryEntity;
 
+    // 게시물 목록 출력용
+    public BoardDto toBoardtitleDto() {
+        return BoardDto.builder()
+                .bno(this.bno)
+                .bemail(this.bemail)
+                .bpassword(this.bpassword)
+                .btitle(this.btitle)
+                .cno(this.categoryEntity.getCno())
+                .cname(this.categoryEntity.getCname())
+                .build();
+    }
+    // 게시물 상세보기 출력용
     public BoardDto toBoardDto() {
         return BoardDto.builder()
                 .bno(this.bno)
@@ -42,8 +54,10 @@ public class BoardEntity {
                 .bpassword(this.bpassword)
                 .btitle(this.btitle)
                 .bcontent(this.bcontent)
+                .bdate(this.bdate.toLocalDate().toString())
                 .cno(this.categoryEntity.getCno())
                 .cname(this.categoryEntity.getCname())
                 .build();
     }
+
 }

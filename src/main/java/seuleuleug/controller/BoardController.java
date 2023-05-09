@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import seuleuleug.domain.board.BoardDto;
 import seuleuleug.domain.board.CategoryDto;
+import seuleuleug.domain.board.CommentDto;
 import seuleuleug.service.BoardService;
 
 import java.util.List;
@@ -47,6 +48,26 @@ public class BoardController {
         log.info("mylist boardDto"+ bemail);
         return  boardService.getMyBoardList(bemail);
     }
-
-
+    // 전체 게시물 목록 출력
+    @GetMapping("/alllist")
+    public List<BoardDto> getBoardList(){
+        log.info("alllist");
+        return  boardService.getBoardList();
+    }
+    // 게시물 상세 출력
+    @GetMapping("/detail")
+    public BoardDto getBoard(@RequestParam int bno){
+        log.info("detail"+ bno);
+        return boardService.getBoard(bno);
+    }
+    // 게시물 답변 출력
+    @GetMapping("/getcomment")
+    public List<CommentDto> getCommentList(@RequestParam int bno){
+        return boardService.getCommentList(bno);
+    }
+    // 답글 작성
+    @PostMapping("/cwrite")
+    public boolean writecomment(@RequestBody CommentDto commentDto){
+        return boardService.writecomment(commentDto);
+    }
 }

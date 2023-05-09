@@ -5,14 +5,14 @@ import Container from '@mui/material/Container';
 import { Paper , Stack , styled , Typography } from '@mui/material';
 import CheckPasswordModal from './CheckPasswordModal';
 
-export default function MyBoardList(props) {
+export default function BoardList(props) {
 
-    console.log('MyBoardList')
+    console.log('BoardList')
     const [ searchParams , setSearchParams ]  = useSearchParams();
     const [ items , setItems ] = useState([]);
 
     useEffect(()=>{
-         axios.get('/board/mylist',  { params : { bemail : searchParams.get("bemail")}})
+         axios.get('/board/alllist')
              .then(  (r) => { console.log(r); setItems(r.data);})
              .catch( (e) => { console.log(e);})
     }, [])
@@ -25,14 +25,21 @@ export default function MyBoardList(props) {
       color: theme.palette.text.secondary,
     }));
 
+    const Handler = (e) => {
+        console.log(e.target.value)
+        console.log(e.target);
+        console.log(e.target.text);
+        window.location.href = "/board/hboard?bno="+e.target.value
+    }
+
     return (<>
        <Container>
-            <h3 style={{textAlign:'center'}}> 내글 목록 </h3>
+            <h3 style={{textAlign:'center'}}> 고민글 목록 </h3>
             <Stack spacing={2}>
                 {items.map((i)=>(
                     <Item>
-                        <h3 > {i.btitle} </h3>
-                        <CheckPasswordModal item={i} />
+                       <h3> {i.btitle}   </h3>
+                       <button value={i.bno} onClick={Handler} > detail </button>
                     </Item>
                 ))}
             </Stack>
