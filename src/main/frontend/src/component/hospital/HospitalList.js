@@ -1,5 +1,6 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState , useEffect , useReducer } from 'react';
 import axios from 'axios';
+import Hospital from './Hospital';
 // ----------------------------------------------------------------
 import Container from '@mui/material/Container';
 import { Paper, Box, Stack, styled, Typography, Pagination, IconButton } from '@mui/material';
@@ -20,6 +21,7 @@ export default function HospitalList( props ) {
     let [ totalCount , setTotalCount ] = useState( 1 );
     const [selected, setSelected] = useState("");
 
+
     // 서버에게 요청하기[ 컴포넌트가 처음 생성 되었을때 ]
     useEffect( ()=>{
         axios.get("/hospital/list" , { params: pageInfo } )
@@ -37,30 +39,6 @@ export default function HospitalList( props ) {
         pageInfo.page = value;
         setPageInfo( {...pageInfo} );
     }
-
-    // 리스트 css
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        color: theme.palette.text.secondary
-    }));
-
-    // 병원리스트
-    const Hospitals = hospital.map((h)=>{return (
-         <Item sx={{ my: 3, mx: 'auto', p: 2, display: 'flex' , justifyContent: 'space-between' }} >
-            <Stack>
-                <Typography variant="h5">
-                     <a style={ h.hurl == null? {textDecoration: "none"} : {textDecoration: "underline "} } onClick={()=>{ h.hurl != null && window.open('http://'+h.hurl) } }>{h.hname}</a>
-                </Typography>
-                <Typography>주소 : {h.haddr}</Typography>
-                <Typography variant="body2">전화번호 : {h.hnum}</Typography>
-            </Stack>
-            <IconButton>
-                <SvgIcon fontSize="large" component={LocationOnIcon} inheritViewBox />
-            </IconButton>
-        </Item>
-    )})
 
     // 검색
     const onSearch = ()=>{
@@ -99,7 +77,11 @@ export default function HospitalList( props ) {
                     </FormControl>
                 </div>
             </Box>
-            { Hospitals }
+            {
+                hospital.map((h)=>{return (
+                    <Hospital item ={ h }  />
+                )})
+            }
             <div style={{ display : 'flex', justifyContent : 'center', margin : '40px 0px' }}>
                 <Pagination count={ totalPage } color="primary" onChange={ selectPage } />
             </div>
