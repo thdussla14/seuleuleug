@@ -50,7 +50,9 @@ export default function HospitalList( props ) {
     const Hospitals = hospital.map((h)=>{return (
          <Item sx={{ my: 3, mx: 'auto', p: 2, display: 'flex' , justifyContent: 'space-between' }} >
             <Stack>
-                <Typography variant="h5">{h.hname}</Typography>
+                <Typography variant="h5">
+                     <a style={ h.hurl != null && textDecoration: "underline" } onClick={()=>{ h.hurl != null && window.open('http://'+h.hurl) } }>{h.hname}</a>
+                </Typography>
                 <Typography>주소 : {h.haddr}</Typography>
                 <Typography variant="body2">전화번호 : {h.hnum}</Typography>
             </Stack>
@@ -99,7 +101,7 @@ export default function HospitalList( props ) {
             </Box>
             { Hospitals }
             <div style={{ display : 'flex', justifyContent : 'center', margin : '40px 0px' }}>
-                <Pagination count={ totalPage } color="primary" onClick={ selectPage } />
+                <Pagination count={ totalPage } color="primary" onChange={ selectPage } />
             </div>
         </Container>
     </>)
