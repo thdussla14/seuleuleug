@@ -51,7 +51,7 @@ export default function HospitalList( props ) {
          <Item sx={{ my: 3, mx: 'auto', p: 2, display: 'flex' , justifyContent: 'space-between' }} >
             <Stack>
                 <Typography variant="h5">
-                     <a style={ h.hurl != null && textDecoration: "underline" } onClick={()=>{ h.hurl != null && window.open('http://'+h.hurl) } }>{h.hname}</a>
+                     <a style={ h.hurl == null? {textDecoration: "none"} : {textDecoration: "underline "} } onClick={()=>{ h.hurl != null && window.open('http://'+h.hurl) } }>{h.hname}</a>
                 </Typography>
                 <Typography>주소 : {h.haddr}</Typography>
                 <Typography variant="body2">전화번호 : {h.hnum}</Typography>
