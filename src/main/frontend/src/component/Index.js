@@ -6,6 +6,10 @@ import DashBoard from './admin/DashBoard';
 import Write from './board/Write';
 import SignUp from './chatting/SignUp';
 import HsignUp from './chatting/HsignUp';
+import Hlogin from './chatting/Hlogin';
+import Login from './chatting/Login';
+import ChattingList from './chatting/ChattingList';
+import Chat from './chatting/Chat';
 import HospitalList from './hospital/HospitalList';
 import GovernmentInfo from './info/GovernmentInfo';
 import ChallengeWrite from './challenge/ChallengeWrite';
@@ -21,6 +25,10 @@ export default function Index(props) {
 
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/hsignup" element={<HsignUp />} />
+                <Route path="/hlogin" element={<Hlogin />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/chattinglist" element={<ChattingList />} />
+                <Route path="/chat/:chatRoomId" element={<Chat />} />
 
                 <Route path="/hospital/hospitallist" element={<HospitalList />} />
 
