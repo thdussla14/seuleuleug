@@ -24,7 +24,7 @@ export default function HospitalList( props ) {
                     <Typography>주소 : 전북 전주시 완산구 한두평 3길 13</Typography>
                     <Typography variant="body2">전화번호 : 063-220-7200</Typography>
                 </Stack>
-                /*<SvgIcon component={LocationOnIcon} inheritViewBox />*/
+                {/*<SvgIcon component={LocationOnIcon} inheritViewBox />*/}
             </Item>
             <Item sx={{ my: 3, mx: 'auto', p: 2, }} >
                 <Stack>

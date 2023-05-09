@@ -8,6 +8,7 @@ import SignUp from './chatting/SignUp';
 import HsignUp from './chatting/HsignUp';
 import Hlogin from './chatting/Hlogin';
 import Login from './chatting/Login';
+import ChattingList from './chatting/ChattingList';
 import Chat from './chatting/Chat';
 import HospitalList from './hospital/HospitalList';
 
@@ -25,7 +26,8 @@ export default function Index(props) {
                 <Route path="/hsignup" element={<HsignUp />} />
                 <Route path="/hlogin" element={<Hlogin />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/chatting" element={<Chat />} />
+                <Route path="/chattinglist" element={<ChattingList />} />
+                <Route path="/chat/:chatRoomId" element={<Chat />} />
 
                 <Route path="/hospital/hospitallist" element={<HospitalList />} />
             </Routes>

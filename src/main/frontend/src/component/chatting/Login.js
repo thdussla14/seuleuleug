@@ -1,10 +1,10 @@
 import React from 'react';
-import {useEffect, useState, useRef} from 'react'
+import {useEffect, useState, useRef, useContext} from 'react'
 import Container from '@mui/material/Container';
 import axios from 'axios';
 
-export default function Hlogin(props){
 
+export default function Hlogin(props){
     let inputMemail = useRef(null);
     let inputMphone = useRef(null);
 
@@ -16,7 +16,7 @@ export default function Hlogin(props){
             console.log(r.data);
             if(r.data!==null){
                 alert('로그인 성공');
-                {/*window.location.href="/";*/}
+                window.location.href="/";
             }else{
                 alert('로그인 실패');
             }
@@ -27,7 +27,7 @@ export default function Hlogin(props){
 
     return(<>
         <Container>
-            <h5> 의사 로그인 페이지 </h5>
+            <h5> 일반 로그인 페이지 </h5>
                 <input ref={inputMemail} className="hmemail" type="text" placeHolder="이메일" />
                 <input ref={inputMphone} className="mphone" type="text" placeHolder="핸드폰" />
                 <button onClick={mlogin} type="button">로그인</button>

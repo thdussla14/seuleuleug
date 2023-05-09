@@ -35,7 +35,7 @@ public class HMemberService {
 
     public boolean files( MultipartFile multipartFile){
 
-        String path = "src/main/resources/file";
+        String path = "src/main/resources/file/";
 
         log.info("File upload multipartFile : " + multipartFile);
         log.info("File upload Filename : " + multipartFile.getOriginalFilename()); // 실제 첨부파일 파일명
