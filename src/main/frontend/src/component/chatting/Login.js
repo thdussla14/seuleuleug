@@ -16,6 +16,7 @@ export default function Hlogin(props){
             console.log(r.data);
             if(r.data!==null){
                 alert('로그인 성공');
+                sessionStorage.setItem('email', memail);
                 window.location.href="/";
             }else{
                 alert('로그인 실패');

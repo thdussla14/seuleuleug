@@ -21,17 +21,16 @@ public class ChattingHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
-        String uri = session.getUri().toString();
-        String chatRoomId = uri.substring(uri.lastIndexOf('/') + 1);
+        log.info("session : " + session);
+        String chatRoomId = (String)session.getAttributes().get("chatRoomId");
         log.info("chatRoomId : " + chatRoomId);
         sessionsByChatRoom.computeIfAbsent(chatRoomId, k -> new ArrayList<>()).add(session);
     }
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String uri = session.getUri().toString();
-        String chatRoomId = uri.substring(uri.lastIndexOf('/') + 1);
+        log.info("session : " + session);
+        String chatRoomId = "123";
         List<WebSocketSession> sessions = sessionsByChatRoom.get(chatRoomId);
         if (sessions != null) {
             for (WebSocketSession sess: sessions) {
@@ -40,6 +39,11 @@ public class ChattingHandler extends TextWebSocketHandler {
                 }
             }
         }
+    }
+
+    @Override
+    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+        log.info("Transport error: " + exception);
     }
 
     @Override
