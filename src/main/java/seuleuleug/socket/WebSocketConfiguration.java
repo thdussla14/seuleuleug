@@ -14,6 +14,6 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 
     @Override // 서버 소켓으로 사용되고 있는 클래스를 등록
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chattingHandler,"/chat/{chatRoomId}").setAllowedOrigins("*");
+        registry.addHandler(chattingHandler,"/chat").setAllowedOrigins("*");
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import seuleuleug.domain.member.MemberDto;
 import seuleuleug.service.MemberService;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @Slf4j
 @RequestMapping("/member")
@@ -21,8 +23,14 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public MemberDto login(@RequestParam("memail") String memail, @RequestParam("mphone") String mphone){
+    public MemberDto login(@RequestParam("memail") String memail, @RequestParam("mphone") String mphone, HttpSession session){
+        log.info("login session : " + session);
         log.info("login memail: " + memail + " mphone: " + mphone);
-        return memberService.login(memail, mphone);
+        MemberDto result = memberService.login(memail, mphone,session);
+        if (result != null) {
+            // Store memail in the session
+            session.setAttribute("memail", memail);
+        }
+        return result;
     }
 }

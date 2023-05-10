@@ -1,26 +1,40 @@
 import React from 'react'
 import {useEffect, useState, useRef} from 'react'
 import Container from '@mui/material/Container';
+import { useSearchParams } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 import { useParams } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 
 export default function Chat(props){
-    const params = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    console.log(searchParams)
+    //const params = useParams();
     let [socket, setSocket] = useState(null);
     let [messages, setMessages] = useState([]);
     const clientSocket = useRef(null);
-    let chatRoomId = params.chatRoomId
+    console.log(sessionStorage.getItem('email'))
+    let chatRoomId = sessionStorage.getItem('email')
+    //let chatRoomId = searchParams.get("chatRoomId");
+    //let chatRoomId = params.chatRoomId
     console.log(chatRoomId);
 
     useEffect(() => {
         if(!clientSocket.current){
-            clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
+            //clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
+            clientSocket.current = new WebSocket(`ws://localhost:8080/chat?chatRoomId=${chatRoomId}`);
+
             clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
                 console.log('서버 접속했습니다');
                 console.log(clientSocket.current);
                 clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId }));
             }
-            clientSocket.current.onclose = (e)=>{ console.log('서버 나갔습니다'); }// 서버에서 나갔을때
-            clientSocket.current.onerror = (e)=>{ console.log('소켓 오류'); } // 에러 발생 시
+            clientSocket.current.onclose = (e)=>{
+                console.log('서버 나갔습니다');
+                console.log(clientSocket.current);
+            }// 서버에서 나갔을때
+            clientSocket.current.onerror = (e)=>{
+                console.log('소켓 오류');
+                console.log(clientSocket.current);
+            } // 에러 발생 시
             clientSocket.current.onmessage = (e)=>{ // 서버에서 메세지가 왔을때
                     console.log('서버소켓으로부터 메세지 수신');
                     console.log(e.data)
