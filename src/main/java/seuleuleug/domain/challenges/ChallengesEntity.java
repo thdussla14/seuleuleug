@@ -1,8 +1,13 @@
 package seuleuleug.domain.challenges;
 
 import lombok.*;
+import seuleuleug.domain.BaseTime;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,7 +17,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "challenges")
-public class ChallengesEntity {
+public class ChallengesEntity extends BaseTime {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int chno;
@@ -20,8 +25,10 @@ public class ChallengesEntity {
     private String chname;
     @Column
     private String chcontent;
-    @Column
-    private String chimg;
+
+    @OneToMany(mappedBy = "challengesEntity" , cascade = CascadeType.REMOVE)
+    @ToString.Exclude @Builder.Default
+    private List<ChallengesImgEntity> challengesImgEntitiy = new ArrayList<>();
 
     // toDto 출력용
     public ChallengesDto todto(){
@@ -29,7 +36,12 @@ public class ChallengesEntity {
             .chno(this.chno)
             .chname(this.chname)
             .chcontent(this.chcontent)
-            .chimg(this.chimg)
+            .cdate(this.cdate.toLocalDate().toString().equals(LocalDateTime.now().toLocalDate().toString() ) ?
+                    this.cdate.toLocalTime().format( DateTimeFormatter.ofPattern( "HH:mm:ss") ) :
+                    this.cdate.toLocalDate().format( DateTimeFormatter.ofPattern( "yy-MM-dd") ))
+            .udate(this.udate.toLocalDate().toString().equals(LocalDateTime.now().toLocalDate().toString() ) ?
+                    this.udate.toLocalTime().format( DateTimeFormatter.ofPattern( "HH:mm:ss") ) :
+                    this.udate.toLocalDate().format( DateTimeFormatter.ofPattern( "yy-MM-dd") ))
             .build();
     }
 

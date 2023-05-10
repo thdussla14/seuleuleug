@@ -1,6 +1,9 @@
 package seuleuleug.domain.challenges;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,7 +15,11 @@ public class ChallengesDto {
     private int chno;
     private String chname;
     private String chcontent;
-    private String chimg;
+
+    private String cdate;
+    private String udate;
+
+    private List<MultipartFile> chimg ;
 
     // toEntity
     public ChallengesEntity toEntity() {
@@ -20,7 +27,6 @@ public class ChallengesDto {
             .chno(this.chno)
             .chname(this.chname)
             .chcontent(this.chcontent)
-            .chimg(this.chimg)
             .build();
     }
 

@@ -1,6 +1,7 @@
 package seuleuleug.domain.challenges;
 
 import lombok.*;
+import seuleuleug.domain.BaseTime;
 
 import javax.persistence.*;
 
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "challengesResults")
-public class ChallengeResultsEntity {
+public class ChallengeResultsEntity extends BaseTime {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int sno;

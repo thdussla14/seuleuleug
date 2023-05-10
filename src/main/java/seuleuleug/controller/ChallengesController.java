@@ -21,7 +21,8 @@ public class ChallengesController {
     }
 
     @PostMapping("")
-    public boolean post(@RequestBody ChallengesDto challengesDto){
+    public boolean post(ChallengesDto challengesDto){
+        log.info("Posting challenge"+challengesDto);
         return challengesService.post(challengesDto);
     }
 

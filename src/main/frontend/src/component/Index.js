@@ -19,6 +19,8 @@ import Chat from './chatting/Chat';
 import HospitalList from './hospital/HospitalList';
 import GovernmentInfo from './info/GovernmentInfo';
 import ChallengeWrite from './challenge/ChallengeWrite';
+import Challenge from './challenge/Challenge';
+
 
 export default function Index(props) {
     return (<>
@@ -45,6 +47,7 @@ export default function Index(props) {
 
                 <Route path="/government/info" element={<GovernmentInfo />} />
                 <Route path="/challenge/challengewrite" element={<ChallengeWrite />} />
+                <Route path="/challenge/challenge" element={<Challenge />} />
             </Routes>
         </BrowserRouter>
     </>)

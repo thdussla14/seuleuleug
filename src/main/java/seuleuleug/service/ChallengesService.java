@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import seuleuleug.domain.challenges.ChallengesDto;
-import seuleuleug.domain.challenges.ChallengesEntity;
-import seuleuleug.domain.challenges.ChallengesEntityRepository;
+import seuleuleug.domain.challenges.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -21,6 +19,10 @@ import java.util.stream.Collectors;
 public class ChallengesService {
     @Autowired
     ChallengesEntityRepository challengesEntityRepository;
+    @Autowired
+    ChallengesImgEntityRepositoty challengesImgEntityRepositoty;
+    @Autowired
+    FileService fileService;
 
     @Transactional
     public List<ChallengesDto> get(){
@@ -31,7 +33,28 @@ public class ChallengesService {
 
     @Transactional
     public boolean post(ChallengesDto challengesDto){
-        challengesEntityRepository.save(challengesDto.toEntity());
+        log.info("Posting challenge"+challengesDto);
+        ChallengesEntity challengesEntity = challengesEntityRepository.save(challengesDto.toEntity());
+
+        if( challengesDto.getChimg().size() != 0 ){
+            // 하나씩 업로드
+            challengesDto.getChimg().forEach( (img)->{
+                // 업로드된 파일 결과[리턴]
+                FileDto fileDto = fileService.fileupload( img );
+                // DB 저장
+                ChallengesImgEntity challengesImgEntity = challengesImgEntityRepositoty.save(
+                        ChallengesImgEntity.builder()
+                                .originalFilename( fileDto.getOriginalFilename() )
+                                .uuidFile( fileDto.getUuidFile())
+                                .build()
+                );
+                // 단방향 : 이미지객체에 제품객체 등록
+                challengesImgEntity.setChallengesEntity(challengesEntity);
+                // 양방향 : 제품객체에 이미지객체 등록
+                challengesEntity.getChallengesImgEntitiy().add( challengesImgEntity );
+            });
+        }
+
         return true;
     }
 
@@ -42,7 +65,6 @@ public class ChallengesService {
             ChallengesEntity entity = entityOptional.get();
             entity.setChname(challengesDto.getChname());
             entity.setChcontent(challengesDto.getChcontent());
-            entity.setChimg(challengesDto.getChimg());
         }
         return true;
     }

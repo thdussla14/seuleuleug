@@ -13,6 +13,7 @@ export default function Header(props) {
             <a href="/hospital/hospitallist" > Hospital </a>
             <a href="/government/info" > 정부지원 </a>
             <a href="/board/boardlist" > 고민글 보기 </a>
+            <a href="/challenge/challenge" > Challenge </a>
         </div>
     </Container>
     )
