@@ -34,6 +34,10 @@ export default function Write(props) {
             )
     }
 
+    const back = () => {
+        window.location.href="/"
+    }
+
     return(<Container>
         <h3>  게시글 작성 페이지 </h3>
         <CategoryList categoryChange= {categoryChange} />
@@ -51,7 +55,7 @@ export default function Write(props) {
         />
         <div style={{marginTop:'20px'}}>
             <Button style={{marginRight:'10px'}} variant="outlined" onClick={setBoard}> 등록 </Button>
-            <Button variant="outlined"> 취소 </Button>
+            <Button variant="outlined" onClick={back} > 취소 </Button>
         </div>
     </Container>)
 }

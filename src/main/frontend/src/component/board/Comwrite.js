@@ -25,6 +25,10 @@ export default function Comwrite(props) {
             )
     }
 
+    const back = () => {
+        window.location.href="/board/boardlist"
+    }
+
     return(<Container>
         <div className="wrapper">
            <div>
@@ -44,7 +48,7 @@ export default function Comwrite(props) {
         />
         <div style={{marginTop:'20px'}}>
             <Button style={{marginRight:'10px'}} variant="outlined" onClick={setComment}> 등록 </Button>
-            <Button variant="outlined"> 취소 </Button>
+            <Button variant="outlined" onClick={back} > 취소 </Button>
         </div>
     </Container>)
 }

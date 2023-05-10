@@ -3,6 +3,7 @@ import axios from 'axios';
 import Container from '@mui/material/Container';
 import styles from '../css/main.css';
 import Fortune from './board/Fortune';
+import fortunecookie from '../fortunecookie.png';  // img 호출
 
 export default function Main(props) {
 
@@ -10,8 +11,7 @@ export default function Main(props) {
         <Container>
             <div className="Main">
                 <div className="Fortune">
-                    <h3> Fortune Cookie </h3>
-                    <Fortune />
+                    <img style={{width:'300px'}} src={fortunecookie}/>
                 </div>
                 <div className="btnBox">
                     <div className="bwrite"> <a href="/board/write">  글쓰기 </a> </div>
