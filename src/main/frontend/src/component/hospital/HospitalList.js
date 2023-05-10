@@ -25,7 +25,7 @@ export default function HospitalList( props ) {
     // 서버에게 요청하기[ 컴포넌트가 처음 생성 되었을때 ]
     useEffect( ()=>{
         axios.get("/hospital/list" , { params: pageInfo } )
-             .then( r =>{ console.log(r);
+             .then( r =>{
                 setHospital( r.data.hospitalDtoList );
                 setTotalCount( r.data.totalCount );
                 setTotalPage( r.data.totalPage );
@@ -51,6 +51,7 @@ export default function HospitalList( props ) {
     let handleChange = (event: SelectChangeEvent) => {
         setSelected(event.target.value);
     };
+
 
     return(<>
         <Container>
@@ -78,9 +79,9 @@ export default function HospitalList( props ) {
                 </div>
             </Box>
             {
-                hospital.map((h)=>{return (
-                    <Hospital item ={ h }  />
-                )})
+               hospital.map((h)=>(
+                        <Hospital item ={ h }  />
+                       ))
             }
             <div style={{ display : 'flex', justifyContent : 'center', margin : '40px 0px' }}>
                 <Pagination count={ totalPage } color="primary" onChange={ selectPage } />

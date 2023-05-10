@@ -15,10 +15,12 @@ import SearchIcon from '@mui/icons-material/Search';
 export default function Hospital(props){
     // 병원
     const [ hospital , setHospital ] = useState( props.item );
-    console.log(hospital)
+
 
     // 2. 컴포넌트 실행시 한번
-    useEffect( ()=>{ }, [props.item])
+    useEffect( ()=>{ setHospital(props.item);
+        if(display == "block"){ toggleDisplay(); }
+     }, [props.item])
 
     // 지도 클릭 display
     const [display, toggleDisplay] = useReducer( (e) => (e === "block" ? "none" : "block"), "none" );
@@ -47,8 +49,9 @@ export default function Hospital(props){
           </IconButton>
         </Item>
         <div style={{ display }}>
-        ㅁㄴㅇㄹㄹ
-            <KakaoMap haddr={hospital.haddr} />
+            <Item sx={{ my: 3, mx: 'auto', p: 2 }}>
+                <KakaoMap haddr={hospital.haddr} hname={hospital.hname} />
+            </Item>
         </div>
 
     </>)

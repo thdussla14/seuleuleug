@@ -6,7 +6,7 @@ export default function KakaoMap(props) {
     const { kakao } = window;
     const mapOption = { center: new kakao.maps.LatLng( 36.2683, 127.6358  ), level: 3 };
 
-    console.log(props.haddr)
+
     useEffect(()=>{
         var map = new kakao.maps.Map( mapContainer.current , mapOption);
 
@@ -26,7 +26,7 @@ export default function KakaoMap(props) {
 
                 // 인포윈도우로 장소에 대한 설명을 표시합니다
                 var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;color:blue;text-align:center;padding:6px 0;"> {props.hname} </div>'
+                    content: '<div style="width:150px;color:blue;text-align:center;padding:6px 0;"> '+ props.hname +' </div>'
                 });
                 infowindow.open(map, marker);
 
@@ -39,6 +39,6 @@ export default function KakaoMap(props) {
 
 
     return(<>
-        <div id="map" ref={ mapContainer } style={{width:'30%%',height:'20%'}} >  </div>
+        <div id="map" ref={ mapContainer } style={{width:'100%', height: '400px'}} >  </div>
     </>)
 }
