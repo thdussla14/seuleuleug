@@ -21,7 +21,6 @@ export default function HospitalList( props ) {
     let [ totalCount , setTotalCount ] = useState( 1 );
     const [selected, setSelected] = useState("");
 
-
     // 서버에게 요청하기[ 컴포넌트가 처음 생성 되었을때 ]
     useEffect( ()=>{
         axios.get("/hospital/list" , { params: pageInfo } )
