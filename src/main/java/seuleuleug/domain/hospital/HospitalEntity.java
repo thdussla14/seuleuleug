@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -13,17 +14,12 @@ import javax.persistence.*;
 public class HospitalEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int hno;                    //병원 번호
-    @Column(nullable = false)
-    private String hname;               //병원 이름
-    @Column
-    private String hnum;                // 병원 전화번호
-    @Column
-    private String haddr;               // 병원 주소
-    @Column
-    private String hurl;                // 병원 홈페이지
-    @Column
-    private String hcertification;      //제휴 여부
+    private int hno;                                           // 병원 번호
+    @Column(nullable = false) private String hname;            // 병원 이름
+    @Column private String hnum;                               // 병원 전화번호
+    @Column private String haddr;                              // 병원 주소
+    @Column private String hurl;                               // 병원 홈페이지
+    @ColumnDefault("0") @Column private int halliance;    // 제휴 여부( 0 : 제휴x , 1 : 제휴o )
 
     public HospitalDto toDto(){
         return HospitalDto.builder()
@@ -32,7 +28,7 @@ public class HospitalEntity {
                 .hnum(this.hnum)
                 .haddr(this.haddr)
                 .hurl(this.hurl)
-                .hcertification(this.hcertification)
+                .halliance(this.halliance)
                 .build();
 
     }

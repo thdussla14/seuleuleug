@@ -21,8 +21,9 @@ public class HospitalService {
     @Autowired
     private HospitalEntityRepository hospitalEntityRepository;
 
+    // 출력
     public PageDto get(PageDto pageDto) {
-        Pageable pageable = PageRequest.of(pageDto.getPage()-1,6, Sort.by(Sort.Direction.ASC, "hno"));
+        Pageable pageable = PageRequest.of(pageDto.getPage()-1,10, Sort.by(Sort.Direction.DESC, "halliance"));
         Page<HospitalEntity> entityPage = hospitalEntityRepository.findBySearch( pageDto.getKey() , pageDto.getKeyword() , pageable);
         List<HospitalDto> hospitalDtoList = new ArrayList<>();
         entityPage.forEach((h)->{hospitalDtoList.add(h.toDto());});

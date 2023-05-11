@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class SimriTestDto {
     private String stitle;
-    private String scontent;
     private String surl;
 }

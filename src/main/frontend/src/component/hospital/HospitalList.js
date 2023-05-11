@@ -3,7 +3,7 @@ import axios from 'axios';
 import Hospital from './Hospital';
 // ----------------------------------------------------------------
 import Container from '@mui/material/Container';
-import { Paper, Box, Stack, styled, Typography, Pagination, IconButton } from '@mui/material';
+import { Grid, Paper, Box, Stack, styled, Typography, Pagination, IconButton } from '@mui/material';
 import { Input, InputLabel, InputAdornment } from '@mui/material';
 import { FormControl, MenuItem, Select } from '@mui/material';
 import SvgIcon from "@mui/material/SvgIcon";
@@ -15,11 +15,11 @@ import SearchIcon from '@mui/icons-material/Search';
 
 export default function HospitalList( props ) {
 
-    let [ hospital , setHospital ] = useState( [] );
-    let [ pageInfo , setPageInfo ] = useState( { 'page' : 1 , 'key' : '' , 'keyword' : '' } );
-    let [ totalPage , setTotalPage ] = useState( 1 );
-    let [ totalCount , setTotalCount ] = useState( 1 );
-    const [selected, setSelected] = useState("");
+    const [ hospital , setHospital ] = useState( [] );
+    const [ pageInfo , setPageInfo ] = useState( { 'page' : 1 , 'key' : '' , 'keyword' : '' } );
+    const [ totalPage , setTotalPage ] = useState( 1 );
+    const [ totalCount , setTotalCount ] = useState( 1 );
+    const [ selected , setSelected ] = useState("");
 
     // 서버에게 요청하기[ 컴포넌트가 처음 생성 되었을때 ]
     useEffect( ()=>{
@@ -31,6 +31,7 @@ export default function HospitalList( props ) {
              })
              .catch( err =>{ console.log(err);})
     } , [pageInfo])
+
 
     // 페이징 번호 선택
     const selectPage = (e , value)=>{
@@ -51,6 +52,15 @@ export default function HospitalList( props ) {
         setSelected(event.target.value);
     };
 
+    // 제휴 구분 css
+    const styleCss = {
+        border: '1px solid rgb(112 170 220)',
+        padding: '0 20px',
+        marginTop: '25px',
+        borderRadius: '10px',
+        borderWidth: '2px',
+        background: 'aliceblue'
+    }
 
     return(<>
         <Container>
@@ -77,11 +87,10 @@ export default function HospitalList( props ) {
                     </FormControl>
                 </div>
             </Box>
-            {
-               hospital.map((h)=>(
-                        <Hospital item ={ h }  />
-                       ))
-            }
+            <div style={ styleCss }>
+            { hospital.filter((i)=> i.halliance == 1 ).map((h)=>( <Hospital item ={ h } /> )) }
+            </div>
+            { hospital.filter((i)=> i.halliance == 0 ).map((h)=>( <Hospital item ={ h } /> )) }
             <div style={{ display : 'flex', justifyContent : 'center', margin : '40px 0px' }}>
                 <Pagination count={ totalPage } color="primary" onChange={ selectPage } />
             </div>

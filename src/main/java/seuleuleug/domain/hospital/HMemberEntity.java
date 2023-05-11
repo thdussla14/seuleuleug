@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ public class HMemberEntity {
     @Column( nullable = false ) private String hmname;              // 의사 이름
     @Column( nullable = false ) private String hmphone;             // 의사 전화번호
     @Column( nullable = false ) private String hmcertification;     // 의사 의사증명서 pdf 파일
-    @Column( nullable = false ) private int hmstate;                // 의사 인증( 0 : 미승인 , 1 : 승인 )
+    @ColumnDefault("0") @Column( nullable = false ) private int hmstate;                // 의사 인증( 0 : 미승인 , 1 : 승인 )
 
     public HMemberDto toDto() {
         return HMemberDto.builder()

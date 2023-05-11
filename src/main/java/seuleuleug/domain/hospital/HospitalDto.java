@@ -12,7 +12,7 @@ public class HospitalDto {
     private String hnum;
     private String haddr;
     private String hurl;
-    private String hcertification;
+    private int halliance;
 
     public HospitalEntity toEntity(){
         return HospitalEntity.builder()
@@ -21,7 +21,7 @@ public class HospitalDto {
                 .hnum(this.hnum)
                 .haddr(this.haddr)
                 .hurl(this.hurl)
-                .hcertification(this.hcertification)
+                .halliance(this.halliance)
                 .build();
     }
 

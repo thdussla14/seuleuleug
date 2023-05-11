@@ -21,7 +21,7 @@ public class SimriTestController {
     @GetMapping("")
     public List<SimriTestDto> getInfo() throws IOException {
         List<SimriTestDto> result = simriTestService.getInfo();
-        // log.info("result : "+result);
+        //log.info("result : "+result);
         return result;
     }
 }

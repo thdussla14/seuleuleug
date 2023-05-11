@@ -20,6 +20,7 @@ import HospitalList from './hospital/HospitalList';
 import GovernmentInfo from './info/GovernmentInfo';
 import ChallengeWrite from './challenge/ChallengeWrite';
 import Challenge from './challenge/Challenge';
+import SimriTest from './info/SimriTest';
 
 
 export default function Index(props) {
@@ -44,6 +45,7 @@ export default function Index(props) {
                 <Route path="/chat/:chatRoomId" element={<Chat />} />
 
                 <Route path="/hospital/hospitallist" element={<HospitalList />} />
+                <Route path="/simritest/info" element={<SimriTest />} />
 
                 <Route path="/government/info" element={<GovernmentInfo />} />
                 <Route path="/challenge/challengewrite" element={<ChallengeWrite />} />

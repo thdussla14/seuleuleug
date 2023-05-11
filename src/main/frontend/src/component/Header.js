@@ -18,6 +18,7 @@ export default function Header(props) {
             <a href="/government/info" > 정부지원 </a>
             <a href="/board/boardlist" > 고민글 보기 </a>
             <a href="/challenge/challenge" > Challenge </a>
+            <a href="/simritest/info" > 심리테스트 </a>
 
 
         {sessionStorage.getItem('email') !== 'null' ? (

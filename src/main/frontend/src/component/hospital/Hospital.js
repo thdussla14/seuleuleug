@@ -33,11 +33,11 @@ export default function Hospital(props){
         color: theme.palette.text.secondary
     }));
 
-    return (<>
-        <Item sx={{ my: 3, mx: 'auto', p: 2, display: 'flex', justifyContent: 'space-between' }}>
+    return ( <>
+          <Item sx={{ my: 2, mx: 'auto', p: 2, display: 'flex', justifyContent: 'space-between' }}>
           <Stack>
             <Typography variant="h5">
-              <a style={ hospital.hurl == null ? { textDecoration: 'none' } : { textDecoration: 'underline ' }} onClick={() => { hospital.hurl != null && window.open('http://' + hospital.hurl); }}>
+              <a style={ hospital.hurl == null ? { textDecoration: 'none' } : { textDecoration: 'underline' }} onClick={() => { hospital.hurl != null && window.open('http://' + hospital.hurl); }}>
                 {hospital.hname}
               </a>
             </Typography>
@@ -53,6 +53,5 @@ export default function Hospital(props){
                 <KakaoMap haddr={hospital.haddr} hname={hospital.hname} />
             </Item>
         </div>
-
     </>)
 }

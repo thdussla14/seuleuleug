@@ -20,23 +20,21 @@ public class SimriTestService {
 
     @PostConstruct
     public List<SimriTestDto> getInfo() throws IOException {
-        url = "https://simritest.com/";
+        url = "http://aiselftest.com/";
         List<SimriTestDto> simriTestDtoList = new ArrayList<>();
 
         Document document = Jsoup.connect(url).get();
-        Elements elements = document.select(".row .jumbotron");
+        Elements elements = document.select("#sec1 .row li");
         //log.info("Simritest : "+elements);
 
         for(Element element : elements){
-            // log.info("Simritest : "+element);
-            // log.info("Simritest stitle : "+element.select("h2").html());
-            // log.info("Simritest scontent : "+element.select("p").html());
-            // log.info("Simritest sulr : "+element.select("a").attr("abs:href"));
+            //log.info("Simritest : "+element);
+            //log.info("Simritest stitle : "+element.select("a").html());
+            //log.info("Simritest sulr : "+element.select("a").attr("abs:href"));
 
             simriTestDtoList.add(
                 SimriTestDto.builder()
-                        .stitle(element.select("h2").html())
-                        .scontent(element.select("p").html())
+                        .stitle(element.select("a").html())
                         .surl(element.select("a").attr("abs:href"))
                         .build()
             );
