@@ -16,7 +16,6 @@ export default function Hospital(props){
     // 병원
     const [ hospital , setHospital ] = useState( props.item );
 
-
     // 2. 컴포넌트 실행시 한번
     useEffect( ()=>{ setHospital(props.item);
         if(display == "block"){ toggleDisplay(); }
