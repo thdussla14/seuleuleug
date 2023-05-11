@@ -30,4 +30,14 @@ public class WordController {
     public WordDto getWord() {
         return wordService.getWord();
     }
+
+    //  모든 응원글귀 출력
+    @GetMapping("/all")
+    public List<WordDto> getWords() {
+        return wordService.getWords();
+    }
+    // 응원글귀 삭제
+    @DeleteMapping("")
+    public boolean ondelete(@RequestParam int wno){ return wordService.ondelete(wno);}
+
 }

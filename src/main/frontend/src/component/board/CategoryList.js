@@ -16,7 +16,7 @@ export default function CategoryList(props) {
             .catch( e => { console.log(e);})
     }, [])
 
-    // 1. 카테고리 리스트
+    // 2. 선택 카테고리 변경 이벤트
     const [ category, setCategory ] = useState(0);
     const handleChange = (event) => {
       setCategory(event.target.value);

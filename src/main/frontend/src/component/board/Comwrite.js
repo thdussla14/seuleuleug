@@ -8,8 +8,11 @@ import logo from '../../logo.svg';  // img 호출
 
 export default function Comwrite(props) {
 
+    // 선택한 게시물 번호 전달받기
     const bno = props.bno
+    // 로그인한 의사 정보 가져오기
 
+    // 입력한 코멘트 댓글 저장
     const setComment = () =>{
         let info = {
             bno       : bno,
@@ -24,7 +27,7 @@ export default function Comwrite(props) {
                  }
             )
     }
-
+    // 취소 버튼 클릭시 BoardList로 전환
     const back = () => {
         window.location.href="/board/boardlist"
     }
