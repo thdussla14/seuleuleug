@@ -17,6 +17,7 @@ export default function Hlogin(props){
             if(r.data!==null){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', memail);
+                sessionStorage.setItem('loginType', "normal");
                 window.location.href="/";
             }else{
                 alert('로그인 실패');

@@ -9,10 +9,10 @@ export default function ChattingList(props){
 
     return (<>
         <div>
-           <a href={"/chat/1"}>1번방</a>
-           <a href={"/chat/2"}>2번방</a>
-           <a href={"/chat/3"}>3번방</a>
-           <a href={"/chat/4"}>4번방</a>
+           <a href={"/chatting/1"}>1번방</a>
+           <a href={"/chatting/2"}>2번방</a>
+           <a href={"/chatting/3"}>3번방</a>
+           <a href={"/chatting/4"}>4번방</a>
         </div>
     </>)
 }

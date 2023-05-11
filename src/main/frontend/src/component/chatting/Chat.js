@@ -1,31 +1,46 @@
 import React from 'react'
 import {useEffect, useState, useRef} from 'react'
 import Container from '@mui/material/Container';
-import { useSearchParams } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 import { useParams } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 
 export default function Chat(props){
-    const [searchParams, setSearchParams] = useSearchParams();
-    console.log(searchParams)
-    //const params = useParams();
     let [socket, setSocket] = useState(null);
     let [messages, setMessages] = useState([]);
-    const clientSocket = useRef(null);
+
+
     console.log(sessionStorage.getItem('email'))
-    let chatRoomId = sessionStorage.getItem('email')
-    //let chatRoomId = searchParams.get("chatRoomId");
-    //let chatRoomId = params.chatRoomId
-    console.log(chatRoomId);
+
+    const params = useParams();
+    let chatRoomId = null;
+    const clientSocket = useRef(null);
 
     useEffect(() => {
         if(!clientSocket.current){
-            //clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
-            clientSocket.current = new WebSocket(`ws://localhost:8080/chat?chatRoomId=${chatRoomId}`);
+            // 채팅방에 들어온 사람이 의사인지 일반 회원인지 구분하여 소켓에 전달하는 정보 구분
+            if(sessionStorage.getItem('loginType')==="doctor"){
+                chatRoomId = sessionStorage.getItem('email');
+                console.log(chatRoomId);
+                clientSocket.current = new WebSocket(`ws://localhost:8080/chat?chatRoomId=${chatRoomId}`);
+                clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
+                    console.log('의사가 서버 접속했습니다');
+                    console.log(clientSocket.current);
+                    clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId , type : "enter", who : "doctor" }));
+                }
+            }else if(sessionStorage.getItem('loginType')==="normal"){
+                chatRoomId = params.chatRoomId;
+                console.log(chatRoomId);
+                clientSocket.current = new WebSocket(`ws://localhost:8080/chat?chatRoomId=${chatRoomId}`);
+                clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
+                    console.log('일반회원이 서버 접속했습니다');
+                    console.log(clientSocket.current);
+                    clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId , type : "enter", who : "normal"  }));
+                }
+            }
 
             clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
                 console.log('서버 접속했습니다');
                 console.log(clientSocket.current);
-                clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId }));
+                clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId , type : "enter" }));
             }
             clientSocket.current.onclose = (e)=>{
                 console.log('서버 나갔습니다');
@@ -53,9 +68,15 @@ export default function Chat(props){
 
 
     function sendMessage(message) {
-      const data = JSON.stringify({ message });
-      console.log(data);
-      clientSocket.current.send(data);
+        console.log(message);
+        console.log(typeof(message));
+        let msg = {
+            message : message,
+            type : "msg"
+        }
+        const data = JSON.stringify(msg);
+        console.log(data);
+        clientSocket.current.send(data);
     }
 
     return (<>

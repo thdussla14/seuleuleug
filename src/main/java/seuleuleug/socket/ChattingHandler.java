@@ -1,45 +1,65 @@
 package seuleuleug.socket;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import seuleuleug.domain.Chatting.ChatUserDto;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component // 빈 등록 [ 스프링 해당 클래스를 관리 = 제어 역전 == IOC]
 @Slf4j
 public class ChattingHandler extends TextWebSocketHandler {
-    private static Map<String, List<WebSocketSession>> sessionsByChatRoom = new HashMap<>();
+    protected static List<ChatUserDto> chatUserDtoList = new ArrayList<ChatUserDto>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String uri = session.getUri().toString();
-        String chatRoomId = uri.substring(uri.lastIndexOf('=') + 1);
-        log.info("chatRoomId : " + chatRoomId);
-        sessionsByChatRoom.computeIfAbsent(chatRoomId, k -> new ArrayList<>()).add(session);
+        log.info("서버에 접속");
+        //log.info("email: " + email);
     }
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String uri = session.getUri().toString();
-        String chatRoomId = uri.substring(uri.lastIndexOf('=') + 1);
-        List<WebSocketSession> sessions = sessionsByChatRoom.get(chatRoomId);
-        if (sessions != null) {
-            for (WebSocketSession sess: sessions) {
-                if (sess.isOpen()) {
-                    sess. sendMessage(message);
+
+        log.info("message2 : " + message.getPayload());
+        JSONObject jsonMessage = new JSONObject(message.getPayload());
+        String type = jsonMessage.getString("type");
+        //log.info("message3 : " + type);
+        if ("enter".equals(type)) {
+            String chatRoomId = jsonMessage.getString("chatRoomId");
+            chatUserDtoList.add(ChatUserDto.builder()
+                    .chatRoomId(chatRoomId)
+                    .session(session)
+                    .build());
+        } else if ("msg".equals(type)) {
+            String senderChatRoomId = null;
+            for (ChatUserDto chatUserDto : chatUserDtoList) {
+                if (chatUserDto.getSession().equals(session)) {
+                    senderChatRoomId = chatUserDto.getChatRoomId();
+                    break;
                 }
             }
-        }
-    }
+            List<WebSocketSession> sessions = new ArrayList<>();
+            for (ChatUserDto chatUserDto : chatUserDtoList) {
+                if (chatUserDto.getChatRoomId().equals(senderChatRoomId)) {
+                    sessions.add(chatUserDto.getSession());
+                }
+            }
+            if (sessions != null) {
+                for (WebSocketSession sess: sessions) {
+                    if (sess.isOpen()) {
+                        sess. sendMessage(message);
+                    } // if e
+                } // for e
+            } // if e
+        } // else if e
+
+    } // method e
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
@@ -48,10 +68,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        String uri = session.getUri().toString();
-        String chatRoomId = uri.substring(uri.lastIndexOf('=') + 1);
-        List<WebSocketSession> sessions = sessionsByChatRoom.getOrDefault(chatRoomId, new ArrayList<>());
-        sessions.remove(session);
+        chatUserDtoList.removeIf(chatUserDto -> chatUserDto.getSession().equals(session));
     }
 
 }

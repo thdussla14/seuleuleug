@@ -10,6 +10,7 @@ import seuleuleug.domain.hospital.HMemberDto;
 import seuleuleug.domain.hospital.HMemberEntity;
 import seuleuleug.domain.hospital.HMemberRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -21,6 +22,8 @@ public class HMemberService {
 
     @Autowired
     private HMemberRepository hMemberRepository;
+    @Autowired
+    private HttpServletRequest request;
 
     public boolean hsignup(HMemberDto hMemberDto){
         log.info("qweqwe");
@@ -59,6 +62,8 @@ public class HMemberService {
         log.info("hlogin service: " + hmemail + " / " + hpassword);
         Optional<HMemberEntity> optionalHMemberEntity = hMemberRepository.findByHmemailAndHpassword(hmemail,hpassword);
         if(optionalHMemberEntity.isPresent()){
+            request.getSession().setAttribute("logintype","doctor");
+            request.getSession().setAttribute("email",optionalHMemberEntity.get().getHmemail());
             return optionalHMemberEntity.get().toDto();
         }
         return null;
