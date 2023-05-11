@@ -42,8 +42,7 @@ export default function Index(props) {
                 <Route path="/hlogin" element={<Hlogin />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/chattinglist" element={<ChattingList />} />
-                <Route path="/chat/:chatRoomId" element={<Chat />} />
-
+                <Route path="/chatting/:chatRoomId" element={<Chat />} />
                 <Route path="/hospital/hospitallist" element={<HospitalList />} />
                 <Route path="/simritest/info" element={<SimriTest />} />
 

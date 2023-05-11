@@ -18,8 +18,21 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 export default function Header(props) {
+
+    console.log(sessionStorage)
+
+
+    if(sessionStorage.length<=0){
+        console.log(sessionStorage)
+        console.log('세션스토리지 비어있음')
+        sessionStorage.setItem('email', null);
+        sessionStorage.setItem('loginType', null);
+    }
+
     const logOut = () => {
         sessionStorage.setItem('email', null);
+        sessionStorage.setItem('loginType', null);
+        axios.get("/member/logout");
         window.location.href = '/';
     };
 
