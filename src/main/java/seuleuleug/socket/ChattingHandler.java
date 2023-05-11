@@ -21,16 +21,16 @@ public class ChattingHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("session : " + session);
-        String chatRoomId = (String)session.getAttributes().get("chatRoomId");
+        String uri = session.getUri().toString();
+        String chatRoomId = uri.substring(uri.lastIndexOf('=') + 1);
         log.info("chatRoomId : " + chatRoomId);
         sessionsByChatRoom.computeIfAbsent(chatRoomId, k -> new ArrayList<>()).add(session);
     }
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        log.info("session : " + session);
-        String chatRoomId = "123";
+        String uri = session.getUri().toString();
+        String chatRoomId = uri.substring(uri.lastIndexOf('=') + 1);
         List<WebSocketSession> sessions = sessionsByChatRoom.get(chatRoomId);
         if (sessions != null) {
             for (WebSocketSession sess: sessions) {
@@ -48,7 +48,8 @@ public class ChattingHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        String chatRoomId = (String) session.getAttributes().get("chatRoomId");
+        String uri = session.getUri().toString();
+        String chatRoomId = uri.substring(uri.lastIndexOf('=') + 1);
         List<WebSocketSession> sessions = sessionsByChatRoom.getOrDefault(chatRoomId, new ArrayList<>());
         sessions.remove(session);
     }
