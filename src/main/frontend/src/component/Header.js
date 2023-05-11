@@ -40,25 +40,25 @@ export default function Header(props) {
     const [state, setState] = React.useState({ left: false });
     const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
+        return;
     }
     setState({ ...state, [anchor]: open });
     };
 
     const list = (anchor) => (
         < Box
-          sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-          role="presentation"
-          onClick={toggleDrawer(anchor, false)}
-          onKeyDown={toggleDrawer(anchor, false)}
+            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+            role="presentation"
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
         >
-          <List>
-              <ListItem key='HOME' disablePadding>
+        <List>
+            <ListItem key='HOME' disablePadding>
                 <ListItemButton href='/'>
-                  <ListItemIcon>
+                    <ListItemIcon>
                     <HomeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary='HOME' />
+                    </ListItemIcon>
+                    <ListItemText primary='HOME' />
                 </ListItemButton>
               </ListItem>
           </List>
