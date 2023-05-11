@@ -3,6 +3,7 @@ package seuleuleug.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import seuleuleug.domain.challenges.FileDto;
 
@@ -19,7 +20,7 @@ import java.util.UUID;
 public class FileService {
 
     // * 첨부파일이 저장 될 경로 [ 1. 배포 전 2.배포 후 ]
-    String path = "C:\\java\\";
+    String path = "C:\\Users\\504\\Desktop\\seuleuleug\\build\\resources\\main\\static\\static\\media\\";
 
     public FileDto fileupload(MultipartFile multipartFile ){
         log.info("File upload : " + multipartFile);
@@ -29,14 +30,19 @@ public class FileService {
         log.info("File upload : " + multipartFile.getSize() );              // 99 995 바이트
         // 1. 첨부파일 존재하는지 확인
         if( !multipartFile.getOriginalFilename().equals("") ){ // 첨부파일이 존재하면
-            // * 만약에 다른 이미지인데 파일이 동일하면 중복발생[ 식별 불가 ] : UUID + 파일명
-            String fileName =
+            String fileName = "";
+            try {
+                // * 만약에 다른 이미지인데 파일이 동일하면 중복발생[ 식별 불가 ] : UUID + 파일명
+            fileName =
                     UUID.randomUUID().toString() +"_"+
                             multipartFile.getOriginalFilename().replaceAll("_","-");
+            byte[] bytes = multipartFile.getBytes();
             // 2.  경로 + UUID파일명  조합해서 file 클래스의 객체 생성 [ 왜?? 파일?? transferTo ]
             File file = new File( path + fileName );
+
             // 3. 업로드 // multipartFile.transferTo( 저장할 File 클래스의 객체 );
-            try { multipartFile.transferTo(file);
+            //FileCopyUtils.copy(bytes, file);
+            multipartFile.transferTo(file);
             }catch ( Exception e ) { log.info("file upload fail : " + e ); }
             // 4. 반환
             return FileDto.builder()

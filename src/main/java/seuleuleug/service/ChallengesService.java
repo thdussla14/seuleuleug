@@ -2,17 +2,19 @@ package seuleuleug.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.multipart.MultipartFile;
 import seuleuleug.domain.challenges.*;
+import seuleuleug.domain.hospital.PageDto;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -25,10 +27,28 @@ public class ChallengesService {
     FileService fileService;
 
     @Transactional
-    public List<ChallengesDto> get(){
-        List<ChallengesEntity> challengesEntityList = challengesEntityRepository.findAll();
-        List<ChallengesDto> challengesDtoList = challengesEntityList.stream().map(o->o.todto()).collect(Collectors.toList());
-        return challengesDtoList;
+    public PageDto get(PageDto pageDto){
+        Pageable pageable = PageRequest.of(pageDto.getPage()-1,6, Sort.by(Sort.Direction.DESC,"chno"));
+
+        Page<ChallengesEntity> entityPage = challengesEntityRepository.findAll( pageable );
+
+        List<ChallengesDto> challengesDtoList = new ArrayList<>();
+        entityPage.forEach((b)->{
+            List<FileDto> list = new ArrayList<>();
+            b.getChallengesImgEntitiy().forEach((r)->{
+                list.add( r.toDto() );
+            });
+
+            ChallengesDto dto = b.todto();
+            dto.setChfiles(list);
+            challengesDtoList.add(dto);
+
+        });
+        pageDto.setChallengesDtoList(challengesDtoList);
+        pageDto.setTotalPage(entityPage.getTotalPages());
+        pageDto.setTotalCount(entityPage.getTotalElements());
+        log.info("Challenges"+pageDto);
+        return pageDto;
     }
 
     @Transactional

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import seuleuleug.domain.challenges.ChallengesDto;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public class PageDto {
     private String key; // 검색할 필드명
     private String keyword; //
     private List<HospitalDto> hospitalDtoList; // 병원리스트dto
+    private List<ChallengesDto> challengesDtoList;
 }
