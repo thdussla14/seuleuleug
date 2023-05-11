@@ -22,4 +22,11 @@ public class ChallengesImgEntity {
     @JoinColumn(name = "chno")
     @ToString.Exclude
     private ChallengesEntity challengesEntity;
+
+    public FileDto toDto (){
+        return FileDto.builder()
+                .uuidFile(uuidFile)
+                .originalFilename(originalFilename)
+                .build();
+    }
 }

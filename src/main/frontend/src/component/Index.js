@@ -21,7 +21,7 @@ import GovernmentInfo from './info/GovernmentInfo';
 import ChallengeWrite from './challenge/ChallengeWrite';
 import Challenge from './challenge/Challenge';
 import SimriTest from './info/SimriTest';
-
+import ChallengeDetail from './challenge/ChallengeDetail.js'
 
 export default function Index(props) {
     return (<>
@@ -50,6 +50,7 @@ export default function Index(props) {
                 <Route path="/government/info" element={<GovernmentInfo />} />
                 <Route path="/challenge/challengewrite" element={<ChallengeWrite />} />
                 <Route path="/challenge/challenge" element={<Challenge />} />
+                <Route path="/challenge/challengedetail" element={<ChallengeDetail />} />
             </Routes>
         </BrowserRouter>
     </>)

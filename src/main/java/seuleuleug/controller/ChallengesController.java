@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import seuleuleug.domain.challenges.ChallengesDto;
+import seuleuleug.domain.hospital.PageDto;
 import seuleuleug.service.ChallengesService;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class ChallengesController {
     ChallengesService challengesService;
 
     @GetMapping("")
-    public List<ChallengesDto> get(){
-        return challengesService.get();
+    public PageDto get(PageDto pageDto){
+        return challengesService.get(pageDto);
     }
 
     @PostMapping("")

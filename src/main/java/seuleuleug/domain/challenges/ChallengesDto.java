@@ -20,6 +20,7 @@ public class ChallengesDto {
     private String udate;
 
     private List<MultipartFile> chimg ;
+    private List<FileDto> chfiles ;
 
     // toEntity
     public ChallengesEntity toEntity() {
