@@ -8,15 +8,23 @@ import CheckPasswordModal from './CheckPasswordModal';
 export default function BoardList(props) {
 
     console.log('BoardList')
+    // 0. 입력한 이메일 파라미터값으로 받기
     const [ searchParams , setSearchParams ]  = useSearchParams();
+    // 1. 해당 이메일로 작성된 게시글 목록 출력
     const [ items , setItems ] = useState([]);
-
     useEffect(()=>{
          axios.get('/board/alllist')
              .then(  (r) => { console.log(r); setItems(r.data);})
              .catch( (e) => { console.log(e);})
     }, [])
-
+    // 2. 게시글 선택 이벤트 -> 게시글번호 파라미터값으로 가지고 상세보기 페이지로 전환
+    const Handler = (e) => {
+        console.log(e.target.value)
+        console.log(e.target);
+        console.log(e.target.text);
+        window.location.href = "/board/hboard?bno="+e.target.value
+    }
+    // css
     const Item = styled(Paper)(({ theme }) => ({
       backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       ...theme.typography.body2,
@@ -24,13 +32,6 @@ export default function BoardList(props) {
       textAlign: 'center',
       color: theme.palette.text.secondary,
     }));
-
-    const Handler = (e) => {
-        console.log(e.target.value)
-        console.log(e.target);
-        console.log(e.target.text);
-        window.location.href = "/board/hboard?bno="+e.target.value
-    }
 
     return (<>
        <Container>

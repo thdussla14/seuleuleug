@@ -23,7 +23,12 @@ public class BoardController {
         log.info("cname"+categoryDto);
         return  boardService.writeCategory(categoryDto);
     }
-
+    // 카테고리 삭제
+    @DeleteMapping("/category")
+    public boolean deleteCategory(@RequestParam int cno) {
+        log.info("cno"+cno);
+        return  boardService.deleteCategory(cno);
+    }
     //  카테고리 출력 [ 반환 : { cno:cname , cno:cname }
     @GetMapping("/category/list")
     public List<CategoryDto> getCategoryList() {

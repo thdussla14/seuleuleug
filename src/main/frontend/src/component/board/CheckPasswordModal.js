@@ -9,18 +9,21 @@ import Modal from '@mui/material/Modal';
 
 export default function CheckPasswordModal(props) {
 
+  // 모달 이벤트
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // 선택된 게시물 정보 전달받기
   const item = props.item
-
+  // 입력된 비밀번호와 게시물 비밀번호 비교
   const checkPassword = (e) =>{
      const bpassword = document.querySelector('#bpassword').value
      console.log(bpassword)
      if(bpassword === item.bpassword){window.location.href="/board/myboard?bno="+item.bno}
      else{alert("비밀번호가 일치하지 않습니다."); window.location.href="/"}
   }
+  // css
   const style = {
       position: 'absolute',
       top: '50%',
@@ -32,6 +35,7 @@ export default function CheckPasswordModal(props) {
       boxShadow: 24,
       p: 4,
   };
+
   return (
     <div>
       <Button onClick={handleOpen}>Open</Button>

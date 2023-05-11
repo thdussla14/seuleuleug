@@ -4,6 +4,7 @@ import logo from '../../logo.svg';  // img 호출
 
 export default function Comment(props){
 
+    // 답변 레코드 하나씩 전달받기
     const comment = props.comment
 
     return (

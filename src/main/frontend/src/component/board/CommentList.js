@@ -4,28 +4,25 @@ import axios from 'axios'
 
 export default function CommentList(props){
 
-    const [ item , setItem ] = useState([]);
+   const [ item , setItem ] = useState([]);
 
-/*    let r =[
-        { name:"유재석" ,comment:"봄"   },
-        { name:"민경훈" ,comment:"사랑" },
-        { name:"서장훈" ,comment:"벚꽃" },
-        { name:"강호동" ,comment:"말고 ^▼^ " },
-    ]*/
-
+   // 해당 게시물에 연결된 답변 목록 가져오기
    useEffect(()=>{
         axios.get('/board/getcomment', { params : { bno : props.bno}})
-            .then(  r => { console.log(r); setItem(r.data) ;})
+            .then(  r => { console.log(r);
+                    if( r == null ){ setItem('null');}
+                    else{setItem(r.data) ;}}
+            )
             .catch( e => { console.log(e);})
     }, [])
-
+    // 답변 하나씩 Comment 컴포넌트로 보내서 내용물 출력
     return (
-        <div>
-            {
-                item.map((c)=>{
-                    return( <Comment comment={c} />)
-                })
-            }
-        </div>
+            <div>
+                    {
+                        item.map((c)=>{
+                            return( <Comment comment={c} />)
+                        })
+                    }
+            </div>
     )
 }

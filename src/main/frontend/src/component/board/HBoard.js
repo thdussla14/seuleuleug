@@ -12,9 +12,10 @@ import Comwrite from './Comwrite';
 export default function MyBoard(props) {
 
     console.log('HBoard')
+    // 선택한 게시물 번호 파라미터방법으로 전달받기
     const [ searchParams , setSearchParams ]  = useSearchParams();
+    // 해당 게시물 정보 가져오기
     const [ item , setItem ] = useState({});
-
     useEffect(()=>{
          console.log(searchParams)
          console.log(searchParams.get("bno"))

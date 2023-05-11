@@ -7,7 +7,7 @@ import styles from '../../css/main.css';
 import CategoryList from './CategoryList';
 
 export default function Write(props) {
-    // 3. 카테고리 변경
+    // 카테고리 변경
     let [ cno, setCno ] = useState(0);
     const categoryChange = (cno) => {
         console.log(cno)
@@ -33,7 +33,7 @@ export default function Write(props) {
                  }
             )
     }
-
+    // 취소 버튼 클릭시 Main으로 전환
     const back = () => {
         window.location.href="/"
     }

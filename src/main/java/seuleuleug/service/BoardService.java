@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import seuleuleug.domain.board.*;
+import seuleuleug.domain.fortune.WordEntity;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -29,7 +30,15 @@ public class BoardService {
         categoryEntityRepository.save(categoryDto.toCategoryEntity());
         return false;
     }
-
+    // 카테고리 삭제
+    public boolean deleteCategory(int cno) {
+        Optional<CategoryEntity> optionalCategoryEntity = categoryEntityRepository.findById(cno);
+        if(optionalCategoryEntity.isPresent()){
+            categoryEntityRepository.delete(optionalCategoryEntity.get());
+            return true;
+        }
+        return false;
+    }
     // 모든 카테고리 출력
     public List<CategoryDto> getCategoryList() {
         List<CategoryEntity> categoryEntityList =  categoryEntityRepository.findAll();

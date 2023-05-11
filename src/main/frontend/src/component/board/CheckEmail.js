@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 
 export default function CheckEmail(props) {
 
+    // 입력받은 이메일 값으로 해당 게시글 목록 찾기
     const checkEmail = (e) =>{
         const bemail = document.querySelector('#bemail').value
         console.log(bemail)
