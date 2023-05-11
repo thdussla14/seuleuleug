@@ -23,6 +23,17 @@ export default function MyBoard(props) {
              .then(  r => { console.log(r); setItem(r.data)})
              .catch( e => { console.log(e);})
      }, [])
+    // 해당 게시물 삭제
+    const deletemy = ( ) => {
+         axios.get('/board',{ params : { bno : searchParams.get("bno")}})
+             .then(  r => { console.log(r);
+                        if(r.data === true){
+                            alert('해당 고민글이 삭제되었습니다.'); window.location.href="/"
+                        }
+                        else{alert('삭제 실패하였습니다.')}
+                    }
+             )
+    }
 
     return (<>
         <Card sx={{ minWidth: 275 }}>
@@ -38,7 +49,7 @@ export default function MyBoard(props) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small"> 삭제 </Button>
+            <Button size="small" onClick={deletemy}> 삭제 </Button>
           </CardActions>
         </Card>
         <div>

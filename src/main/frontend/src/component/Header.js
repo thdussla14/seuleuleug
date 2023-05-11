@@ -66,17 +66,15 @@ export default function Header(props) {
           <List>
             {[{"name":'CHAT',"link":'/chattinglist'},{"name":'HOSPITAL',"link":'/hospital/hospitallist'},
             {"name":'GOVERMENT',"link":'/government/info'},{"name":'CHALLENGE',"link":'/challenge/challenge'},
-            {"name":'HEART',"link":'/simritest/info'},
-            {"name":'LIST',"link":'/board/boardlist'}].map((text, index) => (
+            {"name":'HEART',"link":'/simritest/info'}].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton href={ text.link }>
                   <ListItemIcon>
                     {index == 0 ? <ChatIcon />           :
                      index == 1 ? <LocalHospitalIcon />  :
                      index == 2 ? <AccountBalanceIcon /> :
-                     index == 3 ? <MilitaryTechIcon />   :
-                     index == 4 ? <VolunteerActivismIcon />
-                     : <DescriptionIcon />}
+                     index == 3 ? <MilitaryTechIcon />
+                     : <VolunteerActivismIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text.name} />
                 </ListItemButton>
@@ -88,15 +86,14 @@ export default function Header(props) {
               <Divider />
                 <List>
                   {[{"name":'LOGIN',"link":'/login'},{"name":'SIGNUP',"link":'/signup'},
-                    {"name":'HLOGIN',"link":'/hlogin'},{"name":'HSIGNUP',"link":'/hsignup'},
+                    {"name":'LIST',"link":'/board/boardlist'},
                     {"name":'ADMIN',"link":'/admin/dashboard'}].map((text, index) => (
                     <ListItem key={text} disablePadding>
                       <ListItemButton href={ text.link }>
                         <ListItemIcon>
                           { index == 0 ? <LoginIcon />      :
                             index == 1 ? <HowToRegIcon />   :
-                            index == 2 ? <LoginIcon />      :
-                            index == 3 ? <HowToRegIcon />
+                            index == 2 ? <DescriptionIcon />
                           : <AdminPanelSettingsIcon />}
                         </ListItemIcon>
                         <ListItemText primary={text.name} />
@@ -139,7 +136,7 @@ export default function Header(props) {
 
     return (
     <>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 , marginBottom:'20px'}}>
           <AppBar position="static" style={{ backgroundColor: "#DCBE70" }}>
             <Toolbar>
               <React.Fragment key='left' >
@@ -160,7 +157,7 @@ export default function Header(props) {
                   {list('left')}
                 </Drawer>
                 </React.Fragment>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" component="a" sx={{ flexGrow: 1 }} href="/"  >
                 스르륵
               </Typography>
             </Toolbar>

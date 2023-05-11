@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import { useSearchParams  } from 'react-router-dom';
 import axios from 'axios'
+import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -24,23 +25,25 @@ export default function MyBoard(props) {
              .catch( e => { console.log(e);})
      }, [])
 
-    return (<>
-        <Card sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              {item.cname}
-            </Typography>
-            <Typography variant="h5" component="div">
-              {item.btitle}
-            </Typography>
-            <Typography variant="body2" style={{height:'200px'}}>
-              {item.bcontent}
-            </Typography>
-          </CardContent>
-          <CardActions>
-          </CardActions>
-        </Card>
-        <Comwrite bno={item.bno}/>
-    </>)
+    return (
+        <Container>
+            <Card sx={{ minWidth: 275 }}>
+              <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                  {item.cname}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {item.btitle}
+                </Typography>
+                <Typography variant="body2" style={{height:'200px'}}>
+                  {item.bcontent}
+                </Typography>
+              </CardContent>
+              <CardActions>
+              </CardActions>
+            </Card>
+            <Comwrite bno={item.bno}/>
+        </Container>
+    )
 
 }

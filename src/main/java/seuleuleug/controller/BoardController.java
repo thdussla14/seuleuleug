@@ -65,6 +65,11 @@ public class BoardController {
         log.info("detail"+ bno);
         return boardService.getBoard(bno);
     }
+    @DeleteMapping("")
+    public boolean deletemy(@RequestParam int bno){
+        log.info("deletemy"+ bno);
+        return boardService.deletemy(bno);
+    }
     // 게시물 답변 출력
     @GetMapping("/getcomment")
     public List<CommentDto> getCommentList(@RequestParam int bno){

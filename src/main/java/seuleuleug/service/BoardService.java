@@ -105,6 +105,16 @@ public class BoardService {
         }
         return null;
     }
+    //게시물 삭제
+    public boolean deletemy(int bno){
+        log.info("deletemy service"+ bno);
+        Optional<BoardEntity> optionalBoardEntity = boardEntityRepository.findById(bno);
+        if(optionalBoardEntity.isPresent()){
+            boardEntityRepository.delete(optionalBoardEntity.get());
+            return true;
+        }
+        return false;
+    }
     // 게시물 답변 출력
     public List<CommentDto> getCommentList(int bno){
         log.info("getCommentList service"+ bno);

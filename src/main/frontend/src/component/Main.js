@@ -16,7 +16,7 @@ export default function Main(props) {
                     <h3> Fortune Cookie </h3>
                     <Fortune />
                 </div>
-                <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" >
+                <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" height="200px">
                   <Avatar alt="Remy Sharp"      src={monkey} />
                   <Avatar alt="Travis Howard"   src={monkey}  />
                   <Avatar alt="Cindy Baker"     src={monkey}  />

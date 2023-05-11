@@ -13,7 +13,7 @@ export default function Fortune(props) {
   return (
     <div>
        <div>
-            <img style={{ width:'300px', marginTop:'30px' }} src={fortunecookie}/>
+            <img style={{ width:'100%', marginTop:'30px' }} src={fortunecookie}/>
        </div>
        <div className="cookie-message"></div>
     </div>
