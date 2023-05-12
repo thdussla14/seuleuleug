@@ -8,6 +8,8 @@ export default function Hlogin(props){
     let inputHmemail = useRef(null);
     let inputHpassword = useRef(null);
 
+    const socketRef = props.socketRef;
+
     const hlogin = () => {
        let hmemail = inputHmemail.current.value;
        let hpassword = inputHpassword.current.value;
@@ -18,6 +20,11 @@ export default function Hlogin(props){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', hmemail);
                 sessionStorage.setItem('loginType', "doctor");
+                socketRef.current.send(JSON.stringify({
+                    type : "login",
+                    who : "doctor",
+                    userEmail : r.data.hmemail
+                }));
                 window.location.href="/";
             }else{
                 alert('로그인 실패');

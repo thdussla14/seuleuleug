@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {BrowserRouter , Routes , Route } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
@@ -24,6 +24,28 @@ import SimriTest from './info/SimriTest';
 import ChallengeDetail from './challenge/ChallengeDetail.js'
 
 export default function Index(props) {
+
+    const socketRef = useRef(null);
+    useEffect(()=>{
+        if (!socketRef.current) {
+            socketRef.current = new WebSocket("ws://localhost:8080/intoHomePage");
+            socketRef.current.onopen = (e) => {
+              console.log('로그인 서버 연결');
+            };
+            socketRef.current.onerror = (e) => {
+              console.log('로그인 서버 에러');
+            };
+            socketRef.current.onmessage = (e) => {
+              console.log('로그인 서버에서 메세지 전달');
+              console.log(e.data);
+            };
+          }
+      return () => {
+        // Cleanup code when the component is unmounted
+        socketRef.current.onclose = null;
+      };
+    },[])
+
     return (<>
         <BrowserRouter>
             <Header />
@@ -39,8 +61,8 @@ export default function Index(props) {
                 <Route path="/board/comwrite"    element={<Comwrite />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/hsignup" element={<HsignUp />} />
-                <Route path="/hlogin" element={<Hlogin />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/hlogin" element={<Hlogin socketRef={socketRef} />} />
+                <Route path="/login" element={<Login socketRef={socketRef} />} />
                 <Route path="/chattinglist" element={<ChattingList />} />
                 <Route path="/chatting/:chatRoomId" element={<Chat />} />
                 <Route path="/hospital/hospitallist" element={<HospitalList />} />

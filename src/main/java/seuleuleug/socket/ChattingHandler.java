@@ -20,7 +20,7 @@ public class ChattingHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         log.info("서버에 접속");
-        //log.info("email: " + email);
+        log.info("session1111: " + session);
     }
 
     @Override
