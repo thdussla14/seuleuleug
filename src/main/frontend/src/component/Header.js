@@ -86,14 +86,12 @@ export default function Header(props) {
               <Divider />
                 <List>
                   {[{"name":'LOGIN',"link":'/login'},{"name":'SIGNUP',"link":'/signup'},
-                    {"name":'LIST',"link":'/board/boardlist'},
                     {"name":'ADMIN',"link":'/admin/dashboard'}].map((text, index) => (
                     <ListItem key={text} disablePadding>
                       <ListItemButton href={ text.link }>
                         <ListItemIcon>
                           { index == 0 ? <LoginIcon />      :
-                            index == 1 ? <HowToRegIcon />   :
-                            index == 2 ? <DescriptionIcon />
+                            index == 1 ? <HowToRegIcon />
                           : <AdminPanelSettingsIcon />}
                         </ListItemIcon>
                         <ListItemText primary={text.name} />
@@ -106,7 +104,7 @@ export default function Header(props) {
               <>
                 <Divider />
                 <List>
-                  {[{"name":'LOGOUT',"link":'/'},{"name":'ADMIN',"link":'/admin/dashboard'}].map((text, index) => (
+                  {[{"name":'LOGOUT',"link":'/'},{"name":'LIST',"link":'/board/boardlist'},{"name":'ADMIN',"link":'/admin/dashboard'}].map((text, index) => (
                     <ListItem key={text} disablePadding>
                     { index == 0 ?
                         (<>
@@ -120,7 +118,8 @@ export default function Header(props) {
                       : (<>
                           <ListItemButton href={ text.link } >
                              <ListItemIcon>
-                                <AdminPanelSettingsIcon />
+                               { index == 1 ? <DescriptionIcon />   :
+                                <AdminPanelSettingsIcon /> }
                              </ListItemIcon>
                              <ListItemText primary={text.name} />
                           </ListItemButton>

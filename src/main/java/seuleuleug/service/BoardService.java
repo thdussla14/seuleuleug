@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import seuleuleug.domain.board.*;
 import seuleuleug.domain.fortune.WordEntity;
+import seuleuleug.domain.hospital.HMemberEntity;
+import seuleuleug.domain.hospital.HMemberRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class BoardService {
     BoardEntityRepository boardEntityRepository;
     @Autowired
     CommentEntityRepository commentEntityRepository;
+    @Autowired
+    HMemberRepository hMemberRepository;
 
     // 카테고리 등록
     public boolean writeCategory(CategoryDto categoryDto){
@@ -115,6 +119,25 @@ public class BoardService {
         }
         return false;
     }
+    // 답글 작성
+    public boolean writecomment(@RequestBody CommentDto commentDto){
+        // 게시물 정보
+        Optional<BoardEntity> optionalBoardEntity = boardEntityRepository.findById(commentDto.getBno());
+            if(optionalBoardEntity.isPresent()){
+                // 로그인 정보
+                Optional<HMemberEntity> optionalHMemberEntity = hMemberRepository.findById(commentDto.getHmno());
+                if(optionalHMemberEntity.isPresent()){
+                   CommentEntity entity =  commentDto.toCommentEntity() ;
+                    entity.setBoardEntity(optionalBoardEntity.get());
+                    entity.setHMemberEntity(optionalHMemberEntity.get());
+                    commentEntityRepository.save(entity);
+                    optionalBoardEntity.get().getCommentEntityList().add(entity);
+                    optionalHMemberEntity.get().getCommentEntityList().add(entity);
+                   return true;
+                }
+            }
+        return false;
+    }
     // 게시물 답변 출력
     public List<CommentDto> getCommentList(int bno){
         log.info("getCommentList service"+ bno);
@@ -128,11 +151,5 @@ public class BoardService {
         }
         return null;
     }
-    // 답글 작성
-    public boolean writecomment(@RequestBody CommentDto commentDto){
-        // 작성자 정보 로그인 정보
-        commentDto.setMno(1);
-        commentEntityRepository.save(commentDto.toCommentEntity());
-        return true;
-    }
+
 }

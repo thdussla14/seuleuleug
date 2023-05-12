@@ -17,6 +17,7 @@ export default function MyBoard(props) {
     const [ searchParams , setSearchParams ]  = useSearchParams();
     // 해당 게시물 정보 가져오기
     const [ item , setItem ] = useState({});
+
     useEffect(()=>{
          console.log(searchParams)
          console.log(searchParams.get("bno"))

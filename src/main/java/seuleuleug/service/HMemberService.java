@@ -69,4 +69,13 @@ public class HMemberService {
         return null;
     }
 
+    public HMemberDto get(String hmemail){
+        log.info("get service: " + hmemail );
+        Optional<HMemberEntity> optionalHMemberEntity = hMemberRepository.findByHmemail(hmemail);
+        if(optionalHMemberEntity.isPresent()){
+            return optionalHMemberEntity.get().toDto();
+        }
+        return null;
+    }
+
 }

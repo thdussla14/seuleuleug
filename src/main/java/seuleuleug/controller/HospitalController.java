@@ -26,4 +26,10 @@ public class HospitalController {
         PageDto result = hospitalService.get(pageDto);
         return result;
     }
+    // 제휴병원 리스트 출력
+    @GetMapping("/alllist")
+    public List<HospitalDto> joinList ( ) {
+        return hospitalService.joinList();
+    }
+    
 }

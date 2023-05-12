@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "board")
@@ -34,6 +36,11 @@ public class BoardEntity {
     @JoinColumn(name = "cno") // fk 이름 => pk 필드명과 동일
     @ToString.Exclude //해당 필드는  @ToString 제외 필드 [ 단방향은 선택 ]
     private CategoryEntity categoryEntity;
+
+    // 댓글목록
+    @OneToMany(mappedBy = "boardEntity", cascade=CascadeType.ALL)
+    @Builder.Default
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     // 게시물 목록 출력용
     public BoardDto toBoardtitleDto() {

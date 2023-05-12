@@ -5,7 +5,7 @@ import styles from '../css/main.css';
 import Fortune from './board/Fortune';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import monkey from '../monkey.png';  // img 호출
+import doctor from '../doctor.png';  // img 호출
 
 export default function Main(props) {
 
@@ -16,10 +16,17 @@ export default function Main(props) {
                     <h3> Fortune Cookie </h3>
                     <Fortune />
                 </div>
-                <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" height="200px">
-                  <Avatar alt="Remy Sharp"      src={monkey} />
-                  <Avatar alt="Travis Howard"   src={monkey}  />
-                  <Avatar alt="Cindy Baker"     src={monkey}  />
+                <Stack direction="row" spacing={2}
+                    justifyContent="center"
+                    alignItems="center"
+                    height= "80px"
+                    borderRadius="20px"
+                    margin="50px 0px"
+                    backgroundColor="white"
+                >
+                  <Avatar alt="Remy Sharp"      src={doctor} />
+                  <Avatar alt="Travis Howard"   src={doctor}  />
+                  <Avatar alt="Cindy Baker"     src={doctor}  />
                 </Stack>
                 <div className="btnBox">
                     <div className="bwrite"> <a href="/board/write">        글쓰기   </a> </div>

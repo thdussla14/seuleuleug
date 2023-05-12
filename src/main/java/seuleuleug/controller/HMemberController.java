@@ -36,6 +36,9 @@ public class HMemberController {
         return hMemberService.hlogin(hmemail , hpassword);
     }
 
-
-
+    @GetMapping("/hcomment")
+    public HMemberDto get(@RequestParam("hmemail") String hmemail) {
+        log.info("hmemail : " + hmemail );
+        return hMemberService.get(hmemail);
+    }
 }

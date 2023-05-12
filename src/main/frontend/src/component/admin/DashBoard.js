@@ -43,7 +43,7 @@ export default function DashBoard(props) {
 
     return(<Container>
             <h3>  관리자 페이지 </h3>
-            <Box sx={{ width: '100%', typography: 'body1' }}>
+            <Box sx={{ width: '100%', typography: 'body1'}}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -53,21 +53,21 @@ export default function DashBoard(props) {
                     <Tab label="챌린지"     value="4" />
                   </TabList>
                 </Box>
-                <TabPanel value="1">
+                <TabPanel value="1" sx={{padding: '0px', marginTop : '20px'}}>
                     <TextField id="cname" label="카테고리명" variant="outlined" className ="cname"/>
                     <Button variant="contained" onClick={setCategory}
                         style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 카테고리 등록 </Button> <br/>
 
                     <CategoryTable />
                 </TabPanel>
-                <TabPanel value="2">
+                <TabPanel value="2" sx={{padding: '0px', marginTop : '20px'}}>
                     <TextField id="wcontent" label="응원글귀" variant="outlined" className ="wcontent"/>
                     <Button variant="contained" onClick={setWord}
                         style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 응원글귀 등록 </Button> <br/>
 
                     <WordTable />
                 </TabPanel>
-                <TabPanel value="3">
+                <TabPanel value="3" sx={{padding: '0px', marginTop : '20px'}}>
                      <Button variant="contained" onClick={setWord}
                                             style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 제휴병원 등록 </Button>
                      <Button variant="contained" onClick={setWord}
@@ -75,7 +75,7 @@ export default function DashBoard(props) {
                     <h3> 제휴병원 목록 </h3>
                     <h3> 제휴의사 목록 </h3>
                 </TabPanel>
-                <TabPanel value="4">
+                <TabPanel value="4" sx={{padding: '0px', marginTop : '20px'}}>
                      <Button variant="contained" onClick={setWord}
                                             style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 챌린지 등록 </Button> <br/>
                     <h3> 챌린지 목록 </h3>

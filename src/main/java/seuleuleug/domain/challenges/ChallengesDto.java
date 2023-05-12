@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ChallengesDto {
+
     private int chno;
     private String chname;
     private String chcontent;
@@ -20,7 +21,7 @@ public class ChallengesDto {
     private String udate;
 
     private List<MultipartFile> chimg ;
-    private List<FileDto> chfiles ;
+    private List<FileDto>       chfiles ;
 
     // toEntity
     public ChallengesEntity toEntity() {

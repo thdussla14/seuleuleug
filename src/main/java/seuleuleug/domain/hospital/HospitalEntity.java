@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "hospital")
 public class HospitalEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int hno;                                           // 병원 번호
@@ -19,7 +20,7 @@ public class HospitalEntity {
     @Column private String hnum;                               // 병원 전화번호
     @Column private String haddr;                              // 병원 주소
     @Column private String hurl;                               // 병원 홈페이지
-    @ColumnDefault("0") @Column private int halliance;    // 제휴 여부( 0 : 제휴x , 1 : 제휴o )
+    @ColumnDefault("0") @Column private int halliance;         // 제휴 여부( 0 : 제휴x , 1 : 제휴o )
 
     public HospitalDto toDto(){
         return HospitalDto.builder()
