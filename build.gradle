@@ -37,6 +37,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.15.3'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'         // websocket
     implementation 'org.json:json:20210307'
+    implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티
+
 }
 
 tasks.named('test') {

@@ -2,6 +2,7 @@ package seuleuleug.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import seuleuleug.domain.member.MemberDto;
 import seuleuleug.domain.member.MemberEntity;
@@ -24,6 +25,10 @@ public class MemberService {
     // 일반 회원 회원가입
     @Transactional
     public boolean signup(MemberDto memberDto){
+        // 비밀번호(=mphone) 암호화
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        memberDto.setMphone(passwordEncoder.encode(memberDto.getMphone()));
+        // 저장
         MemberEntity entity = memberEntityRepository.save(memberDto.toEntity());
         if(entity.getMno()>0){
             return true;
@@ -34,12 +39,13 @@ public class MemberService {
     @Transactional
     public MemberDto login(String memail, String mphone){
         log.info("login service memail: " + memail + " password: " + mphone);
-        Optional<MemberEntity> optionalMemberEntity= memberEntityRepository.findByMemailAndMphone(memail, mphone);
-        if(optionalMemberEntity.isPresent()){
-            MemberEntity memberEntity = optionalMemberEntity.get();
+        // 입력받은 이메일로 아이디 찾기
+        MemberEntity entity = memberEntityRepository.findByMemail(memail);
+        // 암호화 된 전화번호와 입력받은 전화번호 비교
+        if( new BCryptPasswordEncoder().matches( mphone , entity.getMphone())){
             request.getSession().setAttribute("logintype","normal");
-            request.getSession().setAttribute("email",memberEntity.getMemail());
-            return memberEntity.toDto();
+            request.getSession().setAttribute("email", entity.getMemail());
+            return entity.toDto();
         }
         return null;
     }
