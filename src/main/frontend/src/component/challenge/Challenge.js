@@ -7,14 +7,16 @@ import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import Pagination from '@mui/material/Pagination';
 
+// 상세보기로 이동
+function detail(e,no){
+    window.location.href = '/challenge/challengedetail?chno='+no
+}
+
+// mui 이용해서 목록 뽑기
 let data = [ ];
 
 interface MediaProps {
     loading?: boolean;
-}
-
-function detail(){
-    window.location.href = '/challenge/challengedetail'
 }
 
 function Media(props: MediaProps) {
@@ -23,7 +25,7 @@ function Media(props: MediaProps) {
     return (
         <Grid container wrap="wrap">
             {(loading ? Array.from(new Array(3)) : data).map((item, index) => (
-                <Box key={index} sx={{ width: "48%", marginRight: "1%", marginLeft: "1%", marginBottom:"0px" ,my: 5 }} onClick={detail} >
+                <Box key={index} sx={{ width: "48%", marginRight: "1%", marginLeft: "1%", marginBottom:"0px" ,my: 5 }} onClick={(e)=>detail(e,item.no)} >
                     {item ? (
                         <img
                             style={{ width: "100%", height: 118 }}
@@ -76,6 +78,7 @@ export default function Challenge(props) {
                                 channel: "오늘부터 시작",
                                 views: "참여인원",
                                 createdAt: i.cdate,
+                                no:i.chno,
                             }
                 data.push(datas);
             })

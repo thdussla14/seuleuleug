@@ -30,6 +30,12 @@ public class ChallengesEntity extends BaseTime {
     @ToString.Exclude @Builder.Default
     private List<ChallengesImgEntity> challengesImgEntitiy = new ArrayList<>();
 
+    // pk = 양방향 [ 해당 댓글 엔티티의 fk 필드와 매핑  ]
+    // 결과목록
+    @OneToMany(mappedBy = "challengesEntity")
+    @Builder.Default
+    private List<ChallengeResultsEntity> challengeResultsEntityList = new ArrayList<>();
+
     // toDto 출력용
     public ChallengesDto todto(){
         return ChallengesDto.builder()

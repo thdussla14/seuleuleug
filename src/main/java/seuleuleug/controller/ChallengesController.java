@@ -3,6 +3,8 @@ package seuleuleug.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import seuleuleug.domain.challenges.ChallengeResultsDto;
+import seuleuleug.domain.challenges.ChallengeResultsEntity;
 import seuleuleug.domain.challenges.ChallengesDto;
 import seuleuleug.domain.hospital.PageDto;
 import seuleuleug.service.ChallengesService;
@@ -36,4 +38,22 @@ public class ChallengesController {
     public boolean delete(int chno){
         return challengesService.delete(chno);
     }
+
+    // 관리자페이지에서 목록 뽑기
+    @GetMapping("admin")
+    public List<ChallengesDto> getList( ){return challengesService.getList();}
+
+    // 게시물 1개 보기
+    @GetMapping("detail")
+    public ChallengesDto getDetail( int chno ){return challengesService.getDetail(chno);}
+
+    // 챌린지 참여
+    @GetMapping("results")
+    public List<ChallengeResultsEntity> getResult(){return challengesService.getResult();}
+
+    @PostMapping("results")
+    public boolean postResult(ChallengeResultsDto challengeResultsDto){return challengesService.postResult(challengeResultsDto);}
+
+    @PutMapping("results")
+    public boolean putResult(int sno){return challengesService.putResult(sno);}
 }

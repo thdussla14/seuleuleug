@@ -10,6 +10,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import WordTable from './WordTable';
 import CategoryTable from './CategoryTable';
+import ChallengeTable from './ChallengeTable'
 
 export default function DashBoard(props) {
     // 탭 전환
@@ -39,6 +40,11 @@ export default function DashBoard(props) {
                     {console.log(r); alert('응원글귀 등록 성공했습니다.'); wcontent.value='';
                      window.location.reload();}
             })
+    }
+
+    //챌린지 등록
+    const setChallenge = () =>{
+        window.location.href = '/challenge/challengewrite'
     }
 
     return(<Container>
@@ -76,9 +82,9 @@ export default function DashBoard(props) {
                     <h3> 제휴의사 목록 </h3>
                 </TabPanel>
                 <TabPanel value="4">
-                     <Button variant="contained" onClick={setWord}
+                     <Button variant="contained" onClick={setChallenge}
                                             style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 챌린지 등록 </Button> <br/>
-                    <h3> 챌린지 목록 </h3>
+                    <ChallengeTable />
                 </TabPanel>
               </TabContext>
             </Box>

@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import seuleuleug.domain.challenges.*;
 import seuleuleug.domain.hospital.PageDto;
 
@@ -25,6 +24,8 @@ public class ChallengesService {
     ChallengesImgEntityRepositoty challengesImgEntityRepositoty;
     @Autowired
     FileService fileService;
+    @Autowired
+    ChallengeResultsEntityRepository challengeResultsEntityRepository;
 
     @Transactional
     public PageDto get(PageDto pageDto){
@@ -95,4 +96,73 @@ public class ChallengesService {
         entityOptional.ifPresent(o->challengesEntityRepository.delete(o));
         return true;
     }
+
+    @Transactional
+    public List<ChallengesDto> getList(){
+        List<ChallengesEntity> challengesEntityList = challengesEntityRepository.findAll();
+        List<ChallengesDto> challengesDtoList = new ArrayList<>();
+        challengesEntityList.forEach((b)->{
+            List<FileDto> list = new ArrayList<>();
+            b.getChallengesImgEntitiy().forEach((r)->{
+                list.add( r.toDto() );
+            });
+            ChallengesDto dto = b.todto();
+            dto.setChfiles(list);
+            challengesDtoList.add(dto);
+        });
+        log.info("Challenges"+challengesDtoList);
+        return challengesDtoList;
+    }
+
+    @Transactional
+    public ChallengesDto getDetail( int chno ){
+        Optional<ChallengesEntity> challengesEntity = challengesEntityRepository.findById(chno);
+
+        if(challengesEntity.isPresent()){
+            ChallengesEntity entity = challengesEntity.get();
+
+            List<FileDto> list = new ArrayList<>();
+            entity.getChallengesImgEntitiy().forEach((r)->{
+                list.add( r.toDto() );
+            });
+
+            ChallengesDto dto = entity.todto();
+            dto.setChfiles(list);
+            log.info("Challenges"+dto);
+            return dto;
+        }
+        return null;
+    }
+
+    // 챌린지 참여
+    @Transactional
+    public List<ChallengeResultsEntity> getResult(){
+        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findAll();
+
+
+        return null;
+    }
+
+    @Transactional
+    public boolean postResult(ChallengeResultsDto challengeResultsDto){
+        if( !challengeResultsDto.getSimg().isEmpty() ){
+            // 업로드된 파일 결과[리턴]
+            FileDto fileDto = fileService.fileupload( challengeResultsDto.getSimg() );
+            // DB 저장
+            ChallengeResultsEntity challengeResultsEntity = challengeResultsEntityRepository.save(
+                    ChallengeResultsEntity.builder()
+                            .originalFilename(fileDto.getOriginalFilename())
+                            .uuidFile(fileDto.getUuidFile())
+                            .build()
+            );
+        }
+        return true;
+    }
+
+    @Transactional
+    public boolean putResult(int sno){
+
+        return false;
+    }
+
 }

@@ -14,13 +14,14 @@ export default function ChallengeWrite(props) {
         axios.post( '/challenge' , writeFormData ).then( r=>{
             if( r.data == true ){
                 alert('등록성공');
+                window.location.href = '/admin/dashboard'
             }
             else{ alert('등록실패'); }
         })
     }
 
     return(<Container>
-        <h3>  게시글 작성 페이지 </h3>
+        <h3>  챌린지 작성 </h3>
         <form ref={ writeForm }>
             <TextField fullWidth name="chname"    id="chname"     label="제목"      variant="standard" /> <br />
             <TextField fullWidth style={{marginTop:'20px'}}
