@@ -23,7 +23,6 @@ public class ChallengeResultsDto {
 
     public ChallengeResultsEntity toEntity(){
         return ChallengeResultsEntity.builder()
-                .simg(this.simg.toString())
                 .uuidFile(this.uuidFile)
                 .originalFilename(this.originalFilename)
                 .build();
