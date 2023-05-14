@@ -2,13 +2,14 @@ import React from 'react';
 import {useEffect, useState, useRef, useContext} from 'react'
 import Container from '@mui/material/Container';
 import axios from 'axios';
+import { AppContext } from './LoginSocket';
 
 
 export default function Hlogin(props){
     let inputMemail = useRef(null);
     let inputMphone = useRef(null);
 
-    const socketRef = props.socketRef;
+    const socketRef = useContext(AppContext);
 
     const mlogin = () => {
        let memail = inputMemail.current.value;

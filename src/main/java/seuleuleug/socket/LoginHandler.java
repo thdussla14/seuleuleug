@@ -24,7 +24,7 @@ public class LoginHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("서버 접속");
+        log.info("into server");
         loginUserDtoList.add(LoginUserDto.builder()
                         .session(session)
                         .build());
@@ -32,7 +32,7 @@ public class LoginHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        log.info("메세지 송신 : " + message.getPayload());
+        log.info("get message : " + message.getPayload());
         JSONObject jsonMessage = new JSONObject(message.getPayload());
         String type = jsonMessage.getString("type");
         if("login".equals(type)) { // 로그인 한 경우
@@ -53,12 +53,12 @@ public class LoginHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        log.info("서버 에러");
+        log.info("server error");
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        log.info("서버 닫힘");
+        log.info("server closed");
         log.info("loginUserDtoList : " + loginUserDtoList);
         loginUserDtoList.removeIf(loginUserDto -> loginUserDto.getSession().equals(session));
         log.info("loginUserDtoList : " + loginUserDtoList);
