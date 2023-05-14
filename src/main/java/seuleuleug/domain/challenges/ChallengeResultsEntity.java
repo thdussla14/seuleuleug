@@ -27,7 +27,7 @@ public class ChallengeResultsEntity extends BaseTime {
     private String originalFilename;
 
     // 게시물fk
-    @ManyToOne@JoinColumn(name = "bno")@ToString.Exclude
+    @ManyToOne@JoinColumn(name = "chno")@ToString.Exclude
     private ChallengesEntity challengesEntity;
     // 작성자fk
     @ManyToOne@JoinColumn(name="mno")@ToString.Exclude

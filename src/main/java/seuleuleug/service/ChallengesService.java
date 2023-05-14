@@ -145,6 +145,18 @@ public class ChallengesService {
 
     @Transactional
     public boolean postResult(ChallengeResultsDto challengeResultsDto){
+        // 0. 로그인 했는지 회원정보 호출[ 댓글 작성자  ]
+        //Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //if( o.equals("anonymousUser")){ return false; }
+        //MemberDto memberDto = (MemberDto)o;
+        //MemberEntity memberEntity = memberEntityRepository.findById(  memberDto.getMno() ).get();
+
+        // 0. 댓글작성할 게시물 호출
+        Optional<ChallengesEntity> optionalChallengesEntity = challengesEntityRepository.findById(challengeResultsDto.getChno());
+        if( !optionalChallengesEntity.isPresent() ){ return false; }
+        ChallengesEntity challengesEntity = optionalChallengesEntity.get();
+
+        // 1. 챌린지 작성(이미지 저장)
         if( !challengeResultsDto.getSimg().isEmpty() ){
             // 업로드된 파일 결과[리턴]
             FileDto fileDto = fileService.fileupload( challengeResultsDto.getSimg() );
@@ -155,6 +167,14 @@ public class ChallengesService {
                             .uuidFile(fileDto.getUuidFile())
                             .build()
             );
+            if( challengeResultsEntity.getSno() < 1 ) { return  false; }
+
+            // 2. 댓글과 회원의 양방향 관계[ 댓글->회원 / 회원 -> 댓글 == 양방향  ,  댓글->회원 == 단방향  ]
+            //replyEntity.setMemberEntity(  memberEntity );
+            //memberEntity.getReplyEntityList().add( replyEntity );
+            // 3. 댓글과 게시물의 양방향 관계 [ 댓글->게시물 / 게시물->댓글 == 양방향 , 댓글->게시물 == 단방향 ]
+            challengeResultsEntity.setChallengesEntity(challengesEntity);
+            challengesEntity.getChallengeResultsEntityList().add(challengeResultsEntity);
         }
         return true;
     }
