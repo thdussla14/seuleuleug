@@ -21,6 +21,7 @@ public class ChallengesDto {
 
     private List<MultipartFile> chimg ;
     private List<FileDto> chfiles ;
+    private List<ChallengeResultsDto> challengeResultsDto;
 
     // toEntity
     public ChallengesEntity toEntity() {

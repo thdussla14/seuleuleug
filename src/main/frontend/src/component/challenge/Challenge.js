@@ -102,12 +102,12 @@ export default function Challenge(props) {
 
 
 
-    return (<>
+    return (<Container>
         <Box sx={{ overflow: 'hidden' }}>
             <Media />
         </Box>
         <div style={{display:'flex',justifyContent:'center',margin:'40px 0px'}}>
             <Pagination count={totalPage} color="primary" onChange={selectPage} />
         </div>
-    </>)
+    </Container>)
 }

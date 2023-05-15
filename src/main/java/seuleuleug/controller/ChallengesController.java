@@ -45,15 +45,15 @@ public class ChallengesController {
 
     // 게시물 1개 보기
     @GetMapping("detail")
-    public ChallengesDto getDetail( int chno ){return challengesService.getDetail(chno);}
+    public ChallengesDto getDetail(@RequestParam int chno ){return challengesService.getDetail(chno);}
 
     // 챌린지 참여
     @GetMapping("results")
-    public List<ChallengeResultsEntity> getResult(){return challengesService.getResult();}
+    public List<ChallengeResultsDto> getResult(@RequestParam int chno){log.info("chno"+chno); return challengesService.getResult(chno);}
 
     @PostMapping("results")
     public boolean postResult(ChallengeResultsDto challengeResultsDto){return challengesService.postResult(challengeResultsDto);}
 
     @PutMapping("results")
-    public boolean putResult(int sno){return challengesService.putResult(sno);}
+    public boolean putResult(@RequestBody ChallengeResultsDto challengeResultsDto){log.info("sno"+challengeResultsDto);return challengesService.putResult(challengeResultsDto);}
 }

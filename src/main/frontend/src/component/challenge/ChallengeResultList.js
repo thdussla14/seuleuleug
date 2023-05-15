@@ -2,36 +2,38 @@ import React, {useState,useEffect} from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
 import { DataGrid, GridColDef, GridValueGetterParams, GridRowSelectionModel } from '@mui/x-data-grid';
+import { useSearchParams  } from 'react-router-dom';
 
-export default function ChallengeTable(props) {
+
+export default function ChallengeResultList(props) {
 
     const columns: GridColDef[] = [
-        { field: 'chno',        headerName: '번호',           width: 50 ,type: 'number'},
-        { field: 'chname',      headerName: '챌린지이름',    width: 100},
-        { field: 'chcontent',      headerName: '챌린지내용',    width: 100},
+        { field: 'mno',        headerName: '회원번호',    width: 70 },
+        { field: 'chno',      headerName: '챌린지번호',    width: 100},
+        { field: 'cdate',      headerName: '등록시간',    width: 100},
         {
-            field: "Print",
-            renderCell: (cellValues) => {
-                return (
-                    <button
-                        variant="contained"
-                        color="primary"
-                        onClick={(event) => {
-                            handleClick(event, cellValues);
-                        }}
-                    >
-                        Print
-                    </button>
-                );
-            }
+            field: 'uuidFile',
+            headerName: '이미지',
+            width: 150,
+            editable: true,
+            renderCell: (params) => <img style={{width:'150px'}} src={"http://localhost:8080/static/media/"+params.value} />, // renderCell will render the component
+        },
+        {
+            field: 'sstate',
+            headerName: '상태',
+            width: 50,
+            editable: true,
+            renderCell: (params) => params.value==0 ? '미확인' : '확인',// renderCell will render the component
         },
     ]
+
+    const [ searchParams , setSearchParams ]  = useSearchParams();
 
     // 1. 상태변수
     const [ rows , setRows ] = useState ([]);
 
     // 2. 제품 호출 axios
-    const getChallenge = () => {axios.get('/challenge/admin')
+    const getChallenge = () => {axios.get('/challenge/results',{ params : searchParams })
         .then( r => {
             console.log(r);
             setRows(r.data)
@@ -43,33 +45,29 @@ export default function ChallengeTable(props) {
 
     const onDeleteHandler = () => {
         console.log("onDeleteHandler");
-        let msg = window.confirm(" 정말 삭제하시겠습니까? 복구가 불가능 합니다.")
-        if( msg == true ){ // 삭제 확인 선택시
+        let msg = window.confirm(" 정말 확인하시겠습니까? 복구가 불가능 합니다.")
+        if( msg == true ){ // 확인 선택시
             // 선택된 글귀 하나씩 서버에 전달
             rowSelectionModel.forEach( r => {
-                axios.delete("/challenge", {params : { chno : r }})
+                console.log(r)
+
+                axios.put("/challenge/results", { 'sno' : r , "sstate" : 1})
                     .then( (r)=>{getChallenge();})
             })
         }
     }
-    console.log(rows)
 
-    const handleClick = (event, cellValues) => {
-        console.log(cellValues)
-        window.location.href = '/challenge/challengeResultList?chno='+cellValues.id
-    }
-
-    return (<>
+    return (<Container>
         <div style={{marginTop:'30px'}}>
             <button type='button'
                 onClick ={ onDeleteHandler }
                 disabled={ rowSelectionModel.length == 0 ? true : false }
                 >
-                    선택 삭제
+                    확인완료
             </button>
-            <div style={{ height: 400, width: '100%' , backgroundColor:'white' }}>
-                <DataGrid
-                    getRowId = {(row) => row.chno}
+            <div style={{ height: 600, width: '100%' , backgroundColor:'white' }}>
+                <DataGrid rowHeight={100}
+                    getRowId = {(row) => row.sno}
                     rows={rows}
                     columns={columns}
                     initialState={{
@@ -85,6 +83,5 @@ export default function ChallengeTable(props) {
                 />
             </div>
         </div>
-    </>)
-
+    </Container>)
 }

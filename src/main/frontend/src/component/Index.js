@@ -22,7 +22,7 @@ import ChallengeWrite from './challenge/ChallengeWrite';
 import Challenge from './challenge/Challenge';
 import SimriTest from './info/SimriTest';
 import ChallengeDetail from './challenge/ChallengeDetail.js'
-
+import ChallengeResultList from'./challenge/ChallengeResultList.js'
 export default function Index(props) {
     return (<>
         <BrowserRouter>
@@ -50,6 +50,7 @@ export default function Index(props) {
                 <Route path="/challenge/challengewrite" element={<ChallengeWrite />} />
                 <Route path="/challenge/challenge" element={<Challenge />} />
                 <Route path="/challenge/challengedetail" element={<ChallengeDetail />} />
+                <Route path="/challenge/challengeResultList" element={<ChallengeResultList />} />
             </Routes>
         </BrowserRouter>
     </>)

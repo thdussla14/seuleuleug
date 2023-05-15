@@ -6,6 +6,8 @@ import seuleuleug.domain.BaseTime;
 import seuleuleug.domain.member.MemberEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -39,6 +41,12 @@ public class ChallengeResultsEntity extends BaseTime {
                 .originalFilename(this.originalFilename)
                 .sno(this.sno)
                 .sstate(this.sstate)
+                .cdate(this.cdate.toLocalDate().toString().equals(LocalDateTime.now().toLocalDate().toString() ) ?
+                        this.cdate.toLocalTime().format( DateTimeFormatter.ofPattern( "HH:mm:ss") ) :
+                        this.cdate.toLocalDate().format( DateTimeFormatter.ofPattern( "yy-MM-dd") ))
+                .udate(this.udate.toLocalDate().toString().equals(LocalDateTime.now().toLocalDate().toString() ) ?
+                        this.udate.toLocalTime().format( DateTimeFormatter.ofPattern( "HH:mm:ss") ) :
+                        this.udate.toLocalDate().format( DateTimeFormatter.ofPattern( "yy-MM-dd") ))
                 .build();
     }
 

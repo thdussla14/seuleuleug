@@ -20,8 +20,8 @@ import java.util.UUID;
 public class FileService {
 
     // * 첨부파일이 저장 될 경로 [ 1. 배포 전 2.배포 후 ]
-    //String path = "C:\\Users\\504\\Desktop\\seuleuleug\\build\\resources\\main\\static\\static\\media\\";
-    String path = "C:\\Users\\kjkim\\IdeaProjects\\seuleuleug\\build\\resources\\main\\static\\static\\media\\";
+    String path = "C:\\Users\\504\\Desktop\\seuleuleug\\build\\resources\\main\\static\\static\\media\\";
+    //String path = "C:\\Users\\kjkim\\IdeaProjects\\seuleuleug\\build\\resources\\main\\static\\static\\media\\";
     public FileDto fileupload(MultipartFile multipartFile ){
         log.info("File upload : " + multipartFile);
         log.info("File upload : " + multipartFile.getOriginalFilename() ); // 실제 첨부파일 파일명

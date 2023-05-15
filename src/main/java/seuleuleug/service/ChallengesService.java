@@ -9,6 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import seuleuleug.domain.challenges.*;
 import seuleuleug.domain.hospital.PageDto;
+import seuleuleug.domain.member.MemberEntity;
+import seuleuleug.domain.member.MemberEntityRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -26,6 +28,9 @@ public class ChallengesService {
     FileService fileService;
     @Autowired
     ChallengeResultsEntityRepository challengeResultsEntityRepository;
+    @Autowired
+    MemberEntityRepository memberEntityRepository;
+
 
     @Transactional
     public PageDto get(PageDto pageDto){
@@ -96,24 +101,26 @@ public class ChallengesService {
         entityOptional.ifPresent(o->challengesEntityRepository.delete(o));
         return true;
     }
-
+    
+    // 관리자 페이지
     @Transactional
     public List<ChallengesDto> getList(){
         List<ChallengesEntity> challengesEntityList = challengesEntityRepository.findAll();
         List<ChallengesDto> challengesDtoList = new ArrayList<>();
         challengesEntityList.forEach((b)->{
-            List<FileDto> list = new ArrayList<>();
+            List<FileDto> challengesImglist = new ArrayList<>();
             b.getChallengesImgEntitiy().forEach((r)->{
-                list.add( r.toDto() );
+                challengesImglist.add( r.toDto() );
             });
             ChallengesDto dto = b.todto();
-            dto.setChfiles(list);
+            dto.setChfiles(challengesImglist);
             challengesDtoList.add(dto);
         });
         log.info("Challenges"+challengesDtoList);
         return challengesDtoList;
     }
-
+    
+    //상세보기
     @Transactional
     public ChallengesDto getDetail( int chno ){
         Optional<ChallengesEntity> challengesEntity = challengesEntityRepository.findById(chno);
@@ -125,7 +132,6 @@ public class ChallengesService {
             entity.getChallengesImgEntitiy().forEach((r)->{
                 list.add( r.toDto() );
             });
-
             ChallengesDto dto = entity.todto();
             dto.setChfiles(list);
             log.info("Challenges"+dto);
@@ -136,25 +142,39 @@ public class ChallengesService {
 
     // 챌린지 참여
     @Transactional
-    public List<ChallengeResultsEntity> getResult(){
-        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findAll();
-
-
-        return null;
+    public List<ChallengeResultsDto> getResult(int chno){
+        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findByChno(chno);
+        List<ChallengeResultsDto> challengeResultsDtoList = new ArrayList<>();
+        challengeResultsEntityList.forEach(e->{
+            ChallengeResultsDto dto = e.toDto();
+            dto.setChno(e.getChallengesEntity().getChno());
+            dto.setMno(e.getMemberEntity().getMno());
+            dto.setMemail(e.getMemberEntity().getMemail());
+            challengeResultsDtoList.add(dto);
+        });
+        log.info("Challenges"+challengeResultsDtoList);
+        return challengeResultsDtoList;
     }
 
     @Transactional
     public boolean postResult(ChallengeResultsDto challengeResultsDto){
+        log.info("Challenges"+challengeResultsDto);
         // 0. 로그인 했는지 회원정보 호출[ 댓글 작성자  ]
         //Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //if( o.equals("anonymousUser")){ return false; }
         //MemberDto memberDto = (MemberDto)o;
         //MemberEntity memberEntity = memberEntityRepository.findById(  memberDto.getMno() ).get();
 
+        Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(challengeResultsDto.getMemail());
+        if(!optionalMemberEntity.isPresent()){return false; }
+        MemberEntity memberEntity = optionalMemberEntity.get();
+
         // 0. 댓글작성할 게시물 호출
         Optional<ChallengesEntity> optionalChallengesEntity = challengesEntityRepository.findById(challengeResultsDto.getChno());
         if( !optionalChallengesEntity.isPresent() ){ return false; }
         ChallengesEntity challengesEntity = optionalChallengesEntity.get();
+
+
 
         // 1. 챌린지 작성(이미지 저장)
         if( !challengeResultsDto.getSimg().isEmpty() ){
@@ -170,18 +190,25 @@ public class ChallengesService {
             if( challengeResultsEntity.getSno() < 1 ) { return  false; }
 
             // 2. 댓글과 회원의 양방향 관계[ 댓글->회원 / 회원 -> 댓글 == 양방향  ,  댓글->회원 == 단방향  ]
-            //replyEntity.setMemberEntity(  memberEntity );
-            //memberEntity.getReplyEntityList().add( replyEntity );
+            challengeResultsEntity.setMemberEntity(  memberEntity );
+            memberEntity.getChallengeResultsEntityList().add( challengeResultsEntity );
             // 3. 댓글과 게시물의 양방향 관계 [ 댓글->게시물 / 게시물->댓글 == 양방향 , 댓글->게시물 == 단방향 ]
             challengeResultsEntity.setChallengesEntity(challengesEntity);
             challengesEntity.getChallengeResultsEntityList().add(challengeResultsEntity);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Transactional
-    public boolean putResult(int sno){
-
+    public boolean putResult(ChallengeResultsDto challengeResultsDto){
+        log.info("sno : " + challengeResultsDto);
+        Optional<ChallengeResultsEntity> optionalChallengeResultsEntity = challengeResultsEntityRepository.findById(challengeResultsDto.getSno());
+        if(optionalChallengeResultsEntity.isPresent()){
+            ChallengeResultsEntity entity = optionalChallengeResultsEntity.get();
+            entity.setSstate(challengeResultsDto.getSstate());
+            return true;
+        }
         return false;
     }
 
