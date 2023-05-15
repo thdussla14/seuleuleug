@@ -18,16 +18,11 @@ public class HMemberController {
     private HMemberService hMemberService;
 
     @PostMapping("/hsignup")
-    public boolean hsignup(@RequestBody HMemberDto hMemberDto){
+    public boolean hsignup(HMemberDto hMemberDto){
         log.info("hsignup : " + hMemberDto);
         boolean result = hMemberService.hsignup(hMemberDto);
         log.info("result : " + result);
         return result;
-    }
-
-    @PostMapping("/files")
-    public boolean files(@RequestParam("hmcertification") MultipartFile multipartFile){
-        return hMemberService.files(multipartFile);
     }
 
     @GetMapping("/hlogin")
@@ -36,6 +31,9 @@ public class HMemberController {
         return hMemberService.hlogin(hmemail , hpassword);
     }
 
-
-
+    @GetMapping("/hcomment")
+    public HMemberDto get(@RequestParam("hmemail") String hmemail) {
+        log.info("hmemail : " + hmemail );
+        return hMemberService.get(hmemail);
+    }
 }

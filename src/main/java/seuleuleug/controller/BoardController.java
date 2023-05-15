@@ -59,20 +59,33 @@ public class BoardController {
         log.info("alllist");
         return  boardService.getBoardList();
     }
+    // 비밀번호 확인
+    @PostMapping("/checkpw")
+    public boolean checkpw(@RequestBody BoardDto boardDto) {
+        log.info("checkpw boardDto"+boardDto);
+        return  boardService.checkpw(boardDto);
+    }
     // 게시물 상세 출력
     @GetMapping("/detail")
     public BoardDto getBoard(@RequestParam int bno){
         log.info("detail"+ bno);
         return boardService.getBoard(bno);
     }
+    @DeleteMapping("")
+    public boolean deletemy(@RequestParam int bno){
+        log.info("deletemy"+ bno);
+        return boardService.deletemy(bno);
+    }
+    // 답글 작성
+    @PostMapping("/cwrite")
+    public boolean writecomment(@RequestBody CommentDto commentDto){
+        log.info("writecomment"+ commentDto);
+        return boardService.writecomment(commentDto);
+    }
     // 게시물 답변 출력
     @GetMapping("/getcomment")
     public List<CommentDto> getCommentList(@RequestParam int bno){
         return boardService.getCommentList(bno);
     }
-    // 답글 작성
-    @PostMapping("/cwrite")
-    public boolean writecomment(@RequestBody CommentDto commentDto){
-        return boardService.writecomment(commentDto);
-    }
+
 }

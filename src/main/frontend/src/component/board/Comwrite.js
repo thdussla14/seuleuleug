@@ -3,20 +3,31 @@ import axios from 'axios'
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
 import styles from '../../css/Comment.css'; // css 호출
-import logo from '../../logo.svg';  // img 호출
+import doctor from '../../doctor.png';  // img 호출
 
 export default function Comwrite(props) {
 
     // 선택한 게시물 번호 전달받기
     const bno = props.bno
     // 로그인한 의사 정보 가져오기
+    const [ doctor , setDoctor ] = useState([]);
+
+    useEffect(()=>{
+         let hmemail = sessionStorage.getItem("email");
+         axios.get('/hmember/hcomment', {params : {"hmemail":hmemail}} )
+             .then(  (r) => { console.log(r); setDoctor(r.data);})
+             .catch( (e) => { console.log(e);})
+    }, [])
 
     // 입력한 코멘트 댓글 저장
     const setComment = () =>{
+
         let info = {
             bno       : bno,
-            rcontent  : document.querySelector('#rcontent').value
+            rcontent  : document.querySelector('#rcontent').value,
+            hmno      : doctor.hmno
         }
         console.log(info);
         axios.post("/board/cwrite",info)
@@ -29,16 +40,16 @@ export default function Comwrite(props) {
     }
     // 취소 버튼 클릭시 BoardList로 전환
     const back = () => {
-        window.location.href="/board/boardlist"
+        window.location.href="/board/doctor/boardlist"
     }
 
     return(<Container>
         <div className="wrapper">
            <div>
-                <img src={logo} className="logoimg" />
+               <Avatar alt="Remy Sharp" src={doctor} />
            </div>
            <div className="contentContainer">
-                <div className="nameText">    홍길동 의사   </div>
+                <div className="nameText">   {doctor.hmname}  의사   </div>
            </div>
         </div>
         <TextField fullWidth style={{marginTop:'20px'}}

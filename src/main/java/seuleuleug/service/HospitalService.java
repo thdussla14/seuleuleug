@@ -35,4 +35,23 @@ public class HospitalService {
                 .page(pageDto.getPage())
                 .build();
     }
+
+    //제휴 병원리스트 출력
+    public List<HospitalDto> joinList ( ) {
+        List<HospitalEntity> list = hospitalEntityRepository.findAll();
+        List<HospitalDto> DtoList = new ArrayList<>();
+        if(list.size()>0){
+            list.forEach((H)->{
+                DtoList.add(H.toDto());
+            });
+            return DtoList;
+        }
+        return null;
+    }
+
+    //
+
+
+
+
 }

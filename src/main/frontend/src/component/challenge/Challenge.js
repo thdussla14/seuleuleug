@@ -20,6 +20,7 @@ interface MediaProps {
 }
 
 function Media(props: MediaProps) {
+
     const { loading = false } = props;
 
     return (

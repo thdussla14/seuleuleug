@@ -1,21 +1,22 @@
 a{
     text-decoration:none;
-    color : black;
+    color : #F0F0C6;
 }
 
 .header{
-    width :390px;
+    width :100%;
     height:100px;
 }
 .Main{
-    width :390px;
+    width :350px;
     height:844px;
     margin:0 auto;
     text-align: center;
 }
 .Fortune{
-    width :390px;
+    width :100%;
     height:300px;
+    margin: 0 auto
 }
 .btnBox{
     display:flex;
@@ -36,10 +37,10 @@ a{
 
 }
 .cookie-message {
-    font-size: 12px;
-    font-weight: 400;
-    position: fixed;
-    left: 238px;
-    top: 215px;
+    font-size: 14px ;
+    font-weight: 700;
+    left: 23px;
+    top: -115px;
+    position: relative;
     transform: rotate(8deg);
 }

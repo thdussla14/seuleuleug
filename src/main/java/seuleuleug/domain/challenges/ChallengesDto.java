@@ -23,6 +23,7 @@ public class ChallengesDto {
     private List<FileDto> chfiles ;
     private List<ChallengeResultsDto> challengeResultsDto;
 
+
     // toEntity
     public ChallengesEntity toEntity() {
         return ChallengesEntity.builder()
