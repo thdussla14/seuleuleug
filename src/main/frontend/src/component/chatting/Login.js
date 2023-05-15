@@ -25,9 +25,9 @@ export default function Login(props){
     let inputMphone = useRef(null);
 
     const mlogin = () => {
-        let loginForm = document.querySelectorAll(".loginForm")[0];
+        let loginForm = document.querySelectorAll(".user")[0];
         let loginFormData = new FormData(loginForm);
-         console.log(loginFormData);
+            console.log(loginFormData);
         axios.post("/member/login", loginFormData ).then( r=>{
             console.log(r.data);
             if(r.data != false){
@@ -46,8 +46,8 @@ export default function Login(props){
 
     const hlogin = () => {
 
-       let hmemail = inputHmemail.current.value;
-       let hpassword = inputHpassword.current.value;
+        let hmemail = inputHmemail.current.value;
+        let hpassword = inputHpassword.current.value;
 
         axios.get("/hmember/hlogin", {params : { "hmemail" : hmemail , "hpassword" : hpassword }} ).then( r=>{
             console.log(r.data);
@@ -62,10 +62,10 @@ export default function Login(props){
         })
     }
     // 관리자 로그인
-     let inputid = useRef(null);
-     let inputpassword = useRef(null);
+        let inputid = useRef(null);
+        let inputpassword = useRef(null);
 
-     const alogin = () => {
+    const alogin = () => {
         let id = inputid.current.value;       console.log(id);
         let pw = inputpassword.current.value; console.log(pw);
         if( id === "admin" && pw === "admin" ){
@@ -73,55 +73,55 @@ export default function Login(props){
             sessionStorage.setItem('loginType', "admin");
             window.location.href="/";
         }else{
-             alert('로그인 실패');
+            alert('로그인 실패');
         }
-     }
+    }
 
     return(<Container>
             <Box sx={{ width: '100%', typography: 'body1' }}>
-              <TabContext value={value}>
+            <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
+                <TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="MAIN"      value="1" />
                     <Tab label="HOSPITAL"  value="2" />
                     <Tab label="ADMIN"     value="3" />
-                  </TabList>
+                </TabList>
                 </Box>
                 <TabPanel value="1">
-                    <div style={{display:'flex'}}>
+                    <form style={{display:'flex'}} className="user">
                         <div>
-                            <TextField id="memail"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="normal" size="small"/> <br/>
-                            <TextField id="mphone"      label="핸드폰"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
+                            <TextField name="memail"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="normal" size="small"/> <br/>
+                            <TextField name="mphone"      label="핸드폰"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
                         </div>
                         <div style={{marginTop:'20px'}}>
                             <Button variant="contained" onClick={mlogin}
                                 style={{height:'100px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
                         </div>
-                    </div>
+                    </form>
                 </TabPanel>
                 <TabPanel value="2">
-                    <div style={{display:'flex'}}>
+                    <form style={{display:'flex'}} className="doctor">
                         <div>
-                             <TextField id="hmemail"     label="이메일"   variant="outlined"  inputRef={inputHmemail} margin="normal"  size="small"  /> <br/>
-                             <TextField id="hpassword"   label="비밀번호"  variant="outlined"  inputRef={inputHpassword} margin="normal" size="small" />
+                            <TextField name="hmemail"     label="이메일"   variant="outlined"  inputRef={inputHmemail} margin="normal"  size="small"  /> <br/>
+                            <TextField name="hpassword"   label="비밀번호"  variant="outlined"  inputRef={inputHpassword} margin="normal" size="small" />
                         </div>
                         <div style={{marginTop:'20px'}}>
                             <Button variant="contained" onClick={hlogin}
                                 style={{height:'100px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
                         </div>
-                    </div>
+                    </form>
                 </TabPanel>
                 <TabPanel value="3">
-                    <div style={{display:'flex'}}>
+                    <form style={{display:'flex'}} className="admin">
                         <div>
-                            <TextField id="id"          label="아이디"   variant="outlined"  inputRef={inputid}      margin="normal" size="small" /> <br/>
-                            <TextField id="password"    label="비밀번호"  variant="outlined" inputRef={inputpassword} margin="normal" size="small" />
+                            <TextField name="id"          label="아이디"   variant="outlined"  inputRef={inputid}      margin="normal" size="small" /> <br/>
+                            <TextField name="password"    label="비밀번호"  variant="outlined" inputRef={inputpassword} margin="normal" size="small" />
                         </div>
                         <div style={{marginTop:'20px'}}>
                             <Button variant="contained" onClick={alogin}
                                 style={{height:'100px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
                         </div>
-                    </div>
+                    </form>
                 </TabPanel>
               </TabContext>
             </Box>

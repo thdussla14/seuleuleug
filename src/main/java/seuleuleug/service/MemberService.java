@@ -63,16 +63,21 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String memail) throws UsernameNotFoundException {
         // 입력받은 이메일로 아이디 찾기
-        MemberEntity entity = memberEntityRepository.findByMemail(memail);
-        if( entity == null ){ return null; }
-        // 검증후 세션에 저장할 DTO 반환
-        MemberDto dto = entity.toDto();
-        //권한 목록
-        Set<GrantedAuthority> rolelist = new HashSet<>();
-        SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_"+entity.getMrole());
-        rolelist.add(role);
-        dto.setRoleList( rolelist );
-        return dto;
+        Optional<MemberEntity> entityOptional = memberEntityRepository.findByMemail(memail);
+        if(entityOptional.isPresent()){
+            MemberEntity entity = entityOptional.get();
+
+            if( entity == null ){ return null; }
+            // 검증후 세션에 저장할 DTO 반환
+            MemberDto dto = entity.toDto();
+            //권한 목록
+            Set<GrantedAuthority> rolelist = new HashSet<>();
+            SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_"+entity.getMrole());
+            rolelist.add(role);
+            dto.setRoleList( rolelist );
+            return dto;
+        }
+        return null;
     }
     // 세션에 존재하는 회원정보[ 1. 로그인 , 2. 채팅 ]
     @Transactional

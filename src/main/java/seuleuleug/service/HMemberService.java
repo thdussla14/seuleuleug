@@ -32,26 +32,29 @@ public class HMemberService {
     // 의사 회원가입
     public boolean hsignup(HMemberDto hMemberDto){
         Optional<HospitalEntity> optionalHospitalEntity = hospitalEntityRepository.findById(hMemberDto.getHno());
-        if(optionalHospitalEntity.isPresent()){
-            FileDto fileDto1 = fileService.fileupload( hMemberDto.getHmpimg());
-            FileDto fileDto2 = fileService.fileupload( hMemberDto.getHmcertification());
-            log.info("fileDto1 : " + fileDto1+"/"+"fileDto2 : " + fileDto2);
+        if(optionalHospitalEntity.isPresent()) {
+            FileDto fileDto1 = fileService.fileupload(hMemberDto.getHmpimg());
+            FileDto fileDto2 = fileService.fileupload(hMemberDto.getHmcertification());
+            log.info("fileDto1 : " + fileDto1 + "/" + "fileDto2 : " + fileDto2);
+
+            // 비밀번호 암호화
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            hMemberDto.setHpassword(passwordEncoder.encode(hMemberDto.getHpassword()));
+            // 등급부여
+            hMemberDto.setHrole("DOCTOR");
+
             HMemberEntity hMemberEntity = hMemberRepository.save(hMemberDto.toEntity());
             log.info("HospitalEntity : " + optionalHospitalEntity.get());
+
             hMemberEntity.setHospitalEntity(optionalHospitalEntity.get());
             log.info("hMemberEntity : " + hMemberEntity);
-            log.info("hMemberEntit.getHospitalEntity : "+hMemberEntity.getHospitalEntity());
+            log.info("hMemberEntit.getHospitalEntity : " + hMemberEntity.getHospitalEntity());
+
             optionalHospitalEntity.get().getHMemberEntities().add(hMemberEntity);
+
             hMemberEntity.setHmpimg(fileDto1.getUuidFile());
             hMemberEntity.setHmcertification(fileDto2.getUuidFile());
-        // 비밀번호 암호화
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        hMemberDto.setHpassword(passwordEncoder.encode(hMemberDto.getHpassword()));
-        // 등급부여
-        hMemberDto.setHrole("DOCTOR");
-        // 저장
-        HMemberEntity hMemberEntity = hMemberRepository.save(hMemberDto.toEntity());
-        if(hMemberEntity.getHmno()>0){
+
             return true;
         }
 
@@ -61,12 +64,15 @@ public class HMemberService {
     public HMemberDto hlogin(String hmemail , String hpassword){
         log.info("hlogin service: " + hmemail + " / " + hpassword);
         // 입력받은 이메일로 아이디 찾기
-        HMemberEntity entity = hMemberRepository.findByHmemail(hmemail);
-        // 암호화 된 비밀번호와 입력받은 비밀번호 비교
-        if( new BCryptPasswordEncoder().matches( hpassword , entity.getHpassword())){
-            request.getSession().setAttribute("logintype","doctor");
-            request.getSession().setAttribute("email",entity.getHmemail());
-            return entity.toDto();
+        Optional<HMemberEntity> entityOptional = hMemberRepository.findByHmemail(hmemail);
+        if(entityOptional.isPresent()){
+            HMemberEntity entity = entityOptional.get();
+            // 암호화 된 비밀번호와 입력받은 비밀번호 비교
+            if( new BCryptPasswordEncoder().matches( hpassword , entity.getHpassword())){
+                request.getSession().setAttribute("logintype","doctor");
+                request.getSession().setAttribute("email",entity.getHmemail());
+                return entity.toDto();
+            }
         }
         return null;
     }
