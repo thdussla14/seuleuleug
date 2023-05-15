@@ -16,19 +16,12 @@ export default function CommentList(props){
             .catch( e => { console.log(e);})
     }, [])
 
-    if( item.length == 0){
+    if( item.length === 0){
         // 답변이 없는 경우
         return(<div> 등록된 답변이 없습니다. </div>)
     }else{
         // 답변 하나씩 Comment 컴포넌트로 보내서 내용물 출력
-        return (
-                <div>
-                        {
-                            item.map((c)=>{
-                                return( <Comment comment={c} />)
-                            })
-                        }
-                </div>
-        )
+        return (<div>{item.map((c)=>{return( <Comment comment={c} />)})}</div>)
     }
 }
+

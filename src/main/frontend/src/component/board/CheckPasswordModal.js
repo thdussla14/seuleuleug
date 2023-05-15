@@ -56,7 +56,7 @@ export default function CheckPasswordModal(props) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
            <TextField id="bpassword" label="bpassword" variant="outlined" className ="bpassword"/>
                        <Button variant="contained" onClick={checkPassword}
-                           style={{height:'56px', marginLeft:'10px'}}> 확인 </Button>
+                           style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 확인 </Button>
           </Typography>
         </Box>
       </Modal>

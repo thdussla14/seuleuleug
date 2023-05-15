@@ -2,14 +2,12 @@ import React, {useState,useEffect} from 'react'
 import { useSearchParams  } from 'react-router-dom';
 import axios from 'axios'
 import Container from '@mui/material/Container';
-import { Paper , Stack , styled , Typography } from '@mui/material';
+import { Paper , Stack , styled } from '@mui/material';
 import CheckPasswordModal from './CheckPasswordModal';
 
 export default function BoardList(props) {
 
     console.log('BoardList')
-    // 0. 입력한 이메일 파라미터값으로 받기
-    const [ searchParams , setSearchParams ]  = useSearchParams();
     // 1. 해당 이메일로 작성된 게시글 목록 출력
     const [ items , setItems ] = useState([]);
     useEffect(()=>{

@@ -49,7 +49,6 @@ export default function DashBoard(props) {
     }
 
     return(<Container>
-            <h3>  관리자 페이지 </h3>
             <Box sx={{ width: '100%', typography: 'body1'}}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -79,7 +78,6 @@ export default function DashBoard(props) {
                                             style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 제휴병원 등록 </Button>
                      <Button variant="contained" onClick={setWord}
                                             style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 제휴의사 등록 </Button> <br/>
-                    <h3> 제휴병원 목록 </h3>
                     <HospitalTable />
                 </TabPanel>
                 <TabPanel value="4" sx={{padding: '0px', marginTop : '20px'}}>

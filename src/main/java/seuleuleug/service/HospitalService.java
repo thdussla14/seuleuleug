@@ -14,6 +14,7 @@ import seuleuleug.domain.hospital.PageDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -49,7 +50,16 @@ public class HospitalService {
         return null;
     }
 
-    //
+    // 검색 병원 출력
+    public List<HospitalDto> findhospital (String keyword ) {
+        List<HospitalEntity> list = hospitalEntityRepository.findBykeyword(keyword);
+        List<HospitalDto> DtoList = new ArrayList<>();
+        if(list.size()>0){
+            list.forEach((H)->{ DtoList.add(H.toDto());});
+            return DtoList;
+        }
+        return null;
+    }
 
 
 

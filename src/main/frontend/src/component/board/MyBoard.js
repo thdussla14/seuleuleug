@@ -1,7 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import { useSearchParams  } from 'react-router-dom';
 import axios from 'axios'
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
 import CardActions from '@mui/material/CardActions';

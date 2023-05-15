@@ -2,10 +2,7 @@ package seuleuleug.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import seuleuleug.domain.hospital.HospitalDto;
 import seuleuleug.domain.hospital.PageDto;
 import seuleuleug.service.HospitalService;
@@ -27,9 +24,14 @@ public class HospitalController {
         return result;
     }
     // 제휴병원 리스트 출력
-    @GetMapping("/alllist")
+    @GetMapping("/joinlist")
     public List<HospitalDto> joinList ( ) {
         return hospitalService.joinList();
+    }
+    // 제휴병원 리스트 출력
+    @GetMapping("/findlist")
+    public List<HospitalDto> findhospital (@RequestBody String keyword) {
+        return hospitalService.findhospital(keyword);
     }
     
 }

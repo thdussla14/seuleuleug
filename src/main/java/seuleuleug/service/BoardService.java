@@ -107,7 +107,9 @@ public class BoardService {
         log.info("checkpw boardDto"+boardDto);
         Optional<BoardEntity> optionalBoardEntity = boardEntityRepository.findById(boardDto.getBno());
         if(optionalBoardEntity.isPresent()){
-           if(optionalBoardEntity.get().getBpassword().equals(boardDto.getBpassword())){return true;}
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            // 암호화 된 비밀번호와 입력받은 비밀번호 비교
+            if( new BCryptPasswordEncoder().matches( boardDto.getBpassword() , boardEntity.getBpassword())){return true;}
         }
         return false;
     }

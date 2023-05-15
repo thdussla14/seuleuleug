@@ -43,6 +43,7 @@ public class CommentEntity {
                 .rno(this.rno)
                 .rcontent(this.rcontent)
                 .rdate(this.rdate)
+                .hname(this.hMemberEntity.getHospitalEntity().getHname())
                 .build();
     }
 }

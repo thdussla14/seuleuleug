@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import styles from '../../css/main.css';
 import fortunecookie from '../../fortunecookie.png';  // img 호출
 
 export default function Fortune(props) {

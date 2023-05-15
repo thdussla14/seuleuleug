@@ -25,7 +25,7 @@ export default function CategoryList(props) {
 
     return(<>
         <Box sx={{ minWidth: 100 }}>
-          <FormControl style={{width:'200px', margin:'20px 0px'}}>
+          <FormControl style={{width:'200px', margin:'0px 20px'}} size="small">
             <InputLabel id="demo-simple-select-label"> Category </InputLabel>
             <Select value={category} label="카테고리" onChange={handleChange}>
             <MenuItem value={0}> 전체보기 </MenuItem>

@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import styles from '../../css/main.css';
 import CategoryList from './CategoryList';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -53,7 +52,7 @@ export default function Write(props) {
         <div style={{ display: 'flex' }}>
             <CategoryList categoryChange= {categoryChange} />
             <Box sx={{ minWidth: 100 }}>
-              <FormControl style={{width:'200px', margin:'20px 0px'}}>
+              <FormControl style={{width:'200px', margin:'20px'}} size="small">
                 <InputLabel id="demo-simple-select-label"> Local </InputLabel>
                 <Select value={local} label="지역" onChange={handleChange}>
                     <MenuItem value={"서울 특별시"}>서울 특별시  </MenuItem>
