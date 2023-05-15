@@ -31,6 +31,8 @@ public class HMemberService {
         // 비밀번호 암호화
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         hMemberDto.setHpassword(passwordEncoder.encode(hMemberDto.getHpassword()));
+        // 등급부여
+        hMemberDto.setHrole("DOCTOR");
         // 저장
         HMemberEntity hMemberEntity = hMemberRepository.save(hMemberDto.toEntity());
         if(hMemberEntity.getHmno()>0){

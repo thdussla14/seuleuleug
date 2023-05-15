@@ -2,6 +2,7 @@ package seuleuleug.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,13 +53,14 @@ public class BoardService {
     @Transactional
     public byte writeBoard(BoardDto boardDto){
         log.info("writeBoard"+boardDto);
-
         // 카테고리 번호를 이용한 카테고리 entity 찾기
         Optional<CategoryEntity> optionalCategoryEntity =
                 categoryEntityRepository.findById(boardDto.getCno());
         if(!optionalCategoryEntity.isPresent()){return 1;}
         CategoryEntity categoryEntity = optionalCategoryEntity.get();
-
+        // 비밀번호 암호화
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boardDto.setBpassword(passwordEncoder.encode(boardDto.getBpassword()));
         // 게시물 저장
         BoardEntity boardEntity = boardEntityRepository.save(boardDto.toboardEntity());
         boardEntity.setCategoryEntity(categoryEntity);

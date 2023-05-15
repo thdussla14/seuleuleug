@@ -23,7 +23,7 @@ public class MemberController {
         log.info("signup dto: " + memberDto);
         return memberService.signup(memberDto);
     }
-
+    /* 시큐리티 사용 전
     @GetMapping("/login")
     public MemberDto login(@RequestParam("memail") String memail, @RequestParam("mphone") String mphone ){
         log.info("login memail: " + memail + " mphone: " + mphone);
@@ -34,11 +34,10 @@ public class MemberController {
         }
         return result;
     }
-
     @GetMapping("/logout")
     public boolean logout(){
         request.getSession().setAttribute("logintype" , null);
         request.getSession().setAttribute("email" , null);
         return true;
-    }
+    }*/
 }

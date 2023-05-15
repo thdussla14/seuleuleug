@@ -18,12 +18,15 @@ public class MemberEntity {
     private String memail;       //회원이메일
     @Column(nullable = false, unique = true)
     private String mphone;       //회원전화번호
+    @Column
+    private String mrole;       // 회원등급
 
     public MemberDto toDto() {
         return MemberDto.builder()
                 .mno(this.mno)
                 .memail(this.memail)
                 .mphone(this.mphone)
+                .mrole(this.mrole)
                 .build();
     }
 

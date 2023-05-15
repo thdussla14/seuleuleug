@@ -9,14 +9,14 @@ export default function Hlogin(props){
     let inputMphone = useRef(null);
 
     const mlogin = () => {
-       let memail = inputMemail.current.value;
-       let mphone = inputMphone.current.value;
-
-        axios.get("/member/login", {params : { "memail" : memail , "mphone" : mphone }} ).then( r=>{
+        let loginForm = document.querySelectorAll(".loginForm")[0];
+        let loginFormData = new FormData(loginForm);
+         console.log(loginFormData);
+        axios.post("/member/login", loginFormData ).then( r=>{
             console.log(r.data);
-            if(r.data!==null){
+            if(r.data != false){
                 alert('로그인 성공');
-                sessionStorage.setItem('email', memail);
+                sessionStorage.setItem('email', r.data.memail);
                 sessionStorage.setItem('loginType', "normal");
                 window.location.href="/";
             }else{
@@ -29,10 +29,13 @@ export default function Hlogin(props){
 
     return(<>
         <Container>
-            <h5> 일반 로그인 페이지 </h5>
-                <input ref={inputMemail} className="hmemail" type="text" placeHolder="이메일" />
-                <input ref={inputMphone} className="mphone" type="text" placeHolder="핸드폰" />
+            <h3> 로그인 페이지 </h3>
+            <form className="loginForm">
+                <input ref={inputMemail} name="memail" type="text" placeHolder="이메일" />
+                <input ref={inputMphone} name="mphone" type="text" placeHolder="핸드폰" />
                 <button onClick={mlogin} type="button">로그인</button>
+                <a href="/oauth2/authorization/kakao"> 카카오 로그인 </a>
+            </form>
         </Container>
     </>)
 
