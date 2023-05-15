@@ -43,9 +43,11 @@ public class WordService {
     public List<WordDto> getWords() {
         List<WordEntity> entityList = wordEntityRepository.findAll();
         List<WordDto> wordDtoList = new ArrayList<>();
-        entityList.forEach((w)->{
-            wordDtoList.add(w.toWordDto());
-        });
+        if(entityList.size()>0) {
+            entityList.forEach((w) -> {
+                wordDtoList.add(w.toWordDto());
+            });
+        }
         return wordDtoList;
     }
 

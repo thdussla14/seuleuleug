@@ -38,6 +38,7 @@ public class LoginHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        /*
         log.info("get message : " + message.getPayload());
         JSONObject jsonMessage = new JSONObject(message.getPayload());
         log.info("jsonMessage : " + jsonMessage );
@@ -59,12 +60,15 @@ public class LoginHandler extends TextWebSocketHandler {
                     chattingHandler.handleTextMessage(dto.getSession(),textMessage);
 
             }
-        }
+        }*/
+        log.info("get message : " + message);
+
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         log.info("server error");
+        log.info("exception : " + exception);
     }
 
     @Override

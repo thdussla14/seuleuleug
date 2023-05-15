@@ -11,7 +11,22 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { LoginContext,LoginListProvider } from './LoginListProvider';
 
-
+const createWebSocket =() =>{
+    const websocket = new WebSocket("ws://localhost:8080/intoHomePage");
+     websocket.onopen = (e)=>{
+        console.log('로그인 서버 연결');
+    }
+    websocket.onclose = (e)=>{
+        console.log('서버 탈출! ');
+    }
+    websocket.onmessage = (e)=>{
+        console.log(e.data);
+    }
+    websocket.onerror = (e)=>{
+        console.log(e);
+    }
+    return websocket;
+}
 
 export default function Login(props){
     // 탭 전환
@@ -19,6 +34,8 @@ export default function Login(props){
     const handleChange = (event, newValue) => {
         setValue(newValue);
     }
+
+    const {loginsocket, handleWebSocket} = useContext(LoginContext);
 
     // 일반로그인
     let inputMemail = useRef(null);
@@ -34,6 +51,10 @@ export default function Login(props){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', r.data.memail);
                 sessionStorage.setItem('loginType', "normal");
+                handleWebSocket(createWebSocket());
+                console.log(loginsocket);
+
+
                 window.location.href="/";
             }else{
                 alert('로그인 실패');
@@ -55,6 +76,8 @@ export default function Login(props){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', hmemail);
                 sessionStorage.setItem('loginType', "doctor");
+
+
                 window.location.href="/";
             }else{
                 alert('로그인 실패');
