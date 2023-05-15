@@ -22,7 +22,7 @@ import ChallengeWrite from './challenge/ChallengeWrite';
 import Challenge from './challenge/Challenge';
 import SimriTest from './info/SimriTest';
 import ChallengeDetail from './challenge/ChallengeDetail.js'
-import LoginSocket, { AppContext } from './chatting/loginsocket';
+import LoginSocket, { AppContext } from './chatting/LoginSocket';
 
 export default function Index(props) {
 

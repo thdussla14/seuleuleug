@@ -5,11 +5,13 @@ import axios from 'axios';
 import { AppContext } from './LoginSocket';
 
 
-export default function Hlogin(props){
+export default function Login(props){
     let inputMemail = useRef(null);
     let inputMphone = useRef(null);
-
     const socketRef = useContext(AppContext);
+    console.log(props)
+    console.log(socketRef)
+
 
     const mlogin = () => {
        let memail = inputMemail.current.value;
@@ -24,7 +26,7 @@ export default function Hlogin(props){
 
                 console.log(socketRef)
                 socketRef.current.send(JSON.stringify({
-                    type : "login",
+                    type : "request",
                     who : "normal",
                     userEmail : r.data.memail
                 }));

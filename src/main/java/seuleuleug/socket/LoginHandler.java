@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import seuleuleug.domain.Chatting.LoginUserDto;
@@ -31,10 +32,17 @@ public class LoginHandler extends TextWebSocketHandler {
     }
 
     @Override
+    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+        super.handleMessage(session, message);
+    }
+
+    @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         log.info("get message : " + message.getPayload());
         JSONObject jsonMessage = new JSONObject(message.getPayload());
+        log.info("jsonMessage : " + jsonMessage );
         String type = jsonMessage.getString("type");
+        log.info("type : " + type );
         if("login".equals(type)) { // 로그인 한 경우
             for (LoginUserDto dto : loginUserDtoList) {
                 if(dto.getSession().equals(session)){
@@ -43,9 +51,12 @@ public class LoginHandler extends TextWebSocketHandler {
                 } // if e
             } // for e
         }else if("request".equals(type)){ // 일반 유저가 의사에게 상담 요청을 보낸 경우
+            log.info("request 로 옴");
             for (LoginUserDto dto : loginUserDtoList) {
                 if (dto.getUserEmail().equals(jsonMessage.getString("userEmail")));
-
+                    String tochatmessage = "qweqwe";
+                    TextMessage textMessage = new TextMessage(tochatmessage);
+                    chattingHandler.handleTextMessage(dto.getSession(),textMessage);
 
             }
         }

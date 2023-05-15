@@ -20,11 +20,11 @@ export default function Hlogin(props){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', hmemail);
                 sessionStorage.setItem('loginType', "doctor");
-                socketRef.current.send(JSON.stringify({
+                {/*socketRef.current.send(JSON.stringify({
                     type : "login",
                     who : "doctor",
                     userEmail : r.data.hmemail
-                }));
+                }));*/}
                 window.location.href="/";
             }else{
                 alert('로그인 실패');
