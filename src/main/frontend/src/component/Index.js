@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useRef,useContext} from 'react';
 import {BrowserRouter , Routes , Route } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
@@ -21,8 +21,11 @@ import Challenge from './challenge/Challenge';
 import SimriTest from './info/SimriTest';
 import ChallengeDetail from './challenge/ChallengeDetail.js'
 import ChallengeResultList from'./challenge/ChallengeResultList.js'
+import { LoginContext, LoginListProvider} from './chatting/LoginListProvider';
+
 export default function Index(props) {
     return (<>
+    <LoginListProvider>
         <BrowserRouter>
             <Header />
             <Routes >
@@ -35,12 +38,16 @@ export default function Index(props) {
                 <Route path="/board/doctor/boardlist"   element={<BoardList />} />
                 <Route path="/board/doctor/hboard"      element={<Hboard />} />
                 <Route path="/board/doctor/comwrite"    element={<Comwrite />} />
+
                 <Route path="/signup"                   element={<SignUp />} />
                 <Route path="/login"                    element={<Login />} />
+
                 <Route path="/chattinglist"             element={<ChattingList />} />
                 <Route path="/chatting/:chatRoomId"     element={<Chat />} />
+
                 <Route path="/hospital/hospitallist"    element={<HospitalList />} />
                 <Route path="/simritest/info"           element={<SimriTest />} />
+
                 <Route path="/government/info"          element={<GovernmentInfo />} />
                 <Route path="/challenge/challengewrite" element={<ChallengeWrite />} />
                 <Route path="/challenge/challenge"      element={<Challenge />} />
@@ -48,5 +55,6 @@ export default function Index(props) {
                 <Route path="/challenge/challengeResultList" element={<ChallengeResultList />} />
             </Routes>
         </BrowserRouter>
+    </LoginListProvider>
     </>)
 }

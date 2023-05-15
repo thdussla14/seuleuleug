@@ -39,6 +39,8 @@ public class MemberController {
     public boolean logout(){
         request.getSession().setAttribute("logintype" , null);
         request.getSession().setAttribute("email" , null);
+        log.info("after logout logintype : " +request.getSession().getAttribute("logintype"));
+        log.info("after logout email : " +request.getSession().getAttribute("email"));
         return true;
     }
 }

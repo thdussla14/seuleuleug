@@ -36,12 +36,6 @@ export default function Chat(props){
                     clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId , type : "enter", who : "normal"  }));
                 }
             }
-
-            clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
-                console.log('서버 접속했습니다');
-                console.log(clientSocket.current);
-                clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId , type : "enter" }));
-            }
             clientSocket.current.onclose = (e)=>{
                 console.log('서버 나갔습니다');
                 console.log(clientSocket.current);
