@@ -59,8 +59,22 @@ export default function Login(props){
                 alert('로그인 실패');
             }
         })
-
     }
+    // 관리자 로그인
+     let inputid = useRef(null);
+     let inputpassword = useRef(null);
+
+     const alogin = () => {
+        let id = inputid.current.value;       console.log(id);
+        let pw = inputpassword.current.value; console.log(pw);
+        if( id === "admin" && pw === "admin" ){
+            sessionStorage.setItem('email', "admin");
+            sessionStorage.setItem('loginType', "admin");
+            window.location.href="/";
+        }else{
+             alert('로그인 실패');
+        }
+     }
 
     return(<Container>
             <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -99,11 +113,11 @@ export default function Login(props){
                 <TabPanel value="3">
                     <div style={{display:'flex'}}>
                         <div>
-                            <TextField id="id"          label="아이디"   variant="outlined"  margin="normal" size="small" /> <br/>
-                            <TextField id="password"    label="비밀번호"  variant="outlined" margin="normal" size="small" />
+                            <TextField id="id"          label="아이디"   variant="outlined"  inputRef={inputid}      margin="normal" size="small" /> <br/>
+                            <TextField id="password"    label="비밀번호"  variant="outlined" inputRef={inputpassword} margin="normal" size="small" />
                         </div>
                         <div style={{marginTop:'20px'}}>
-                            <Button variant="contained"
+                            <Button variant="contained" onClick={alogin}
                                 style={{height:'100px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
                         </div>
                     </div>

@@ -13,6 +13,7 @@ export default function Comwrite(props) {
     const bno = props.bno
     // 로그인한 의사 정보 가져오기
     const [ doctor , setDoctor ] = useState([]);
+
     useEffect(()=>{
          let hmemail = sessionStorage.getItem("email");
          axios.get('/hmember/hcomment', {params : {"hmemail":hmemail}} )
@@ -39,7 +40,7 @@ export default function Comwrite(props) {
     }
     // 취소 버튼 클릭시 BoardList로 전환
     const back = () => {
-        window.location.href="/board/boardlist"
+        window.location.href="/board/doctor/boardlist"
     }
 
     return(<Container>
@@ -48,7 +49,7 @@ export default function Comwrite(props) {
                <Avatar alt="Remy Sharp" src={doctor} />
            </div>
            <div className="contentContainer">
-                <div className="nameText">   {doctor.hmname} 의사   </div>
+                <div className="nameText">   {doctor.hmname}  의사   </div>
            </div>
         </div>
         <TextField fullWidth style={{marginTop:'20px'}}

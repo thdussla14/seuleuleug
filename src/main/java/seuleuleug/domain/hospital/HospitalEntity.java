@@ -5,8 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import seuleuleug.domain.board.CommentEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data@AllArgsConstructor@NoArgsConstructor@Builder
 @Entity
@@ -22,6 +26,11 @@ public class HospitalEntity {
     @Column private String hurl;                               // 병원 홈페이지
     @ColumnDefault("0") @Column private int halliance;         // 제휴 여부( 0 : 제휴x , 1 : 제휴o )
 
+    // 의사 목록
+    @OneToMany(mappedBy = "hospitalEntity", cascade=CascadeType.ALL)
+    @Builder.Default
+    private List<HMemberEntity> hMemberEntities= new ArrayList<>();
+
     public HospitalDto toDto(){
         return HospitalDto.builder()
                 .hno(this.hno)
@@ -30,6 +39,7 @@ public class HospitalEntity {
                 .haddr(this.haddr)
                 .hurl(this.hurl)
                 .halliance(this.halliance)
+                .list(this.getHMemberEntities().stream().map(o->o.toDto()).collect(Collectors.toList()))
                 .build();
 
     }

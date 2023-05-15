@@ -11,8 +11,6 @@ import BoardList from './board/BoardList';
 import Hboard from './board/Hboard';
 import Comwrite from './board/Comwrite';
 import SignUp from './chatting/SignUp';
-import HsignUp from './chatting/HsignUp';
-import Hlogin from './chatting/Hlogin';
 import Login from './chatting/Login';
 import ChattingList from './chatting/ChattingList';
 import Chat from './chatting/Chat';
@@ -28,27 +26,24 @@ export default function Index(props) {
         <BrowserRouter>
             <Header />
             <Routes >
-                <Route path="/"                  element={<Main />} />
-                <Route path="/admin/dashboard"   element={<DashBoard />} />
-                <Route path="/board/write"       element={<Write />} />
-                <Route path="/board/checkemail"  element={<CheckEmail />} />
-                <Route path="/board/myboardlist" element={<MyBoardList />} />
-                <Route path="/board/myboard"     element={<MyBoard />} />
-                <Route path="/board/boardlist"   element={<BoardList />} />
-                <Route path="/board/hboard"      element={<Hboard />} />
-                <Route path="/board/comwrite"    element={<Comwrite />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/hsignup" element={<HsignUp />} />
-                <Route path="/hlogin" element={<Hlogin />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/chattinglist" element={<ChattingList />} />
-                <Route path="/chatting/:chatRoomId" element={<Chat />} />
-                <Route path="/hospital/hospitallist" element={<HospitalList />} />
-                <Route path="/simritest/info" element={<SimriTest />} />
-
-                <Route path="/government/info" element={<GovernmentInfo />} />
+                <Route path="/"                         element={<Main />} />
+                <Route path="/admin/dashboard"          element={<DashBoard />} />
+                <Route path="/board/write"              element={<Write />} />
+                <Route path="/board/checkemail"         element={<CheckEmail />} />
+                <Route path="/board/user/myboardlist"   element={<MyBoardList />} />
+                <Route path="/board/user/myboard"       element={<MyBoard />} />
+                <Route path="/board/doctor/boardlist"   element={<BoardList />} />
+                <Route path="/board/doctor/hboard"      element={<Hboard />} />
+                <Route path="/board/doctor/comwrite"    element={<Comwrite />} />
+                <Route path="/signup"                   element={<SignUp />} />
+                <Route path="/login"                    element={<Login />} />
+                <Route path="/chattinglist"             element={<ChattingList />} />
+                <Route path="/chatting/:chatRoomId"     element={<Chat />} />
+                <Route path="/hospital/hospitallist"    element={<HospitalList />} />
+                <Route path="/simritest/info"           element={<SimriTest />} />
+                <Route path="/government/info"          element={<GovernmentInfo />} />
                 <Route path="/challenge/challengewrite" element={<ChallengeWrite />} />
-                <Route path="/challenge/challenge" element={<Challenge />} />
+                <Route path="/challenge/challenge"      element={<Challenge />} />
                 <Route path="/challenge/challengedetail" element={<ChallengeDetail />} />
             </Routes>
         </BrowserRouter>

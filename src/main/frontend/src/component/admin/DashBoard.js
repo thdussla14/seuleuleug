@@ -10,6 +10,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import WordTable from './WordTable';
 import CategoryTable from './CategoryTable';
+import HospitalTable from './HospitalTable';
 
 export default function DashBoard(props) {
     // 탭 전환
@@ -73,7 +74,7 @@ export default function DashBoard(props) {
                      <Button variant="contained" onClick={setWord}
                                             style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 제휴의사 등록 </Button> <br/>
                     <h3> 제휴병원 목록 </h3>
-                    <h3> 제휴의사 목록 </h3>
+                    <HospitalTable />
                 </TabPanel>
                 <TabPanel value="4" sx={{padding: '0px', marginTop : '20px'}}>
                      <Button variant="contained" onClick={setWord}

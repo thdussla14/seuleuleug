@@ -100,6 +100,15 @@ public class BoardService {
         }
         return null;
     }
+    // 비밀번호 확인
+    public boolean checkpw(BoardDto boardDto) {
+        log.info("checkpw boardDto"+boardDto);
+        Optional<BoardEntity> optionalBoardEntity = boardEntityRepository.findById(boardDto.getBno());
+        if(optionalBoardEntity.isPresent()){
+           if(optionalBoardEntity.get().getBpassword().equals(boardDto.getBpassword())){return true;}
+        }
+        return false;
+    }
     // 게시물 상세 출력
     public BoardDto getBoard(int bno){
         log.info("detail service"+ bno);

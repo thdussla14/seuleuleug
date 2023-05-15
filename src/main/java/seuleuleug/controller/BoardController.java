@@ -59,6 +59,12 @@ public class BoardController {
         log.info("alllist");
         return  boardService.getBoardList();
     }
+    // 비밀번호 확인
+    @PostMapping("/checkpw")
+    public boolean checkpw(@RequestBody BoardDto boardDto) {
+        log.info("checkpw boardDto"+boardDto);
+        return  boardService.checkpw(boardDto);
+    }
     // 게시물 상세 출력
     @GetMapping("/detail")
     public BoardDto getBoard(@RequestParam int bno){

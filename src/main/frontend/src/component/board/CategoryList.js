@@ -24,7 +24,7 @@ export default function CategoryList(props) {
     };
 
     return(<>
-        <Box sx={{ minWidth: 120 }}>
+        <Box sx={{ minWidth: 100 }}>
           <FormControl style={{width:'200px', margin:'20px 0px'}}>
             <InputLabel id="demo-simple-select-label"> Category </InputLabel>
             <Select value={category} label="카테고리" onChange={handleChange}>

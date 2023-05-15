@@ -52,7 +52,7 @@ export default function Write(props) {
         <h3>  게시글 작성 페이지 </h3>
         <div style={{ display: 'flex' }}>
             <CategoryList categoryChange= {categoryChange} />
-            <Box sx={{ minWidth: 120 }}>
+            <Box sx={{ minWidth: 100 }}>
               <FormControl style={{width:'200px', margin:'20px 0px'}}>
                 <InputLabel id="demo-simple-select-label"> Local </InputLabel>
                 <Select value={local} label="지역" onChange={handleChange}>

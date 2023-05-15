@@ -39,41 +39,15 @@ export default function SingUp(props){
         })
     }
     // 의사 회원가입
-    let hmemail = useRef(null);
-    let hpassword = useRef(null);
-    let hmname = useRef(null);
-    let hmphone = useRef(null);
-    let hmcertification = useRef(null);
-    let inputform = useRef(null);
+    const inputform = useRef(null);
 
     const hsignup = ()=>{
-
-        console.log(hmcertification.current.value);
-        console.log(hmcertification.current.name);
-        console.log(hmcertification.current.files[0]);
-        let file = hmcertification.current.files[0];
-
-        let info = {
-            hmemail : hmemail.current.value,
-            hpassword : hpassword.current.value,
-            hmname : hmname.current.value,
-            hmphone : hmphone.current.value,
-            hmcertification : file.name
-        }
-
-        axios.post("/hmember/hsignup", info ).then( r=>{
-            console.log(r.data);
-            if(r.data==true){
-                alert('회원가입 성공');
-                {/*window.location.href="/";*/}
-            }else{
-                alert('회원가입 실패');
-            }
-        })
-        let formData = new FormData(inputform.current);
-        axios.post("/hmember/files", formData).then( r =>{
-            console.log(r.data);
-        })
+        const formData = new FormData(inputform.current);
+        console.log(formData)
+        axios.post('/hmember/hsignup',formData)
+            .then(r=>{
+            if( r.data == true){alert('회원 가입 완료');}
+            else {alert('회원 가입 실패')}})
     }
 
 
@@ -93,22 +67,17 @@ export default function SingUp(props){
                         style={{height:'56px', margin:'10px', backgroundColor: '#DCBE70'}}> SIGNUP </Button>
                 </TabPanel>
                 <TabPanel value="2">
-                    <TextField id="hmemail"     label="이메일"   variant="outlined"   inputRef={hmemail}   margin="normal" size="small" />
-                    <TextField id="hpassword"   label="비밀번호"  variant="outlined"  inputRef={hpassword} margin="normal" size="small" />
-                    <TextField id="hmname"      label="이름"     variant="outlined"  inputRef={hmname}    margin="normal" size="small" />
-                    <TextField id="hmphone"     label="전화번호"  variant="outlined"  inputRef={hmphone}   margin="normal" size="small" />
-                    <div>
-                        <h5>의사 자격증 제출란</h5>
-                        <form ref={inputform}>
-                            <input
-                                ref={hmcertification}
-                                type="file"
-                                name="hmcertification"
-                            />
-                        </form>
-                    </div>
+                    <form ref={inputform}>
+                    <TextField name="hno"         label="소속병원"  variant="outlined"  margin="normal" size="small" />
+                    <TextField name="hmemail"     label="이메일"   variant="outlined"   margin="normal" size="small" />
+                    <TextField name="hpassword"   label="비밀번호"  variant="outlined"  margin="normal" size="small" />
+                    <TextField name="hmname"      label="이름"     variant="outlined"  margin="normal" size="small" />
+                    <TextField name="hmphone"     label="전화번호"  variant="outlined"  margin="normal" size="small" />
+                    <input     name="hmpimg"              accept="image/png, image/jpeg, image/gif"   type="file" /> <br/>
+                    <input     name="hmcertification"     accept="image/png, image/jpeg, image/gif"   type="file" />
                     <Button variant="contained" onClick={hsignup}
                         style={{height:'56px', margin:'10px', backgroundColor: '#DCBE70'}}> SIGNUP </Button>
+                    </form>
                 </TabPanel>
               </TabContext>
             </Box>

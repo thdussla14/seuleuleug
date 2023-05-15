@@ -22,7 +22,7 @@ export default function BoardList(props) {
         console.log(e.target.value)
         console.log(e.target);
         console.log(e.target.text);
-        window.location.href = "/board/hboard?bno="+e.target.value
+        window.location.href = "/board/doctor/hboard?bno="+e.target.value
     }
     // css
     const Item = styled(Paper)(({ theme }) => ({

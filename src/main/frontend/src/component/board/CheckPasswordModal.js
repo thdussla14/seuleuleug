@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -18,10 +19,13 @@ export default function CheckPasswordModal(props) {
   const item = props.item
   // 입력된 비밀번호와 게시물 비밀번호 비교
   const checkPassword = (e) =>{
-     const bpassword = document.querySelector('#bpassword').value
-     console.log(bpassword)
-     if(bpassword === item.bpassword){window.location.href="/board/myboard?bno="+item.bno}
-     else{alert("비밀번호가 일치하지 않습니다."); window.location.href="/"}
+     item.bpassword = document.querySelector('#bpassword').value;
+     axios.post('/board/checkpw',  item )
+         .then((r) => {
+             console.log(r);
+             if(r.data === true){window.location.href="/board/user/myboard?bno="+item.bno;}
+             else{alert('비밀번호가 일치하지 않습니다.'); window.location.href='/'}
+         })
   }
   // css
   const style = {

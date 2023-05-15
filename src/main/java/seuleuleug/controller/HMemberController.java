@@ -18,16 +18,11 @@ public class HMemberController {
     private HMemberService hMemberService;
 
     @PostMapping("/hsignup")
-    public boolean hsignup(@RequestBody HMemberDto hMemberDto){
+    public boolean hsignup(HMemberDto hMemberDto){
         log.info("hsignup : " + hMemberDto);
         boolean result = hMemberService.hsignup(hMemberDto);
         log.info("result : " + result);
         return result;
-    }
-
-    @PostMapping("/files")
-    public boolean files(@RequestParam("hmcertification") MultipartFile multipartFile){
-        return hMemberService.files(multipartFile);
     }
 
     @GetMapping("/hlogin")

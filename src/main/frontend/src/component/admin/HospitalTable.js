@@ -1,7 +1,9 @@
 import React, {useState,useEffect} from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
 import { DataGrid, GridColDef, GridValueGetterParams, GridRowSelectionModel } from '@mui/x-data-grid';
+
 
 export default function HospitalTable(props) {
 
@@ -21,24 +23,23 @@ export default function HospitalTable(props) {
     const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
 
     return (<>
-        <div style={{marginTop:'30px'}}
+        <div style={{marginTop:'30px'}}>
             <div style={{ height: 400, width: '100%', backgroundColor:'white' }}>
-              <DataGrid
-                getRowId = {(row) => row.hno}
-                rows={rows}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10]}
-                onRowSelectionModelChange={(newRowSelectionModel) => {
-                  setRowSelectionModel(newRowSelectionModel);
-                }}
-              />
+            <DataGrid
+              getRowId = {(row) => row.hno}
+              rows={rows}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              pageSizeOptions={[5, 10]}
+              onRowSelectionModelChange={(newRowSelectionModel) => {
+                setRowSelectionModel(newRowSelectionModel);
+              }}
+            />
             </div>
         </div>
     </>)
-
 }
