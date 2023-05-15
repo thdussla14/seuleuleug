@@ -8,9 +8,8 @@ import { AppContext } from './LoginSocket';
 export default function Login(props){
     let inputMemail = useRef(null);
     let inputMphone = useRef(null);
+
     const socketRef = useContext(AppContext);
-    console.log(props)
-    console.log(socketRef)
 
 
     const mlogin = () => {
@@ -25,12 +24,7 @@ export default function Login(props){
                 sessionStorage.setItem('loginType', "normal");
 
                 console.log(socketRef)
-                socketRef.current.send(JSON.stringify({
-                    type : "request",
-                    who : "normal",
-                    userEmail : r.data.memail
-                }));
-                window.location.href="/";
+                //window.location.href="/";
             }else{
                 alert('로그인 실패');
             }

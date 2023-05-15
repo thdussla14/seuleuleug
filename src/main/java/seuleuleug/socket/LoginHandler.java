@@ -54,7 +54,7 @@ public class LoginHandler extends TextWebSocketHandler {
             log.info("request 로 옴");
             for (LoginUserDto dto : loginUserDtoList) {
                 if (dto.getUserEmail().equals(jsonMessage.getString("userEmail")));
-                    String tochatmessage = "qweqwe";
+                    String tochatmessage = " type : enter, chatRoomId : 123 ";
                     TextMessage textMessage = new TextMessage(tochatmessage);
                     chattingHandler.handleTextMessage(dto.getSession(),textMessage);
 

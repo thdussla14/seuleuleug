@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef,useContext} from 'react';
 import {BrowserRouter , Routes , Route } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
@@ -22,15 +22,12 @@ import ChallengeWrite from './challenge/ChallengeWrite';
 import Challenge from './challenge/Challenge';
 import SimriTest from './info/SimriTest';
 import ChallengeDetail from './challenge/ChallengeDetail.js'
-import LoginSocket, { AppContext } from './chatting/LoginSocket';
+import { AppProvider } from './chatting/LoginSocket';
 
 export default function Index(props) {
 
-
-
     return (<>
-        <LoginSocket>
-            <AppContext.Provider>
+            <AppProvider>
                 <BrowserRouter>
                     <Header />
                     <Routes >
@@ -58,7 +55,6 @@ export default function Index(props) {
                         <Route path="/challenge/challengedetail" element={<ChallengeDetail />} />
                     </Routes>
                 </BrowserRouter>
-            </AppContext.Provider>
-        </LoginSocket>
+            </AppProvider>
     </>)
 }
