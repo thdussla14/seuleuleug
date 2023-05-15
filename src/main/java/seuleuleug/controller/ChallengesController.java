@@ -47,9 +47,16 @@ public class ChallengesController {
     @GetMapping("detail")
     public ChallengesDto getDetail(@RequestParam int chno ){return challengesService.getDetail(chno);}
 
-    // 챌린지 참여
+    // 오늘 챌린지 참여 목록
     @GetMapping("results")
     public List<ChallengeResultsDto> getResult(@RequestParam int chno){log.info("chno"+chno); return challengesService.getResult(chno);}
+
+    // 로그인한 사람의 참여 보기
+    @GetMapping("results/info")
+    public List<ChallengeResultsDto> getResultByMno(@RequestBody ChallengeResultsDto challengeResultsDto){log.info("getResultByMno : "+challengeResultsDto);return challengesService.getResultByMno(challengeResultsDto);}
+
+    @GetMapping("results/admin")
+    public List<ChallengeResultsDto> getResultAdmin(@RequestParam int chno){return challengesService.getResultAdmin(chno);}
 
     @PostMapping("results")
     public boolean postResult(ChallengeResultsDto challengeResultsDto){return challengesService.postResult(challengeResultsDto);}

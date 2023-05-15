@@ -33,7 +33,7 @@ export default function ChallengeResultList(props) {
     const [ rows , setRows ] = useState ([]);
 
     // 2. 제품 호출 axios
-    const getChallenge = () => {axios.get('/challenge/results',{ params : searchParams })
+    const getChallenge = () => {axios.get('/challenge/results/admin',{ params : searchParams })
         .then( r => {
             console.log(r);
             setRows(r.data)

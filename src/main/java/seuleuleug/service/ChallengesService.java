@@ -13,6 +13,7 @@ import seuleuleug.domain.member.MemberEntity;
 import seuleuleug.domain.member.MemberEntityRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -141,9 +142,11 @@ public class ChallengesService {
     }
 
     // 챌린지 참여
+    // 상세페이지에서 참여 목록
     @Transactional
     public List<ChallengeResultsDto> getResult(int chno){
-        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findByChno(chno);
+        String datenow = LocalDateTime.now().toLocalDate().toString();
+        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findByChno(chno,datenow);
         List<ChallengeResultsDto> challengeResultsDtoList = new ArrayList<>();
         challengeResultsEntityList.forEach(e->{
             ChallengeResultsDto dto = e.toDto();
@@ -156,6 +159,44 @@ public class ChallengesService {
         return challengeResultsDtoList;
     }
 
+    // 로그인한 사람 참여상황
+    @Transactional
+    public List<ChallengeResultsDto> getResultByMno(ChallengeResultsDto resultsDto){
+        Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(resultsDto.getMemail());
+        if(!optionalMemberEntity.isPresent()){return null;}
+        MemberEntity memberEntity = optionalMemberEntity.get();
+
+        log.info("getResultByMno : "+resultsDto);
+        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findByMno(resultsDto.getChno(),memberEntity.getMno());
+        List<ChallengeResultsDto> challengeResultsDtoList = new ArrayList<>();
+        challengeResultsEntityList.forEach(e->{
+            ChallengeResultsDto dto = e.toDto();
+            dto.setChno(e.getChallengesEntity().getChno());
+            dto.setMno(e.getMemberEntity().getMno());
+            dto.setMemail(e.getMemberEntity().getMemail());
+            challengeResultsDtoList.add(dto);
+        });
+        log.info("getResultByMno : "+challengeResultsDtoList);
+        return challengeResultsDtoList;
+    }
+
+    // 관리자 페이지에서 참여 목록
+    @Transactional
+    public List<ChallengeResultsDto> getResultAdmin(int chno){
+        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findByChnoAndState(chno);
+        List<ChallengeResultsDto> challengeResultsDtoList = new ArrayList<>();
+        challengeResultsEntityList.forEach(e->{
+            ChallengeResultsDto dto = e.toDto();
+            dto.setChno(e.getChallengesEntity().getChno());
+            dto.setMno(e.getMemberEntity().getMno());
+            dto.setMemail(e.getMemberEntity().getMemail());
+            challengeResultsDtoList.add(dto);
+        });
+        log.info("Challenges"+challengeResultsDtoList);
+        return challengeResultsDtoList;
+    }
+
+    // 오늘의 인증 등록
     @Transactional
     public boolean postResult(ChallengeResultsDto challengeResultsDto){
         log.info("Challenges"+challengeResultsDto);
@@ -173,8 +214,6 @@ public class ChallengesService {
         Optional<ChallengesEntity> optionalChallengesEntity = challengesEntityRepository.findById(challengeResultsDto.getChno());
         if( !optionalChallengesEntity.isPresent() ){ return false; }
         ChallengesEntity challengesEntity = optionalChallengesEntity.get();
-
-
 
         // 1. 챌린지 작성(이미지 저장)
         if( !challengeResultsDto.getSimg().isEmpty() ){
@@ -200,6 +239,7 @@ public class ChallengesService {
         return false;
     }
 
+    // 관리자 페이지 인증 확인
     @Transactional
     public boolean putResult(ChallengeResultsDto challengeResultsDto){
         log.info("sno : " + challengeResultsDto);
