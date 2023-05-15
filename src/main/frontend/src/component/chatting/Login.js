@@ -27,9 +27,7 @@ export default function Login(props){
     const mlogin = () => {
         let loginForm = document.querySelectorAll(".user")[0];
         let loginFormData = new FormData(loginForm);
-            console.log(loginFormData);
         axios.post("/member/login", loginFormData ).then( r=>{
-            console.log(r.data);
             if(r.data != false){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', r.data.memail);
@@ -45,15 +43,14 @@ export default function Login(props){
     let inputHpassword = useRef(null);
 
     const hlogin = () => {
+        let loginForm = document.querySelectorAll(".doctor")[0];
+        let loginFormData = new FormData(loginForm);
 
-        let hmemail = inputHmemail.current.value;
-        let hpassword = inputHpassword.current.value;
-
-        axios.get("/hmember/hlogin", {params : { "hmemail" : hmemail , "hpassword" : hpassword }} ).then( r=>{
+        axios.get("/hmember/hlogin", loginFormData ).then( r=>{
             console.log(r.data);
-            if(r.data!==null){
+            if(r.data != false){
                 alert('로그인 성공');
-                sessionStorage.setItem('email', hmemail);
+                sessionStorage.setItem('email', r.data.hmemail);
                 sessionStorage.setItem('loginType', "doctor");
                 window.location.href="/";
             }else{
