@@ -2,6 +2,7 @@ package seuleuleug.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,7 @@ public class HMemberService {
     @Autowired
     private HttpServletRequest request;
 
+    // 의사 회원가입
     public boolean hsignup(HMemberDto hMemberDto){
         Optional<HospitalEntity> optionalHospitalEntity = hospitalEntityRepository.findById(hMemberDto.getHno());
         if(optionalHospitalEntity.isPresent()){
@@ -42,18 +44,29 @@ public class HMemberService {
             optionalHospitalEntity.get().getHMemberEntities().add(hMemberEntity);
             hMemberEntity.setHmpimg(fileDto1.getUuidFile());
             hMemberEntity.setHmcertification(fileDto2.getUuidFile());
+        // 비밀번호 암호화
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        hMemberDto.setHpassword(passwordEncoder.encode(hMemberDto.getHpassword()));
+        // 등급부여
+        hMemberDto.setHrole("DOCTOR");
+        // 저장
+        HMemberEntity hMemberEntity = hMemberRepository.save(hMemberDto.toEntity());
+        if(hMemberEntity.getHmno()>0){
             return true;
         }
+
         return false;
     }
 
     public HMemberDto hlogin(String hmemail , String hpassword){
         log.info("hlogin service: " + hmemail + " / " + hpassword);
-        Optional<HMemberEntity> optionalHMemberEntity = hMemberRepository.findByHmemailAndHpassword(hmemail,hpassword);
-        if(optionalHMemberEntity.isPresent()){
+        // 입력받은 이메일로 아이디 찾기
+        HMemberEntity entity = hMemberRepository.findByHmemail(hmemail);
+        // 암호화 된 비밀번호와 입력받은 비밀번호 비교
+        if( new BCryptPasswordEncoder().matches( hpassword , entity.getHpassword())){
             request.getSession().setAttribute("logintype","doctor");
-            request.getSession().setAttribute("email",optionalHMemberEntity.get().getHmemail());
-            return optionalHMemberEntity.get().toDto();
+            request.getSession().setAttribute("email",entity.getHmemail());
+            return entity.toDto();
         }
         return null;
     }

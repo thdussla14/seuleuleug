@@ -25,14 +25,14 @@ export default function Login(props){
     let inputMphone = useRef(null);
 
     const mlogin = () => {
-       let memail = inputMemail.current.value;
-       let mphone = inputMphone.current.value;
-
-        axios.get("/member/login", {params : { "memail" : memail , "mphone" : mphone }} ).then( r=>{
+        let loginForm = document.querySelectorAll(".loginForm")[0];
+        let loginFormData = new FormData(loginForm);
+         console.log(loginFormData);
+        axios.post("/member/login", loginFormData ).then( r=>{
             console.log(r.data);
-            if(r.data!==null){
+            if(r.data != false){
                 alert('로그인 성공');
-                sessionStorage.setItem('email', memail);
+                sessionStorage.setItem('email', r.data.memail);
                 sessionStorage.setItem('loginType', "normal");
                 window.location.href="/";
             }else{
