@@ -2,15 +2,15 @@ import React from 'react';
 import {useEffect, useState, useRef, useContext} from 'react'
 import Container from '@mui/material/Container';
 import axios from 'axios';
-import { AppContext } from './LoginSocket';
+import { LoginContext,LoginListProvider } from './LoginListProvider';
 
 
 export default function Login(props){
     let inputMemail = useRef(null);
     let inputMphone = useRef(null);
 
-    const socketRef = useContext(AppContext);
-
+    const {loginsocket} = useContext(LoginContext);
+    console.log(loginsocket)
 
     const mlogin = () => {
        let memail = inputMemail.current.value;
@@ -22,9 +22,11 @@ export default function Login(props){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', memail);
                 sessionStorage.setItem('loginType', "normal");
-
-                console.log(socketRef)
-                //window.location.href="/";
+                console.log(loginsocket)
+                loginsocket.onopen = (e)=>{
+                    console.log('로그인 서버 연결');
+                }
+                window.location.href="/";
             }else{
                 alert('로그인 실패');
             }
