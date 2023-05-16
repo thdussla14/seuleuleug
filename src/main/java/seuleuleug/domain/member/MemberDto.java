@@ -6,17 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 @Data@AllArgsConstructor@NoArgsConstructor@Builder
-public class MemberDto implements UserDetails {
+public class MemberDto implements UserDetails , OAuth2User {
     private int mno;            //회원번호
     private String memail;       //회원이메일
     private String mphone;       //회원전화번호
     private String mrole;       // 회원등급
     private Set<GrantedAuthority> roleList; //권한 목록
+    private Map<String , Object> social; // oauth2 인증 회원정보
 
     public MemberEntity toEntity() {
         return MemberEntity.builder()
@@ -56,4 +59,10 @@ public class MemberDto implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    // OAuth2User
+    @Override // Oauth2 회원정보
+    public Map<String, Object> getAttributes() { return this.social; }
+    @Override // Oauth2 아이디
+    public String getName() { return this.memail; }
 }
