@@ -11,7 +11,22 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { LoginContext,LoginListProvider } from './LoginListProvider';
 
-
+const createWebSocket =() =>{
+    const websocket = new WebSocket("ws://localhost:8080/intoHomePage");
+     websocket.onopen = (e)=>{
+        console.log('로그인 서버 연결');
+    }
+    websocket.onclose = (e)=>{
+        console.log('서버 탈출! ');
+    }
+    websocket.onmessage = (e)=>{
+        console.log(e.data);
+    }
+    websocket.onerror = (e)=>{
+        console.log(e);
+    }
+    return websocket;
+}
 
 export default function Login(props){
     // 탭 전환
@@ -20,6 +35,8 @@ export default function Login(props){
         setValue(newValue);
     }
 
+    const {loginsocket, handleWebSocket} = useContext(LoginContext);
+
     // 일반로그인
     let inputMemail = useRef(null);
     let inputMphone = useRef(null);
@@ -27,13 +44,15 @@ export default function Login(props){
     const mlogin = () => {
         let loginForm = document.querySelectorAll(".user")[0];
         let loginFormData = new FormData(loginForm);
-            console.log(loginFormData);
         axios.post("/member/login", loginFormData ).then( r=>{
-            console.log(r.data);
             if(r.data != false){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', r.data.memail);
                 sessionStorage.setItem('loginType', "normal");
+                handleWebSocket(createWebSocket());
+                console.log(loginsocket);
+
+
                 window.location.href="/";
             }else{
                 alert('로그인 실패');
@@ -45,16 +64,17 @@ export default function Login(props){
     let inputHpassword = useRef(null);
 
     const hlogin = () => {
+        let loginForm = document.querySelectorAll(".doctor")[0];
+        let loginFormData = new FormData(loginForm);
 
-        let hmemail = inputHmemail.current.value;
-        let hpassword = inputHpassword.current.value;
-
-        axios.get("/hmember/hlogin", {params : { "hmemail" : hmemail , "hpassword" : hpassword }} ).then( r=>{
+        axios.get("/hmember/hlogin", loginFormData ).then( r=>{
             console.log(r.data);
-            if(r.data!==null){
+            if(r.data != false){
                 alert('로그인 성공');
-                sessionStorage.setItem('email', hmemail);
+                sessionStorage.setItem('email', r.data.hmemail);
                 sessionStorage.setItem('loginType', "doctor");
+
+
                 window.location.href="/";
             }else{
                 alert('로그인 실패');
