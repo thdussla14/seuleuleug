@@ -22,6 +22,8 @@ public class CommentDto {
     private String  hmname;
     private String  hmemail;
 
+    private String  hname;
+
     public  CommentEntity toCommentEntity() {
         return CommentEntity.builder()
                 .rno(this.rno)

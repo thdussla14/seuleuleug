@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import styles from '../../css/main.css';
 import CategoryList from './CategoryList';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -50,32 +49,30 @@ export default function Write(props) {
 
     return(<Container>
         <h3>  게시글 작성 페이지 </h3>
-        <div style={{ display: 'flex' }}>
-            <CategoryList categoryChange= {categoryChange} />
-            <Box sx={{ minWidth: 100 }}>
-              <FormControl style={{width:'200px', margin:'20px 0px'}}>
-                <InputLabel id="demo-simple-select-label"> Local </InputLabel>
-                <Select value={local} label="지역" onChange={handleChange}>
-                    <MenuItem value={"서울 특별시"}>서울 특별시  </MenuItem>
-                    <MenuItem value={"부산 특별시"}>부산 광역시  </MenuItem>
-                    <MenuItem value={"인천 특별시"}>인천 광역시  </MenuItem>
-                    <MenuItem value={"대구 특별시"}>대구 광역시  </MenuItem>
-                    <MenuItem value={"광주 특별시"}>광주 광역시  </MenuItem>
-                    <MenuItem value={"대전 특별시"}>대전 광역시  </MenuItem>
-                    <MenuItem value={"울산 특별시"}>울산 광역시  </MenuItem>
-                    <MenuItem value={"경기도"}>    경기도      </MenuItem>
-                    <MenuItem value={"강원도"}>    강원도      </MenuItem>
-                    <MenuItem value={"충청남도"}>   충청남도     </MenuItem>
-                    <MenuItem value={"충청북도"}>   충청북도     </MenuItem>
-                    <MenuItem value={"전라남도"}>   전라남도     </MenuItem>
-                    <MenuItem value={"전라북도"}>   전라북도     </MenuItem>
-                    <MenuItem value={"경상남도"}>   경상남도     </MenuItem>
-                    <MenuItem value={"경상북도"}>   경상북도     </MenuItem>
-                    <MenuItem value={"제주특별자치도"}>제주특별자치도</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-        </div>
+        <CategoryList categoryChange= {categoryChange} />
+        <Box sx={{ minWidth: 100 }}>
+          <FormControl style={{width:'100%', margin:'10px 0px'}} size="small">
+            <InputLabel id="demo-simple-select-label"> Local </InputLabel>
+            <Select value={local} label="지역" onChange={handleChange}>
+                <MenuItem value={"서울 특별시"}>서울 특별시  </MenuItem>
+                <MenuItem value={"부산 특별시"}>부산 광역시  </MenuItem>
+                <MenuItem value={"인천 특별시"}>인천 광역시  </MenuItem>
+                <MenuItem value={"대구 특별시"}>대구 광역시  </MenuItem>
+                <MenuItem value={"광주 특별시"}>광주 광역시  </MenuItem>
+                <MenuItem value={"대전 특별시"}>대전 광역시  </MenuItem>
+                <MenuItem value={"울산 특별시"}>울산 광역시  </MenuItem>
+                <MenuItem value={"경기도"}>    경기도      </MenuItem>
+                <MenuItem value={"강원도"}>    강원도      </MenuItem>
+                <MenuItem value={"충청남도"}>   충청남도     </MenuItem>
+                <MenuItem value={"충청북도"}>   충청북도     </MenuItem>
+                <MenuItem value={"전라남도"}>   전라남도     </MenuItem>
+                <MenuItem value={"전라북도"}>   전라북도     </MenuItem>
+                <MenuItem value={"경상남도"}>   경상남도     </MenuItem>
+                <MenuItem value={"경상북도"}>   경상북도     </MenuItem>
+                <MenuItem value={"제주특별자치도"}>제주특별자치도</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         <TextField fullWidth className="bemail"    id="bemail"     label="이메일"    variant="standard" /> <br />
         <TextField fullWidth className="bpassword" id="bpassword"  label="비밀번호"  variant="standard" /> <br />
         <TextField fullWidth className="btitle"    id="btitle"     label="제목"     variant="standard" /> <br />

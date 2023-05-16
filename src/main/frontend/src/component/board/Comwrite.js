@@ -1,11 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import styles from '../../css/Comment.css'; // css 호출
-import doctor from '../../doctor.png';  // img 호출
 
 export default function Comwrite(props) {
 
@@ -17,16 +15,17 @@ export default function Comwrite(props) {
     useEffect(()=>{
          let hmemail = sessionStorage.getItem("email");
          axios.get('/hmember/hcomment', {params : {"hmemail":hmemail}} )
-             .then(  (r) => { console.log(r); setDoctor(r.data);})
+             .then(  (r) => { console.log(r.data); setDoctor(r.data);})
              .catch( (e) => { console.log(e);})
     }, [])
 
     // 입력한 코멘트 댓글 저장
-    const setComment = () =>{
+    const rcontent = useRef(null);
 
+    const setComment = () =>{
         let info = {
             bno       : bno,
-            rcontent  : document.querySelector('#rcontent').value,
+            rcontent  : rcontent.current.value,
             hmno      : doctor.hmno
         }
         console.log(info);
@@ -46,15 +45,15 @@ export default function Comwrite(props) {
     return(<Container>
         <div className="wrapper">
            <div>
-               <Avatar alt="Remy Sharp" src={doctor} />
+               <Avatar alt={doctor.hmname}  src={'http://localhost:8080/static/media/'+doctor.hmpimg} />
            </div>
            <div className="contentContainer">
                 <div className="nameText">   {doctor.hmname}  의사   </div>
+                <div style={{fontSize:'10px'}}>   {doctor.hname}  소속    </div>
            </div>
         </div>
         <TextField fullWidth style={{marginTop:'20px'}}
-          className="rcontent"
-          id="rcontent"
+          inputRef={rcontent}
           label="내용"
           multiline
           rows={10}

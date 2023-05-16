@@ -23,6 +23,7 @@ public class FileService {
     String path = "C:\\Users\\504\\Desktop\\seuleuleug\\build\\resources\\main\\static\\static\\media\\";
     //String path = "C:\\Users\\kjkim\\IdeaProjects\\seuleuleug\\build\\resources\\main\\static\\static\\media\\";
     public FileDto fileupload(MultipartFile multipartFile ){
+
         log.info("File upload : " + multipartFile);
         log.info("File upload : " + multipartFile.getOriginalFilename() ); // 실제 첨부파일 파일명
         log.info("File upload : " + multipartFile.getName() );              // input name

@@ -56,6 +56,7 @@ export default function WordTable(props) {
                   setRowSelectionModel(newRowSelectionModel);
                 }}
               />
+
             </div>
         </div>
     </>)

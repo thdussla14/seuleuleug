@@ -1,7 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React from 'react';
 import axios from 'axios';
-import styles from '../css/main.css';
-import {Container,Box,AppBar,Toolbar,Typography,Button,IconButton,Drawer,List,
+import {Box,AppBar,Toolbar,Typography,IconButton,Drawer,List,
 Divider,ListItem,ListItemText, ListItemButton,ListItemIcon}from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
@@ -13,7 +12,6 @@ import ChatIcon from '@mui/icons-material/Chat';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
-import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import DescriptionIcon from '@mui/icons-material/Description';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
@@ -23,12 +21,6 @@ export default function Header(props) {
     console.log(sessionStorage)
 
     const loginType = sessionStorage.getItem('loginType');
-
-
-
-
-
-
 
     if(sessionStorage.length<=0){
         console.log(sessionStorage)
@@ -78,10 +70,10 @@ export default function Header(props) {
               <ListItem key={text} disablePadding>
                 <ListItemButton href={ text.link }>
                   <ListItemIcon>
-                    {index == 0 ? <ChatIcon />           :
-                     index == 1 ? <LocalHospitalIcon />  :
-                     index == 2 ? <AccountBalanceIcon /> :
-                     index == 3 ? <MilitaryTechIcon />
+                    {index === 0 ? <ChatIcon />           :
+                     index === 1 ? <LocalHospitalIcon />  :
+                     index === 2 ? <AccountBalanceIcon /> :
+                     index === 3 ? <MilitaryTechIcon />
                      : <VolunteerActivismIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text.name} />
@@ -97,8 +89,8 @@ export default function Header(props) {
                     <ListItem key={text} disablePadding>
                       <ListItemButton href={ text.link }>
                         <ListItemIcon>
-                          { index == 0 ? <LoginIcon />      :
-                            index == 1 ? <HowToRegIcon />
+                          { index === 0 ? <LoginIcon />      :
+                            index === 1 ? <HowToRegIcon />
                           : <AdminPanelSettingsIcon />}
                         </ListItemIcon>
                         <ListItemText primary={text.name} />

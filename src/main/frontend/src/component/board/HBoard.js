@@ -2,11 +2,10 @@ import React, {useState,useEffect} from 'react'
 import { useSearchParams  } from 'react-router-dom';
 import axios from 'axios'
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import Chip from '@mui/material/Chip';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Comwrite from './Comwrite';
 
@@ -31,12 +30,12 @@ export default function MyBoard(props) {
             <Card sx={{ minWidth: 275 }}>
               <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                  {item.cname}
+                    <Chip label={item.cname} />
                 </Typography>
-                <Typography variant="h5" component="div">
+                <Typography variant="h5" component="div" style={{margin: '10px'}}>
                   {item.btitle}
                 </Typography>
-                <Typography variant="body2" style={{height:'200px'}}>
+                <Typography variant="body2" style={{height:'200px', margin: '10px'}}>
                   {item.bcontent}
                 </Typography>
               </CardContent>

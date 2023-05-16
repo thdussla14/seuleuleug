@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react'
 import { useSearchParams  } from 'react-router-dom';
 import axios from 'axios'
 import Container from '@mui/material/Container';
-import { Paper , Stack , styled , Typography } from '@mui/material';
+import { Paper , Stack , styled  } from '@mui/material';
 import CheckPasswordModal from './CheckPasswordModal';
 
 export default function MyBoardList(props) {

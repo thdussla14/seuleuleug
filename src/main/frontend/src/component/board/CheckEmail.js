@@ -24,7 +24,7 @@ export default function CheckEmail(props) {
             <h3>  EMAIL CHECK </h3>
             <TextField id="bemail" label="bemail" variant="outlined" className ="bemail"/>
             <Button variant="contained" onClick={checkEmail}
-                style={{height:'56px', marginLeft:'10px'}}> 내글 찾기 </Button>
+                style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 내글 찾기 </Button>
         </div>
     </Container>)
 

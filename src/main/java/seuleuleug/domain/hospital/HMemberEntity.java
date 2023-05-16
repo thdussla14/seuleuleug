@@ -34,7 +34,7 @@ public class HMemberEntity {
     @OneToMany(mappedBy = "hMemberEntity", cascade=CascadeType.ALL)
     @Builder.Default
     private List<CommentEntity> commentEntityList = new ArrayList<>();
-
+    // 
     public HMemberDto toDto() {
         return HMemberDto.builder()
               .hmno( this.hmno )
@@ -42,7 +42,19 @@ public class HMemberEntity {
               .hpassword( this.hpassword )
               .hmname(this. hmname )
               .hmphone(this. hmphone )
+              .hmpimg( this. hmpimg )
+              .hmcertification( this. hmcertification )
               .hmstate(this. hmstate )
               .build();
     }
+    // 답변 작성용 의사 정보 출력
+    public HMemberDto toCommentDto() {
+        return HMemberDto.builder()
+                .hmno( this.hmno )
+                .hmname(this. hmname )
+                .hmpimg( this. hmpimg )
+                .hname(this.getHospitalEntity().getHname())
+                .build();
+    }
+
 }
