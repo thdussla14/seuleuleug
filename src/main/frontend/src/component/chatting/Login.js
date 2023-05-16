@@ -9,8 +9,8 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { LoginContext,LoginListProvider } from './LoginListProvider';
-
+//import { LoginContext,LoginListProvider } from './LoginListProvider';
+/*
 const createWebSocket =() =>{
     const websocket = new WebSocket("ws://localhost:8080/intoHomePage");
      websocket.onopen = (e)=>{
@@ -27,7 +27,7 @@ const createWebSocket =() =>{
     }
     return websocket;
 }
-
+*/
 export default function Login(props){
     // 탭 전환
     const [value, setValue] = React.useState('1');
@@ -35,11 +35,10 @@ export default function Login(props){
         setValue(newValue);
     }
 
-    const {loginsocket, handleWebSocket} = useContext(LoginContext);
-
     // 일반로그인
     let inputMemail = useRef(null);
     let inputMphone = useRef(null);
+    let websocket = null;
 
     const mlogin = () => {
         let loginForm = document.querySelectorAll(".user")[0];
@@ -51,15 +50,30 @@ export default function Login(props){
                 alert('로그인 성공');
                 sessionStorage.setItem('email', r.data.memail);
                 sessionStorage.setItem('loginType', "normal");
-                handleWebSocket(createWebSocket());
-                console.log(loginsocket);
-
-
+                websocket = new WebSocket("ws://localhost:8080/intoHomePage");
+                sessionStorage.setItem('websocket',websocket);
+                websocket.onopen = () => {
+                  console.log('WebSocket connection is open.');
+                  sendWebSocketMessage("qweqweqwe");
+                };
+                console.log(websocket)
+                console.log(sessionStorage.getItem('websocket'))
                 window.location.href="/";
             }else{
                 alert('로그인 실패');
             }
         })
+    }
+    function sendWebSocketMessage(message) {
+      if (websocket.readyState === WebSocket.OPEN) {
+        console.log('Sending message:', message);
+        websocket.send(JSON.stringify("qweqweqwe"));
+      } else {
+        console.log('WebSocket connection is still connecting...');
+        setTimeout(() => {
+          sendWebSocketMessage(message);
+        }, 1000); // Retry after 1 second
+      }
     }
     // 의사 로그인
     let inputHmemail = useRef(null);
