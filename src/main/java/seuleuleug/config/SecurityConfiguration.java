@@ -44,7 +44,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .logout()
                             .logoutRequestMatcher( new AntPathRequestMatcher("/member/logout")) // 로그아웃 처리 를 요청할 매핑 URL
                             .logoutSuccessUrl("/")                                                          //로그아웃 성공했을때 이동할 매핑 URL
-                            .invalidateHttpSession( true );// 세션 초기화
+                            .invalidateHttpSession( true )// 세션 초기화
+                .and()
+                    .oauth2Login() // 소셜 로그인 설정     /oauth2/authorization/클라이언트이름
+                    .defaultSuccessUrl("/") // 로그인 성공시 이동할 매핑 URL
+                    .userInfoEndpoint()
+                    .userService( memberService ); //  oauth2 서비스를 처리할 서비스 구현
         http.cors();
         http.csrf().disable(); // cosf  사용 해제
 

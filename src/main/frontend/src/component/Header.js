@@ -93,7 +93,7 @@ export default function Header(props) {
               <>
               <Divider />
                 <List>
-                  {[{"name":'LOGIN',"link":'/login'},{"name":'SIGNUP',"link":'/signup'}].map((text, index) => (
+                  {[{"name":'LOGIN',"link":'/member/login'},{"name":'SIGNUP',"link":'/signup'}].map((text, index) => (
                     <ListItem key={text} disablePadding>
                       <ListItemButton href={ text.link }>
                         <ListItemIcon>

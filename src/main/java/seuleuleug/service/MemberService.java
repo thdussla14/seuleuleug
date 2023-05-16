@@ -9,6 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import seuleuleug.domain.member.MemberDto;
 import seuleuleug.domain.member.MemberEntity;
@@ -19,12 +24,13 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.websocket.Session;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
 @Slf4j
-public class MemberService implements UserDetailsService {
+public class MemberService implements UserDetailsService , OAuth2UserService<OAuth2UserRequest , OAuth2User> {
     @Autowired
     private MemberEntityRepository memberEntityRepository;
     @Autowired
@@ -44,6 +50,40 @@ public class MemberService implements UserDetailsService {
             return true;
         }
         return false;
+    }
+    // Oauth 유저 회원가입
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        // 1. 인증[로그인] 결과 토큰 확인
+        OAuth2UserService auth2UserService = new DefaultOAuth2UserService(); log.info("서비스 정보 : "+auth2UserService.loadUser( userRequest ));
+        // 2. 전달받은 정보 객체
+        OAuth2User oAuth2User = auth2UserService.loadUser( userRequest ); log.info("회원정보 : "+ oAuth2User.getAttributes());
+        // 3. 카카오 정보 호출
+        Map<String , Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
+        Map<String , Object> profile = (Map<String, Object>) kakao_account.get("profile");
+        String email = (String) kakao_account.get("email");
+        log.info("회원정보 : "+ email );
+        // 인가 객체 [ OAuth2User ---> MemberDto 통합Dto ( 일반+aouth ) ]
+        MemberDto memberDto = new MemberDto();
+        memberDto.setSocial( oAuth2User.getAttributes());
+        memberDto.setMemail(email);
+            Set<GrantedAuthority> roleList = new HashSet<>();
+            SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_USER");
+            roleList.add(role);
+        memberDto.setRoleList(roleList);
+        // 1. DB 저장하기 전에 해당 이메일로 된 이메일 존재하는지 검사( DB중복 저장 방지 )
+        Optional<MemberEntity> entityOptional = memberEntityRepository.findByMemail(email);
+        if(!entityOptional.isPresent()){
+            log.info("확인2 : "+ entityOptional );
+            memberDto.setMrole("USER");
+            MemberEntity entity = memberEntityRepository.save(memberDto.toEntity());
+            memberDto.setMno( entity.getMno());
+        }else {
+            MemberEntity entity = entityOptional.get();
+            memberDto = entity.toDto();
+        }
+        log.info("확인3 : "+ memberDto );
+        return memberDto;
     }
     // 일반회원 로그인 시큐리티 전
     /*@Transactional

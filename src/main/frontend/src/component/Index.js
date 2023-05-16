@@ -40,7 +40,7 @@ export default function Index(props) {
                 <Route path="/board/doctor/comwrite"    element={<Comwrite />} />
 
                 <Route path="/signup"                   element={<SignUp />} />
-                <Route path="/login"                    element={<Login />} />
+                <Route path="/member/login"                    element={<Login />} />
 
                 <Route path="/chattinglist"             element={<ChattingList />} />
                 <Route path="/chatting/:chatRoomId"     element={<Chat />} />

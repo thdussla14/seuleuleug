@@ -19,7 +19,7 @@ public class MemberEntity {
     private int mno;            //회원번호
     @Column(nullable = false, unique = true)
     private String memail;       //회원이메일
-    @Column(nullable = false, unique = true)
+    @Column
     private String mphone;       //회원전화번호
     @Column
     private String mrole;       // 회원등급
