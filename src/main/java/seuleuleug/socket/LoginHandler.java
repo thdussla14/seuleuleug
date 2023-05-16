@@ -29,11 +29,12 @@ public class LoginHandler extends TextWebSocketHandler {
         loginUserDtoList.add(LoginUserDto.builder()
                         .session(session)
                         .build());
+        log.info("loginUserDtoList : " + loginUserDtoList);
     }
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        super.handleMessage(session, message);
+        log.info("Received message from client: " + message.getPayload());
     }
 
     @Override
