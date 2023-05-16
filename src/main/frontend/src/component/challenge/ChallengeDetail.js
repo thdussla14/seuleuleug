@@ -26,6 +26,7 @@ export default function ChallengeDetail(props) {
     const [ items , setItems ] = useState([]);
     const [ imgs , setImgs ] = useState();
     const [ itemByMno , SetItemByMno ] = useState([]);
+    const [ date , setDate ] = useState();
 
     useEffect(()=>{
         get();
@@ -82,14 +83,18 @@ export default function ChallengeDetail(props) {
 
     // 로그인한 사람 인증 목록
     const getChallengeByMno = () => { console.log('실행'+searchParams.get('chno')+','+login)
-    axios.get('/challenge/results/info',{ chno:searchParams.get('chno'), memail:login })
+    let info = {
+        chno:searchParams.get('chno'), memail:login
+    }
+    axios.get('/challenge/resultsinfo',{params : info})
         .then( r => {
             console.log(r);
             SetItemByMno(r.data)
-            console.log(itemByMno)
         })
         .catch( (e) => { console.log(e);})
     }
+
+
 
     return(<Container>
         <div className="divs">
@@ -97,16 +102,34 @@ export default function ChallengeDetail(props) {
             <div name="chname"     id="chname">{items.chname}</div>
             <div name="chcontent"     id="chcontent">{items.chcontent}</div>
         </div>
-        {login=='null'?
+        {login=='null' ?
             <div>로그인하고 참여하기</div>
             :
-
+            itemByMno == "" ?
                 <form ref={ writeForm }>
-                    참여하기 : <input type="file" name="simg" id="simg"  /> <br />
+                    참여하기1 : <input type="file" name="simg" id="simg"  /> <br />
                     <input type="hidden" value={searchParams.get("chno")} name="chno" id="chno" />
                     <input type="hidden" value={login} name="memail" id="memail" />
                     <button type="button" onClick={postResult}>제출</button>
                 </form>
+                :
+                itemByMno[0].cdate != dateString ?
+                    <form ref={ writeForm }>
+                        참여하기2 : <input type="file" name="simg" id="simg"  /> <br />
+                        <input type="hidden" value={searchParams.get("chno")} name="chno" id="chno" />
+                        <input type="hidden" value={login} name="memail" id="memail" />
+                        <button type="button" onClick={postResult}>제출</button>
+                    </form>
+                    :
+
+
+                    itemByMno[0].sstate == 0 ?
+                        <div>오늘 : 참여완료[미인증]</div>
+                        :
+                        <div>
+                        {Math.abs(((new Date(itemByMno[0].cdate)).getTime() - (new Date(itemByMno[itemByMno.length-1].cdate)).getTime()) / (1000 * 60 * 60 * 24))+1}
+                        일째 도전 중 {itemByMno.length}일 성공
+                        오늘 : 참여완료[인증]</div>
         }
         <div>인증 사진</div>
         <ImageList  cols={3} rowHeight={120}>

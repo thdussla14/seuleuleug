@@ -41,8 +41,8 @@ public class ChallengeResultsEntity extends BaseTime {
                 .originalFilename(this.originalFilename)
                 .sno(this.sno)
                 .sstate(this.sstate)
-                .cdate(this.cdate.toLocalDate().format( DateTimeFormatter.ofPattern( "yy-MM-dd") ))
-                .udate(this.udate.toLocalDate().format( DateTimeFormatter.ofPattern( "yy-MM-dd") ))
+                .cdate(this.cdate.toLocalDate().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd") ))
+                .udate(this.udate.toLocalDate().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd") ))
                 .build();
     }
 

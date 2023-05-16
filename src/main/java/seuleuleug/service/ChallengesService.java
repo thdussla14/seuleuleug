@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -45,9 +46,21 @@ public class ChallengesService {
             b.getChallengesImgEntitiy().forEach((r)->{
                 list.add( r.toDto() );
             });
-
+            List<ChallengeResultsDto> challengeResultsDtoList = new ArrayList<>();
+            List<Map<Integer,Integer>> resultsEntity = challengeResultsEntityRepository.findByCount();
+            log.info("resultsEntity"+resultsEntity.toString());
+            /*resultsEntity.forEach((r)->{
+                for(Map.Entry<Integer,Integer> m : r.entrySet()){
+                    ChallengeResultsDto resultsDto = ChallengeResultsDto.builder()
+                            .mno(m.getKey())
+                            .chno(m.getValue())
+                            .build();
+                    challengeResultsDtoList.add(resultsDto);
+                }
+            });*/
             ChallengesDto dto = b.todto();
             dto.setChfiles(list);
+            dto.setChallengeResultsDto(challengeResultsDtoList);
             challengesDtoList.add(dto);
 
         });
@@ -161,13 +174,13 @@ public class ChallengesService {
 
     // 로그인한 사람 참여상황
     @Transactional
-    public List<ChallengeResultsDto> getResultByMno(ChallengeResultsDto resultsDto){
-        Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(resultsDto.getMemail());
+    public List<ChallengeResultsDto> getResultByMno(int chno , String memail ){
+        Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(memail);
         if(!optionalMemberEntity.isPresent()){return null;}
         MemberEntity memberEntity = optionalMemberEntity.get();
 
-        log.info("getResultByMno : "+resultsDto);
-        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findByMno(resultsDto.getChno(),memberEntity.getMno());
+        log.info("getResultByMno : "+chno+memail);
+        List<ChallengeResultsEntity> challengeResultsEntityList = challengeResultsEntityRepository.findByMno(chno,memberEntity.getMno());
         List<ChallengeResultsDto> challengeResultsDtoList = new ArrayList<>();
         challengeResultsEntityList.forEach(e->{
             ChallengeResultsDto dto = e.toDto();
