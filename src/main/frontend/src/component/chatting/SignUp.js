@@ -9,7 +9,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import SearchHospital from './SearchHospital';
+import JoinHospitalList from './JoinHospitalList';
 
 export default function SingUp(props){
 
@@ -40,9 +40,16 @@ export default function SingUp(props){
     // 의사 회원가입
     const inputform = useRef(null);
 
+    // 카테고리 변경
+    let [ hno, setHno ] = useState(0);
+    const hospitalChange = (hno) => {
+        console.log(hno)
+        setHno(hno);
+    }
     const hsignup = ()=>{
         const formData = new FormData(inputform.current);
         console.log(formData)
+        formData.set("hno", hno);
         axios.post('/hmember/hsignup',formData)
             .then(r=>{
             if( r.data == true){alert('회원 가입 완료');}
@@ -72,8 +79,8 @@ export default function SingUp(props){
                 </div>
                 </TabPanel>
                 <TabPanel value="2">
+                    <JoinHospitalList hospitalChange= {hospitalChange} />
                     <form ref={inputform}>
-                        <TextField name="hno"         label="소속병원"   variant="outlined"  margin="normal" size="small" />
                         <TextField name="hmemail"     label="이메일"    variant="outlined"  margin="normal" size="small" />
                         <TextField name="hpassword"   label="비밀번호"  variant="outlined"  margin="normal" size="small" />
                         <TextField name="hmname"      label="이름"     variant="outlined"  margin="normal" size="small" />

@@ -11,6 +11,7 @@ import seuleuleug.domain.challenges.FileDto;
 import seuleuleug.domain.hospital.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class HMemberService {
     private HttpServletRequest request;
 
     // 의사 회원가입
+    @Transactional
     public boolean hsignup(HMemberDto hMemberDto){
         Optional<HospitalEntity> optionalHospitalEntity = hospitalEntityRepository.findById(hMemberDto.getHno());
         if(optionalHospitalEntity.isPresent()) {
@@ -59,9 +61,10 @@ public class HMemberService {
         return false;
     }
     // 의사 승인 상태 변경
-    public boolean hupdate(int hmno){
-        log.info("hupdate service: " + hmno);
-        Optional<HMemberEntity> entityOptional = hMemberRepository.findById(hmno);
+    @Transactional
+    public boolean hupdate(HMemberDto hMemberDto){
+        log.info("hupdate service: " + hMemberDto);
+        Optional<HMemberEntity> entityOptional = hMemberRepository.findById(hMemberDto.getHmno());
         if(entityOptional.isPresent()){
             entityOptional.get().setHmstate(1);
             return true;

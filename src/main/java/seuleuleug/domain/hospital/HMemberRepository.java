@@ -13,4 +13,5 @@ public interface HMemberRepository extends JpaRepository<HMemberEntity , Integer
     Optional<HMemberEntity> findByHmemailAndHpassword(String hmemail, String hpassword);
     @Query(value = "select * from hmember where hmemail = :hmemail", nativeQuery = true)
     Optional<HMemberEntity> findByHmemail(String hmemail);
+
 }

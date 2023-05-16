@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { DataGrid, GridColDef} from '@mui/x-data-grid';
-
+import ConfirmDoctor from './ConfirmDoctor';
 
 export default function DoctorTable(props) {
 
@@ -20,14 +20,8 @@ export default function DoctorTable(props) {
         { field: 'hmstate', headerName: '승인',       width: 100 ,
              renderCell : (params)=>(
                  <strong>
-                     { params.value === 1 ? '승인'
-                     : <Button
-                            value={params.value}
-                            onClick={onupdate}
-                            style={{height:'15px', margin:'10px 0px',textDecoration: 'none',
-                            backgroundColor: '#DCBE70', color:'white'}}>
-                            승인
-                       </Button>
+                     { params.value === 1 ? '승인완료'
+                     : <ConfirmDoctor  item={params} />
                      }
                  </strong>)
         }
@@ -42,13 +36,7 @@ export default function DoctorTable(props) {
     useEffect (()=>{ setRows(item.row.list)},[])
     // 4.
     const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
-    // 의사 등록 승인
-    const onupdate = (e) => {
-        console.log(e);
-        console.log(e.target.value);
-        axios.put("/hmember/hupdate",  { "hmno" : 1 } )
-            .then( (r)=> console.log(r.data) );
-    }
+
     // 의사 삭제
     const onDeleteHandler = () => {
         console.log("onDeleteHandler");
@@ -56,8 +44,8 @@ export default function DoctorTable(props) {
         if( msg == true ){ // 삭제 확인 선택시
             // 선택된 글귀 하나씩 서버에 전달
             rowSelectionModel.forEach( r => {
-                axios.delete("/hmember", {params : { hmno : r }})
-                    .then( (r)=> console.log(r) );
+                axios.delete("/hmember", {params : { "hmno" : r }})
+                    .then( (r)=> {console.log(r); alert('삭제 완료'); window.location.reload();} );
             })
         }
     }
@@ -69,6 +57,7 @@ export default function DoctorTable(props) {
       left: '50%',
       transform: 'translate(-50%, -50%)',
       width: '90%',
+      height: '300px',
       bgcolor: 'background.paper',
       border: '2px solid #000',
       boxShadow: 24,
@@ -85,25 +74,27 @@ export default function DoctorTable(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-            <DataGrid
-              getRowId = {(row) => row.hmno}
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
-                },
-              }}
-              pageSizeOptions={[5, 10]}
-              checkboxSelection
-              onRowSelectionModelChange={(newRowSelectionModel) => {
-                setRowSelectionModel(newRowSelectionModel);
-              }}
-            />
-            <Button variant="contained" onClick ={ onDeleteHandler } disabled={ rowSelectionModel.length == 0 ? true : false }
-                style={{height:'30px', margin:'10px', backgroundColor: '#DCBE70'}}>
-                선택 삭제
-            </Button>
+            <div style={{height: '90%'}}>
+                <DataGrid
+                  getRowId = {(row) => row.hmno}
+                  rows={rows}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 5 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10]}
+                  checkboxSelection
+                  onRowSelectionModelChange={(newRowSelectionModel) => {
+                    setRowSelectionModel(newRowSelectionModel);
+                  }}
+                />
+                <Button variant="contained" onClick ={ onDeleteHandler } disabled={ rowSelectionModel.length == 0 ? true : false }
+                    style={{height:'30px', margin:'10px', backgroundColor: '#DCBE70'}}>
+                    선택 삭제
+                </Button>
+            </div>
         </Box>
       </Modal>
     </div>

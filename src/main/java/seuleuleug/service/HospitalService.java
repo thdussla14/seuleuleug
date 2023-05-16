@@ -39,7 +39,7 @@ public class HospitalService {
 
     //제휴 병원리스트 출력
     public List<HospitalDto> joinList ( ) {
-        List<HospitalEntity> list = hospitalEntityRepository.findAll();
+        List<HospitalEntity> list = hospitalEntityRepository.findjoinList();
         List<HospitalDto> DtoList = new ArrayList<>();
         if(list.size()>0){
             list.forEach((H)->{

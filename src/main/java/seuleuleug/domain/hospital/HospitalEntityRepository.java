@@ -14,4 +14,6 @@ public interface HospitalEntityRepository extends JpaRepository<HospitalEntity, 
     @Query( value = "select * from hospital where hname like %:keyword%", nativeQuery = true)
     List<HospitalEntity> findBykeyword(String keyword);
 
+    @Query(value = "select * from hospital where halliance = 1 ", nativeQuery = true)
+    List<HospitalEntity> findjoinList();
 }

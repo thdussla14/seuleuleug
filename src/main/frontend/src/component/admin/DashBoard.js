@@ -74,10 +74,6 @@ export default function DashBoard(props) {
                     <WordTable />
                 </TabPanel>
                 <TabPanel value="3" sx={{padding: '0px', marginTop : '20px'}}>
-                     <Button variant="contained" onClick={setWord}
-                                            style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 제휴병원 등록 </Button>
-                     <Button variant="contained" onClick={setWord}
-                                            style={{height:'56px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 제휴의사 등록 </Button> <br/>
                     <HospitalTable />
                 </TabPanel>
                 <TabPanel value="4" sx={{padding: '0px', marginTop : '20px'}}>
