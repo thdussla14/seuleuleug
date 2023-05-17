@@ -9,7 +9,7 @@ export default function HospitalTable(props) {
 
     const columns: GridColDef[] = [
       { field: 'hno',         headerName: '번호',       width: 50 ,type: 'number'},
-      { field: 'hname',       headerName: '병원명',     width: 150 },
+      { field: 'hname',       headerName: '병원명',     width: 100 },
       { field: 'halliance',   headerName: '제휴',       width: 100 ,
          renderCell : (params)=>(
              <strong>
@@ -21,7 +21,7 @@ export default function HospitalTable(props) {
     // 1. 상태변수
     const [ rows , setRows ] = useState ([]);
     // 2. 제품 호출 axios
-    const getHList = () => {axios.get("/hospital/joinlist").then( r => {console.log(r); setRows(r.data)})}
+    const getHList = () => {axios.get("/hospital/alllist").then( r => {console.log(r); setRows(r.data)})}
     // 3. 컴포넌트 생명주기에 따른 함수 호출
     useEffect (()=>{ getHList();},[])
     // 4.

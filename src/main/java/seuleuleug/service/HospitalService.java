@@ -42,17 +42,15 @@ public class HospitalService {
         List<HospitalEntity> list = hospitalEntityRepository.findjoinList();
         List<HospitalDto> DtoList = new ArrayList<>();
         if(list.size()>0){
-            list.forEach((H)->{
-                DtoList.add(H.toDto());
-            });
+            list.forEach((H)->{DtoList.add(H.toDto());});
             return DtoList;
         }
         return null;
     }
 
-    // 검색 병원 출력
-    public List<HospitalDto> findhospital (String keyword ) {
-        List<HospitalEntity> list = hospitalEntityRepository.findBykeyword(keyword);
+    // 전체 병원 출력
+    public List<HospitalDto> alllist ( ) {
+        List<HospitalEntity> list = hospitalEntityRepository.findAll();
         List<HospitalDto> DtoList = new ArrayList<>();
         if(list.size()>0){
             list.forEach((H)->{ DtoList.add(H.toDto());});
@@ -60,8 +58,5 @@ public class HospitalService {
         }
         return null;
     }
-
-
-
 
 }

@@ -38,7 +38,7 @@ export default function ChildModal(props) {
         console.log(e);
         console.log(e.target.value);
         axios.put("/hmember/hupdate",  { "hmno" : e.target.value } )
-            .then( (r)=> {console.log(r.data) ; alert('승인 완료'); window.location.href="/admin/dashboard";});
+            .then( (r)=> {console.log(r.data) ; alert('승인 완료'); window.location.href="/admin/dashboard"});
     }
 
     return (

@@ -33,7 +33,7 @@ public class BoardService {
     public boolean writeCategory(CategoryDto categoryDto){
         log.info("writeCategory"+categoryDto);
         categoryEntityRepository.save(categoryDto.toCategoryEntity());
-        return false;
+        return true;
     }
     // 카테고리 삭제
     public boolean deleteCategory(int cno) {

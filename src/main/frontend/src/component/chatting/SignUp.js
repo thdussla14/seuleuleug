@@ -85,9 +85,9 @@ export default function SingUp(props){
                         <TextField name="hpassword"   label="비밀번호"  variant="outlined"  margin="normal" size="small" />
                         <TextField name="hmname"      label="이름"     variant="outlined"  margin="normal" size="small" />
                         <TextField name="hmphone"     label="전화번호"  variant="outlined"  margin="normal" size="small" />
-                        <TextField name="doctorpimg"  label="프로필사진"  variant="outlined" margin="normal" size="small"
+                        <TextField name="doctorpimg"  label="프로필사진"  InputLabelProps={{ shrink: true}} variant="outlined" margin="normal" size="small"
                          accept="image/png, image/jpeg, image/gif"   type="file" />
-                        <TextField name="doctorcertification" label="의사증명서"  variant="outlined" margin="normal" size="small"
+                        <TextField name="doctorcertification" label="의사증명서"  InputLabelProps={{ shrink: true}} variant="outlined" margin="normal" size="small"
                          accept="image/png, image/jpeg, image/gif"   type="file" />
                         <Button variant="contained" onClick={hsignup}
                             style={{height:'56px', margin:'10px', backgroundColor: '#DCBE70'}}> SIGNUP </Button>
