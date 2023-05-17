@@ -31,11 +31,11 @@ public class WordService {
     public WordDto getWord() {
         List<WordEntity> entityList = wordEntityRepository.findAll();
         // 난수 생성
-        Random random = new Random();
-        Optional<WordEntity> WordEntity = wordEntityRepository.findById(random.nextInt(entityList.size()-1));
-        if(WordEntity.isPresent()){
-            return WordEntity.get().toWordDto();
-        }
+        /*Random random = new Random();
+        Optional<WordEntity> wordEntity = wordEntityRepository.findById(random.nextInt(entityList.size()-1));
+        if(wordEntity.isPresent()){
+            return wordEntity.get().toWordDto();
+        }*/
         return null;
     }
 

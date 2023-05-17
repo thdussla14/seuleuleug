@@ -51,14 +51,15 @@ export default function Login(props){
                 sessionStorage.setItem('email', r.data.memail);
                 sessionStorage.setItem('loginType', "normal");
                 websocket = new WebSocket("ws://localhost:8080/intoHomePage");
-                sessionStorage.setItem('websocket',websocket);
                 websocket.onopen = () => {
-                  console.log('WebSocket connection is open.');
-                  sendWebSocketMessage("qweqweqwe");
+                    console.log('WebSocket connection is open.');
+                    //sendWebSocketMessage("qweqweqwe");
                 };
+                sessionStorage.setItem('websocket',websocket);
+
                 console.log(websocket)
                 console.log(sessionStorage.getItem('websocket'))
-                window.location.href="/";
+                //window.location.href="/";
             }else{
                 alert('로그인 실패');
             }

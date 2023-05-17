@@ -71,4 +71,9 @@ public class ChattingHandler extends TextWebSocketHandler {
         chatUserDtoList.removeIf(chatUserDto -> chatUserDto.getSession().equals(session));
     }
 
+    public List<ChatUserDto> getChatUserDtoList() {
+        log.info("getChatUserDtoList");
+        return chatUserDtoList;
+    }
+
 }
