@@ -26,6 +26,7 @@ public class ChallengesEntity extends BaseTime {
     @Column
     private String chcontent;
 
+
     @OneToMany(mappedBy = "challengesEntity" , cascade = CascadeType.REMOVE)
     @ToString.Exclude @Builder.Default
     private List<ChallengesImgEntity> challengesImgEntitiy = new ArrayList<>();

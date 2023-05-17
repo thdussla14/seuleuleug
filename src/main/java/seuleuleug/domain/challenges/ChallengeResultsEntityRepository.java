@@ -17,6 +17,9 @@ public interface ChallengeResultsEntityRepository extends JpaRepository< Challen
     @Query( value = "select * from challenges_results where chno = :chno order by sstate asc, cdate desc " , nativeQuery = true )
     List<ChallengeResultsEntity> findByChnoAndState(int chno);
 
-    @Query( value = "select count(distinct mno) as mno , chno from challenges_results group by chno " , nativeQuery = true )
-    List<Map<Integer,Integer>> findByCount();
+    /*@Query( value = "select count(distinct mno) as mno , chno from challenges_results group by chno " , nativeQuery = true )
+    List<ChallengesEntity> findByCount();*/
+
+    @Query( value = "select count(distinct mno) as count , chno from challenges_results where chno=:chno " , nativeQuery = true )
+    List<ChallengeCount> findByCount(int chno);
 }

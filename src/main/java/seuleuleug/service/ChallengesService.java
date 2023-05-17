@@ -47,17 +47,15 @@ public class ChallengesService {
                 list.add( r.toDto() );
             });
             List<ChallengeResultsDto> challengeResultsDtoList = new ArrayList<>();
-            List<Map<Integer,Integer>> resultsEntity = challengeResultsEntityRepository.findByCount();
-            log.info("resultsEntity"+resultsEntity.toString());
-            /*resultsEntity.forEach((r)->{
-                for(Map.Entry<Integer,Integer> m : r.entrySet()){
-                    ChallengeResultsDto resultsDto = ChallengeResultsDto.builder()
-                            .mno(m.getKey())
-                            .chno(m.getValue())
-                            .build();
-                    challengeResultsDtoList.add(resultsDto);
-                }
-            });*/
+            List<ChallengeCount> challengeCounts = challengeResultsEntityRepository.findByCount(b.getChno());
+            challengeCounts.forEach((r)->{
+                ChallengeResultsDto resultsDto = ChallengeResultsDto.builder()
+                        .mno(r.getCount())
+                        .chno(r.getChno())
+                        .build();
+                challengeResultsDtoList.add(resultsDto);
+            });
+            log.info("resultsEntity : "+challengeResultsDtoList);
             ChallengesDto dto = b.todto();
             dto.setChfiles(list);
             dto.setChallengeResultsDto(challengeResultsDtoList);

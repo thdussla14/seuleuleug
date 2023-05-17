@@ -23,6 +23,7 @@ public class ChallengesDto {
     private List<FileDto> chfiles ;
     private List<ChallengeResultsDto> challengeResultsDto;
 
+    private int count;
 
     // toEntity
     public ChallengesEntity toEntity() {
