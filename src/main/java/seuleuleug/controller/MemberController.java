@@ -23,6 +23,12 @@ public class MemberController {
         log.info("signup dto: " + memberDto);
         return memberService.signup(memberDto);
     }
+
+    @GetMapping("/info")
+    public String info(){
+        String result = memberService.info();
+        return  result;
+    }
     /* 시큐리티 사용 전
     @GetMapping("/login")
     public MemberDto login(@RequestParam("memail") String memail, @RequestParam("mphone") String mphone ){

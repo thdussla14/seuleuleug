@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState , useEffect } from 'react';
 import axios from 'axios';
 import {Box,AppBar,Toolbar,Typography,IconButton,Drawer,List,
 Divider,ListItem,ListItemText, ListItemButton,ListItemIcon}from '@mui/material';
@@ -28,7 +28,24 @@ export default function Header(props) {
         sessionStorage.setItem('email', null);
         sessionStorage.setItem('loginType', null);
     }
+    // 로그인
+    useEffect( ()=>{
+        axios.get("/member/info").then( r => {console.log(r);
+            if( r.data != ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
+                // js 로컬 스토리지에 저장
+                if(r.data.split(' ')[0] == 'DOCTOR'){
+                    sessionStorage.setItem("email" , r.data.split(' ')[1] );
+                    sessionStorage.setItem('loginType', "doctor");
+                }else{
+                    sessionStorage.setItem("email" , r.data );
+                    sessionStorage.setItem('loginType', "normal");
+                }
+                console.log(sessionStorage)
+            }
+        })
+    }, [])
 
+    // 로그아웃
     const logOut = () => {
         sessionStorage.setItem('email', null);
         sessionStorage.setItem('loginType', null);

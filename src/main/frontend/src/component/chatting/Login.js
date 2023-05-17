@@ -45,22 +45,11 @@ export default function Login(props){
         let loginForm = document.querySelectorAll(".user")[0];
         let loginFormData = new FormData(loginForm);
         axios.post("/member/login", loginFormData ).then( r=>{
-            console.log(r.data);
             if(r.data != false){
                 alert('로그인 성공');
-                sessionStorage.setItem('email', r.data.memail);
-                sessionStorage.setItem('loginType', "normal");
-                websocket = new WebSocket("ws://localhost:8080/intoHomePage");
-                sessionStorage.setItem('websocket',websocket);
-                websocket.onopen = () => {
-                  console.log('WebSocket connection is open.');
-                  sendWebSocketMessage("qweqweqwe");
-                };
-                console.log(websocket)
-                console.log(sessionStorage.getItem('websocket'))
                 window.location.href="/";
             }else{
-                alert('로그인 실패');
+                alert('동일한 회원정보가 없습니다.');
             }
         })
     }
@@ -83,14 +72,10 @@ export default function Login(props){
         let loginForm = document.querySelectorAll(".doctor")[0];
         let loginFormData = new FormData(loginForm);
 
-        axios.get("/hmember/hlogin", loginFormData ).then( r=>{
+        axios.post("/member/login", loginFormData ).then( r=>{
             console.log(r.data);
             if(r.data != false){
                 alert('로그인 성공');
-                sessionStorage.setItem('email', r.data.hmemail);
-                sessionStorage.setItem('loginType', "doctor");
-
-
                 window.location.href="/";
             }else{
                 alert('로그인 실패');
@@ -126,8 +111,8 @@ export default function Login(props){
                 <TabPanel value="1">
                     <form style={{display:'flex'}} className="user">
                         <div>
-                            <TextField name="memail"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="normal" size="small"/> <br/>
-                            <TextField name="mphone"      label="핸드폰"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
+                            <TextField name="email"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="normal" size="small"/> <br/>
+                            <TextField name="password"      label="핸드폰"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
                         </div>
                         <div style={{marginTop:'20px'}}>
                             <Button variant="contained" onClick={mlogin}
@@ -140,8 +125,8 @@ export default function Login(props){
                 <TabPanel value="2">
                     <form style={{display:'flex'}} className="doctor">
                         <div>
-                            <TextField name="hmemail"     label="이메일"   variant="outlined"  inputRef={inputHmemail} margin="normal"  size="small"  /> <br/>
-                            <TextField name="hpassword"   label="비밀번호"  variant="outlined"  inputRef={inputHpassword} margin="normal" size="small" />
+                            <TextField name="email"     label="이메일"   variant="outlined"  inputRef={inputHmemail} margin="normal"  size="small"  /> <br/>
+                            <TextField name="password"   label="비밀번호"  variant="outlined"  inputRef={inputHpassword} margin="normal" size="small" />
                         </div>
                         <div style={{marginTop:'20px'}}>
                             <Button variant="contained" onClick={hlogin}
