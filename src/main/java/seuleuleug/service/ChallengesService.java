@@ -46,19 +46,11 @@ public class ChallengesService {
             b.getChallengesImgEntitiy().forEach((r)->{
                 list.add( r.toDto() );
             });
-            List<ChallengeResultsDto> challengeResultsDtoList = new ArrayList<>();
-            List<ChallengeCount> challengeCounts = challengeResultsEntityRepository.findByCount(b.getChno());
-            challengeCounts.forEach((r)->{
-                ChallengeResultsDto resultsDto = ChallengeResultsDto.builder()
-                        .mno(r.getCount())
-                        .chno(r.getChno())
-                        .build();
-                challengeResultsDtoList.add(resultsDto);
-            });
-            log.info("resultsEntity : "+challengeResultsDtoList);
+            int challengeCounts = challengeResultsEntityRepository.findByCount(b.getChno());
+
             ChallengesDto dto = b.todto();
             dto.setChfiles(list);
-            dto.setChallengeResultsDto(challengeResultsDtoList);
+            dto.setCount(challengeCounts);
             challengesDtoList.add(dto);
 
         });
@@ -144,8 +136,12 @@ public class ChallengesService {
             entity.getChallengesImgEntitiy().forEach((r)->{
                 list.add( r.toDto() );
             });
+
+            int challengeCounts = challengeResultsEntityRepository.findByCount(chno);
+
             ChallengesDto dto = entity.todto();
             dto.setChfiles(list);
+            dto.setCount(challengeCounts);
             log.info("Challenges"+dto);
             return dto;
         }
@@ -218,14 +214,18 @@ public class ChallengesService {
         //MemberEntity memberEntity = memberEntityRepository.findById(  memberDto.getMno() ).get();
 
         Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(challengeResultsDto.getMemail());
+        log.info("optionalMemberEntity : "+!optionalMemberEntity.isPresent());
         if(!optionalMemberEntity.isPresent()){return false; }
         MemberEntity memberEntity = optionalMemberEntity.get();
 
         // 0. 댓글작성할 게시물 호출
         Optional<ChallengesEntity> optionalChallengesEntity = challengesEntityRepository.findById(challengeResultsDto.getChno());
+        log.info("optionalChallengesEntity : "+!optionalChallengesEntity.isPresent());
         if( !optionalChallengesEntity.isPresent() ){ return false; }
         ChallengesEntity challengesEntity = optionalChallengesEntity.get();
 
+
+        log.info("getSimg : "+!challengeResultsDto.getSimg().isEmpty());
         // 1. 챌린지 작성(이미지 저장)
         if( !challengeResultsDto.getSimg().isEmpty() ){
             // 업로드된 파일 결과[리턴]
@@ -237,6 +237,7 @@ public class ChallengesService {
                             .uuidFile(fileDto.getUuidFile())
                             .build()
             );
+            log.info("challengeResultsEntity.getSno() : "+challengeResultsEntity.getSno());
             if( challengeResultsEntity.getSno() < 1 ) { return  false; }
 
             // 2. 댓글과 회원의 양방향 관계[ 댓글->회원 / 회원 -> 댓글 == 양방향  ,  댓글->회원 == 단방향  ]

@@ -59,7 +59,7 @@ public class ChallengesController {
     public List<ChallengeResultsDto> getResultAdmin(@RequestParam int chno){return challengesService.getResultAdmin(chno);}
 
     @PostMapping("/results")
-    public boolean postResult(ChallengeResultsDto challengeResultsDto){return challengesService.postResult(challengeResultsDto);}
+    public boolean postResult(ChallengeResultsDto challengeResultsDto){log.info("challengeResultsDto : "+challengeResultsDto); return challengesService.postResult(challengeResultsDto);}
 
     @PutMapping("/results")
     public boolean putResult(@RequestBody ChallengeResultsDto challengeResultsDto){log.info("sno"+challengeResultsDto);return challengesService.putResult(challengeResultsDto);}

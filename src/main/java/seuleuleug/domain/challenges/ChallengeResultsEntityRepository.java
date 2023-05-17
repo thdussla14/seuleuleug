@@ -20,6 +20,6 @@ public interface ChallengeResultsEntityRepository extends JpaRepository< Challen
     /*@Query( value = "select count(distinct mno) as mno , chno from challenges_results group by chno " , nativeQuery = true )
     List<ChallengesEntity> findByCount();*/
 
-    @Query( value = "select count(distinct mno) as count , chno from challenges_results where chno=:chno " , nativeQuery = true )
-    List<ChallengeCount> findByCount(int chno);
+    @Query( value = "select count(distinct mno) as count from challenges_results where chno=:chno " , nativeQuery = true )
+    int findByCount(int chno);
 }

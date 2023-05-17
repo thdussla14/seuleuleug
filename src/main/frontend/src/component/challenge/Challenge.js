@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import Pagination from '@mui/material/Pagination';
+import PersonIcon from '@mui/icons-material/Person';
 
 // 상세보기로 이동
 function detail(e,no){
@@ -44,8 +45,8 @@ function Media(props: MediaProps) {
                             <Typography display="block" variant="caption" color="text.secondary">
                                 {item.channel}
                             </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                                {`${item.views} • ${item.createdAt}`}
+                            <Typography variant="caption" color="text.secondary" style={{ display: 'flex', alignItems:'flex-center'}}>
+                                <PersonIcon sx={{ fontSize: 17 }} />{`${item.views} • ${item.createdAt}`}
                             </Typography>
                         </Box>
                     ) : (
@@ -77,7 +78,7 @@ export default function Challenge(props) {
                                 src: "http://localhost:8080/static/media/"+i.chfiles[0].uuidFile,
                                 title: i.chname,
                                 channel: "오늘부터 시작",
-                                views: "참여인원",
+                                views: i.count+"명",
                                 createdAt: i.cdate,
                                 no:i.chno,
                             }

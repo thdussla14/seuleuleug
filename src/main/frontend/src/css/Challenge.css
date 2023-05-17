@@ -1,7 +1,71 @@
-
-
 .divs{
     display: flex;
     width: 100%;
     flex-direction: column;
-    align-items: center;}
+}
+#chname{
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px 0px;
+}
+#chcontent{
+    font-size: 18px;
+    margin :  15px 0px;
+}
+#count{
+    display: flex;
+    align-items: center;
+}
+.infoBox{
+    width: 100%;
+    padding: 0px 20px;
+}
+.login{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #DCBE70;
+    font-size: 20px;
+    font-weight: bold;
+}
+.btn{
+       height: 42px;
+       width: 80px;
+       margin-left: 10px;
+       border: none;
+       font-size: 15px;
+       font-weight: bold;
+       background-color: #F0F0C6;
+}
+
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 180px;
+    color: #999999;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 22px;
+    font-size: 15px;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
