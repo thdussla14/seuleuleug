@@ -10,6 +10,7 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { SvgIconComponent } from "@mui/icons-material";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SearchIcon from '@mui/icons-material/Search';
+import Link from '@mui/material/Link';
 
 
 export default function Hospital(props){
@@ -36,9 +37,9 @@ export default function Hospital(props){
           <Item sx={{ my: 2, mx: 'auto', p: 2, display: 'flex', justifyContent: 'space-between' }}>
           <Stack>
             <Typography variant="h5">
-              <a style={ hospital.hurl == null ? { textDecoration: 'none' } : { textDecoration: 'underline' }} onClick={() => { hospital.hurl != null && window.open('http://' + hospital.hurl); }}>
+              <Link sx={{ color: 'black'}} style={ hospital.hurl == null ? { textDecoration: 'none' } : { textDecoration: 'underline' }} onClick={() => { hospital.hurl != null && window.open('http://' + hospital.hurl); }}>
                 {hospital.hname}
-              </a>
+              </Link>
             </Typography>
             <Typography>주소 : {hospital.haddr}</Typography>
             <Typography variant="body2">전화번호 : {hospital.hnum}</Typography>
