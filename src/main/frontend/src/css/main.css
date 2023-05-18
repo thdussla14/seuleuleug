@@ -39,8 +39,9 @@ a{
 .cookie-message {
     font-size: 14px ;
     font-weight: 700;
-    left: 23px;
-    top: -115px;
+    left: 148px;
+    max-width: 100px;
+    top: -123px;
     position: relative;
     transform: rotate(8deg);
 }
