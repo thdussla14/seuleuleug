@@ -15,51 +15,53 @@ import java.util.List;
 @Component // 빈 등록 [ 스프링 해당 클래스를 관리 = 제어 역전 == IOC]
 @Slf4j
 public class ChattingHandler extends TextWebSocketHandler {
-    protected static List<ChatUserDto> chatUserDtoList = new ArrayList<ChatUserDto>();
+    protected static List<ChatUserDto> chatUserDtoList = new ArrayList<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         log.info("서버에 접속");
         log.info("session1111: " + session);
+        String chatRoomId = (String) session.getAttributes().get("pathes");
+        log.info("chatRoomId: " + chatRoomId);
+        chatUserDtoList.add(ChatUserDto.builder()
+                        .session(session)
+                        .chatRoomId(chatRoomId)
+                        .sessionId(session.getId())
+                        .build());
+        log.info("서버 접속 : chatUserDtoList :" + chatUserDtoList);
     }
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
-        log.info("message2 : " + message.getPayload());
+        log.info("message2: " + message.getPayload());
         JSONObject jsonMessage = new JSONObject(message.getPayload());
         String type = jsonMessage.getString("type");
-        //log.info("message3 : " + type);
+
         if ("enter".equals(type)) {
-            String chatRoomId = jsonMessage.getString("chatRoomId");
-            chatUserDtoList.add(ChatUserDto.builder()
-                    .chatRoomId(chatRoomId)
-                    .session(session)
-                    .build());
-        } else if ("msg".equals(type)) {
-            String senderChatRoomId = null;
             for (ChatUserDto chatUserDto : chatUserDtoList) {
-                if (chatUserDto.getSession().equals(session)) {
-                    senderChatRoomId = chatUserDto.getChatRoomId();
-                    break;
+                if(chatUserDto.getSessionId().equals(session.getId())){
+                    chatUserDto.setType(jsonMessage.getString("who"));
                 }
             }
+        } else if ("msg".equals(type)) {
+            String senderChatRoomId = (String) session.getAttributes().get("pathes");
             List<WebSocketSession> sessions = new ArrayList<>();
+
             for (ChatUserDto chatUserDto : chatUserDtoList) {
                 if (chatUserDto.getChatRoomId().equals(senderChatRoomId)) {
                     sessions.add(chatUserDto.getSession());
                 }
             }
-            if (sessions != null) {
-                for (WebSocketSession sess: sessions) {
-                    if (sess.isOpen()) {
-                        sess. sendMessage(message);
-                    } // if e
-                } // for e
-            } // if e
-        } // else if e
 
-    } // method e
+            if (sessions != null) {
+                for (WebSocketSession sess : sessions) {
+                    if (sess.isOpen()) {
+                        sess.sendMessage(message);
+                    }
+                }
+            }
+        } // msg e
+    }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
@@ -68,7 +70,22 @@ public class ChattingHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        chatUserDtoList.removeIf(chatUserDto -> chatUserDto.getSession().equals(session));
+        log.info("서버에서 나감");
+        chatUserDtoList.removeIf(chatUserDto -> chatUserDto.getSessionId().equals(session.getId()));
+    }
+
+    public List<ChatUserDto> getChatUserDtoList() {
+        log.info("getChatUserDtoList");
+        List<ChatUserDto> result = new ArrayList<>();
+        for (ChatUserDto dto : chatUserDtoList) {
+            ChatUserDto newDto = ChatUserDto.builder()
+                    .sessionId(dto.getSessionId())
+                    .chatRoomId(dto.getChatRoomId())
+                    .type(dto.getType())
+                    .build();
+            result.add(newDto);
+        }
+        return result;
     }
 
 }
