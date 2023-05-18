@@ -16,7 +16,7 @@
     display: inline-block;
     padding: 5px 10px;
     border-radius: 20px;
-    background-color: #5c6ac4;
+    background-color: #dcbe70;
     color: #fff;
     font-size: 14px;
     font-weight: 700;
@@ -87,6 +87,7 @@
   margin: 0 auto;
   padding: 20px;
   background-color: #fff;
+  background-color: transparent;
 }
 
 .tab-menu {

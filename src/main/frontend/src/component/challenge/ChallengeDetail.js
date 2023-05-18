@@ -29,6 +29,7 @@ export default function ChallengeDetail(props) {
     const [ imgs , setImgs ] = useState();
     const [ itemByMno , SetItemByMno ] = useState([]);
     const [ date , setDate ] = useState();
+    const imageInput = useRef();
 
     useEffect(()=>{
         get();
@@ -96,23 +97,27 @@ export default function ChallengeDetail(props) {
             .catch( (e) => { console.log(e);})
     }
 
-    const App = () => {
+    const onCickImageUpload = () => {
+        imageInput.current.click();
+    };
+
+    /*const App = () => {
       // useRef를 이용해 input태그에 접근한다.
-      const imageInput = useRef();
+        const imageInput = useRef();
 
       // 버튼클릭시 input태그에 클릭이벤트를 걸어준다.
-      const onCickImageUpload = () => {
+        const onCickImageUpload = () => {
         imageInput.current.click();
-      };
+        };
 
       // input태그는 display:"none" 을 이용해 안보이게 숨겨준다.
-      return (
-      	<>
-          <input type="file" style={{ display: "none" }} ref={imageInput} name="simg" id="simg" />
-          <button type="button" onClick={onCickImageUpload} className="btn">파일선택</button>
-    	</>
-      );
-    };
+        return (
+            <>
+                <input type="file" style={{ display: "none" }} ref={imageInput} name="simg" id="simg" />
+                <button type="button" onClick={onCickImageUpload} className="btn">파일선택</button>
+            </>
+        );
+    };*/
 
     return(<div>
         <div className="divs">
@@ -128,7 +133,9 @@ export default function ChallengeDetail(props) {
             :
             itemByMno == "" ?
                 <form ref={ writeForm } className="login">
-                    {App()}
+
+                    <input type="file" style={{ display: "none" }} ref={imageInput} name="simg" id="simg" />
+                    <button type="button" onClick={onCickImageUpload} className="btn">파일선택</button>
                     <input type="hidden" value={searchParams.get("chno")} name="chno" id="chno" />
                     <input type="hidden" value={login} name="memail" id="memail" />
                     <button type="button" onClick={postResult} className="btn">제출</button>
@@ -136,7 +143,9 @@ export default function ChallengeDetail(props) {
                 :
                 itemByMno[0].cdate != dateString ?
                     <form ref={ writeForm } className="login">
-                        {App()}
+
+                        <input type="file" style={{ display: "none" }} ref={imageInput} name="simg" id="simg" />
+                        <button type="button" onClick={onCickImageUpload} className="btn">파일선택</button>
                         <input type="hidden" value={searchParams.get("chno")} name="chno" id="chno" />
                         <input type="hidden" value={login} name="memail" id="memail" />
                         <button type="button" onClick={postResult} className="btn">제출</button>
@@ -153,7 +162,6 @@ export default function ChallengeDetail(props) {
                         일째 도전 중 {itemByMno.length}일 성공
                         오늘 : 참여완료[인증]</div>
         }
-        <div>인증 사진</div>
         <ImageList  cols={3} rowHeight={120}>
             {itemData.map((item) => (
                 <ImageListItem key={item.img}>
