@@ -30,8 +30,7 @@ export default function SingUp(props){
         axios.post("/member/singup", info ).then( r=>{
             console.log(r.data);
             if(r.data==true){
-                alert('회원가입 성공');
-                window.location.href="/";
+                alert('회원가입 성공'); window.location.href="/";
             }else{
                 alert('회원가입 실패');
             }
@@ -52,7 +51,7 @@ export default function SingUp(props){
         formData.set("hno", hno);
         axios.post('/hmember/hsignup',formData)
             .then(r=>{
-            if( r.data == true){alert('회원 가입 완료');}
+            if( r.data == true){alert('회원 가입 완료');window.location.href="/";}
             else {alert('회원 가입 실패')}})
     }
 

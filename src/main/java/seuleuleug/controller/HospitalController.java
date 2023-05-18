@@ -33,5 +33,9 @@ public class HospitalController {
     public List<HospitalDto> alllist () {
         return hospitalService.alllist();
     }
-    
+
+    // 병원 제휴 상태 변경
+    @PutMapping("/change")
+    public boolean changestate (@RequestBody HospitalDto hospitalDto) { return hospitalService.changestate(hospitalDto) ;}
+
 }

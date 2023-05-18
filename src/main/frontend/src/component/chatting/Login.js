@@ -76,13 +76,12 @@ export default function Login(props){
       }
     }
     // 의사 로그인
-    let inputHmemail = useRef(null);
-    let inputHpassword = useRef(null);
+    let hloginform = useRef(null);
 
     const hlogin = () => {
         let loginForm = document.querySelectorAll(".doctor")[0];
         let loginFormData = new FormData(loginForm);
-
+        console.log(hloginform)
         axios.get("/hmember/hlogin", loginFormData ).then( r=>{
             console.log(r.data);
             if(r.data != false){
@@ -138,10 +137,10 @@ export default function Login(props){
                     </form>
                 </TabPanel>
                 <TabPanel value="2">
-                    <form style={{display:'flex'}} className="doctor">
+                    <form style={{display:'flex'}} ref={hloginform}>
                         <div>
-                            <TextField name="hmemail"     label="이메일"   variant="outlined"  inputRef={inputHmemail} margin="normal"  size="small"  /> <br/>
-                            <TextField name="hpassword"   label="비밀번호"  variant="outlined"  inputRef={inputHpassword} margin="normal" size="small" />
+                            <TextField name="hmemail"     label="이메일"   variant="outlined"  margin="normal"  size="small"  /> <br/>
+                            <TextField name="hpassword"   label="비밀번호"  variant="outlined"  margin="normal" size="small" />
                         </div>
                         <div style={{marginTop:'20px'}}>
                             <Button variant="contained" onClick={hlogin}

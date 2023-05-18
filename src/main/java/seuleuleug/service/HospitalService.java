@@ -12,6 +12,7 @@ import seuleuleug.domain.hospital.HospitalEntity;
 import seuleuleug.domain.hospital.HospitalEntityRepository;
 import seuleuleug.domain.hospital.PageDto;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,17 @@ public class HospitalService {
             return DtoList;
         }
         return null;
+    }
+
+    // 병원 제휴 등록
+    @Transactional
+    public boolean changestate(HospitalDto hospitalDto){
+        Optional<HospitalEntity> optionalHospitalEntity = hospitalEntityRepository.findById(hospitalDto.getHno());
+        if(optionalHospitalEntity.isPresent()){
+            optionalHospitalEntity.get().setHalliance(1);
+            return true;
+        }
+        return false;
     }
 
 }

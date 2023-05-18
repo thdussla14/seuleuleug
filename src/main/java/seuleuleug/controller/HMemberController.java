@@ -33,9 +33,9 @@ public class HMemberController {
     }
     // 의사 로그인
     @GetMapping("/hlogin")
-    public HMemberDto hlogin(@RequestParam("hmemail") String hmemail , @RequestParam("hpassword") String hpassword){
-        log.info("hlogin : " + hmemail + " / " + hpassword);
-        return hMemberService.hlogin(hmemail , hpassword);
+    public HMemberDto hlogin( HMemberDto hMemberDto){
+        log.info("hlogin : " + hMemberDto);
+        return hMemberService.hlogin(hMemberDto);
     }
     // 의사 정보 호출
     @GetMapping("/hcomment")

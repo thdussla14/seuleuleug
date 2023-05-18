@@ -20,6 +20,7 @@ export default function ChildModal(props) {
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
+      textAlign: 'center',
       width: '250px' ,
       bgcolor: 'background.paper',
       border: '2px solid #000',
@@ -60,13 +61,13 @@ export default function ChildModal(props) {
           <Button
               value={item.id}
               onClick={onupdate}
-              style={{height:'15px', margin:'10px 0px',textDecoration: 'none',
+              style={{height:'15px', margin:'10px',textDecoration: 'none',
               backgroundColor: '#DCBE70', color:'white'}}>
               승인
           </Button>
           < Button
               onClick={handleClose}
-              style={{height:'15px', margin:'10px 0px',textDecoration: 'none',
+              style={{height:'15px', margin:'10px',textDecoration: 'none',
               backgroundColor: '#DCBE70', color:'white'}} >
               Close
           </Button>

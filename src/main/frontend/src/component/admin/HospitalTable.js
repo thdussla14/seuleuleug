@@ -13,7 +13,11 @@ export default function HospitalTable(props) {
       { field: 'halliance',   headerName: '제휴',       width: 100 ,
          renderCell : (params)=>(
              <strong>
-                 { params.value === 1 ? <DoctorTable item={params} /> : '' }
+                 { params.value === 1 ?
+                   <DoctorTable item={params} /> :
+                   <Button variant="contained" onClick={(e)=>setJoin(e, params)}
+                       style={{height:'20px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 제휴 </Button>
+                 }
              </strong>)
       }
     ];
@@ -26,6 +30,13 @@ export default function HospitalTable(props) {
     useEffect (()=>{ getHList();},[])
     // 4.
     const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
+
+    // 병원 제휴 상태 변경
+    const setJoin = (e,params) => {
+        console.log(params);
+        axios.put("/hospital/change",{"hno" :params.id })
+        .then( r => {console.log(r); alert('제휴 등록 완료'); window.location.reload();})
+    }
 
     return (<>
         <div style={{marginTop:'30px', textAlign:'center'}}>

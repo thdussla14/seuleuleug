@@ -39,7 +39,7 @@ dependencies {
     implementation 'org.json:json:20210307'
     implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // Oauth2
-
+    implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일 전송
 }
 
 tasks.named('test') {
