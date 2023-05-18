@@ -22,6 +22,9 @@ public class ChattingController {
     public List<ChatUserDto> getChattingList(){
         List<ChatUserDto> result = chattingHandler.getChatUserDtoList();
         log.info(result.toString());
+        for (ChatUserDto dto : result) {
+            dto.setSession(null);
+        }
         return result;
     }
 }

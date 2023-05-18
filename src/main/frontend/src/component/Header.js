@@ -18,9 +18,34 @@ import NightsStayIcon from '@mui/icons-material/NightsStay';
 
 export default function Header(props) {
 
+    let websocket = null;
+
     console.log(sessionStorage)
 
+    const email = sessionStorage.getItem('email');
     const loginType = sessionStorage.getItem('loginType');
+
+    if(sessionStorage.length>0&&email!==null&&email!=="null"){
+        websocket = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
+        websocket.onopen = () => {
+            console.log('로그인 웹소켓 열림');
+            sendWebSocketMessage(loginType);
+        };
+    }
+
+
+    function sendWebSocketMessage(message) {
+      if (websocket.readyState === WebSocket.OPEN) {
+        console.log('Sending message:', message);
+        websocket.send(JSON.stringify(message));
+      } else {
+        console.log('WebSocket 연결 진행중');
+        setTimeout(() => {
+          sendWebSocketMessage(message);
+        }, 1000); // Retry after 1 second
+      }
+    }
+
 
     if(sessionStorage.length<=0){
         console.log(sessionStorage)

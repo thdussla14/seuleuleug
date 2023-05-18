@@ -25,16 +25,28 @@ public class LoginHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("into server");
+        log.info("로그인 서버 접속");
+        log.info("session1111: " + session);
+        String email = (String) session.getAttributes().get("pathes");
+        log.info("user email: " + email);
         loginUserDtoList.add(LoginUserDto.builder()
                         .session(session)
+                        .userEmail(email)
                         .build());
         log.info("loginUserDtoList : " + loginUserDtoList);
     }
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        log.info("Received message from client: " + message.getPayload());
+        log.info("로긴핸들러에 메세지 들어옴 : " + message.getPayload());
+        String LoginType = (String) message.getPayload();
+        for (LoginUserDto loginUserDto : loginUserDtoList) {
+            if(loginUserDto.getUserEmail().equals(session.getAttributes().get("pathes"))){
+                loginUserDto.setType(LoginType);
+            }
+        }
+        log.info("loginUserDtoList : " + loginUserDtoList);
+        handleTextMessage(session, (TextMessage) message);
     }
 
     @Override
@@ -68,15 +80,16 @@ public class LoginHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        log.info("server error");
+        log.info("로그인 서버 에러");
         log.info("exception : " + exception);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        log.info("server closed");
+        log.info("로그인 서버 닫힘");
         log.info("loginUserDtoList : " + loginUserDtoList);
         loginUserDtoList.removeIf(loginUserDto -> loginUserDto.getSession().equals(session));
         log.info("loginUserDtoList : " + loginUserDtoList);
     }
+
 }

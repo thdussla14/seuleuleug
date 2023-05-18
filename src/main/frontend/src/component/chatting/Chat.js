@@ -2,6 +2,7 @@ import React from 'react'
 import {useEffect, useState, useRef} from 'react'
 import Container from '@mui/material/Container';
 import { useParams } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
+import '../../css/Chat.css';
 
 export default function Chat(props){
     let [socket, setSocket] = useState(null);
@@ -20,20 +21,20 @@ export default function Chat(props){
             if(sessionStorage.getItem('loginType')==="doctor"){
                 chatRoomId = sessionStorage.getItem('email');
                 console.log(chatRoomId);
-                clientSocket.current = new WebSocket(`ws://localhost:8080/chat?chatRoomId=${chatRoomId}`);
+                clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
                 clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
                     console.log('의사가 서버 접속했습니다');
                     console.log(clientSocket.current);
-                    clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId , type : "enter", who : "doctor" }));
+                    clientSocket.current.send(JSON.stringify({ type : "enter", who : "doctor" }));
                 }
             }else if(sessionStorage.getItem('loginType')==="normal"){
                 chatRoomId = params.chatRoomId;
                 console.log(chatRoomId);
-                clientSocket.current = new WebSocket(`ws://localhost:8080/chat?chatRoomId=${chatRoomId}`);
+                clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
                 clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
                     console.log('일반회원이 서버 접속했습니다');
                     console.log(clientSocket.current);
-                    clientSocket.current.send(JSON.stringify({ chatRoomId: chatRoomId , type : "enter", who : "normal"  }));
+                    clientSocket.current.send(JSON.stringify({  type : "enter", who : "normal"  }));
                 }
             }
             clientSocket.current.onclose = (e)=>{
@@ -66,24 +67,39 @@ export default function Chat(props){
         console.log(typeof(message));
         let msg = {
             message : message,
-            type : "msg"
+            type : "msg",
+            sender : sessionStorage.getItem('email')
         }
         const data = JSON.stringify(msg);
         console.log(data);
         clientSocket.current.send(data);
     }
 
-    return (<>
-        <Container>
-          {messages.map((message, index) => (
-            <p key={index}>{message.message}</p>
-          ))}
-          <input type="text" onKeyPress={event => {
-            if (event.key === 'Enter') {
-              sendMessage(event.target.value);
-              event.target.value = '';
-            }
-          }} />
-        </Container>
-      </>);
+    return (
+      <Container className="container">
+        {messages.map((message, index) => (
+          <p
+            key={index}
+            className={`message ${message.sender === sessionStorage.getItem('email') ? 'sender' : 'receiver'}`}
+          >
+            {message.message}
+          </p>
+        ))}
+        <div className="input-container">
+          <input
+            type="text"
+            className="input"
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                sendMessage(event.target.value);
+                event.target.value = '';
+              }
+            }}
+          />
+          <button className="input-button" onClick={() => sendMessage(document.querySelector('.input').value)}>
+            전송
+          </button>
+        </div>
+      </Container>
+    );
 }
