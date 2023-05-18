@@ -25,9 +25,10 @@ export default function DashBoard(props) {
         console.log(cname.value)
         axios.post("/board/category/write", {"cname": cname.value})
             .then((r) =>  {
-                if(r.data === true)
+                console.log(r)
+                if(r.data == true)
                     {console.log(r); alert('카테고리 등록 성공했습니다.'); cname.value='';
-                     window.location.reload();}
+                      setValue("1");;}
             })
     }
 
@@ -37,9 +38,10 @@ export default function DashBoard(props) {
         console.log(wcontent.value)
         axios.post("/word", {"wcontent": wcontent.value})
             .then((r) => {
-                if(r.data === true)
+                console.log(r)
+                if(r.data == true)
                     {console.log(r); alert('응원글귀 등록 성공했습니다.'); wcontent.value='';
-                     window.location.reload();}
+                     setValue("2");;}
             })
     }
 
@@ -52,7 +54,7 @@ export default function DashBoard(props) {
             <Box sx={{ width: '100%', typography: 'body1'}}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
+                  <TabList onChange={handleChange} >
                     <Tab label="카테고리"   value="1" />
                     <Tab label="응원글귀"   value="2" />
                     <Tab label="제휴병원"   value="3" />

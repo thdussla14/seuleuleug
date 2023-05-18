@@ -4,10 +4,13 @@ import fortunecookie from '../../fortunecookie.png';  // img 호출
 
 export default function Fortune(props) {
 
-  // 응원문구 랜덤 출력
+ // 응원문구 랜덤 출력
   useEffect(()=>{
        axios.get("/word")
-            .then( r => { console.log(r); document.querySelector('.cookie-message').innerHTML = r.data.wcontent  ;})
+            .then( r => {console.log(r);
+                document.querySelector('.cookie-message').innerHTML = r.data.wcontent;
+                //dangerouslySetInnerHTML={ __html : r.data.wcontent }
+            })
   }, [])
 
   return (
@@ -15,7 +18,7 @@ export default function Fortune(props) {
        <div>
             <img style={{ width:'100%', marginTop:'30px' }} src={fortunecookie}/>
        </div>
-       <div className="cookie-message"></div>
+       <div className="cookie-message">  </div>
     </div>
   );
 }

@@ -22,6 +22,10 @@ export default function Comwrite(props) {
     // 입력한 코멘트 댓글 저장
     const rcontent = useRef(null);
 
+    const sendmail = () =>{
+        axios.post('/send-mail', {"bno":bno}).then( (r) => { console.log(r)})
+    }
+
     const setComment = () =>{
         let info = {
             bno       : bno,
@@ -32,7 +36,7 @@ export default function Comwrite(props) {
         axios.post("/board/cwrite",info)
             .then((r) => {
                 console.log(r);
-                 if(r.data===true){alert('답글 등록되었습니다.') }
+                 if(r.data===true){alert('답글 등록되었습니다.') ; sendmail(); }
                  else if(r.data===false){alert('답글 등록에 실패하였습니다.'); window.location.href="/" }
                  }
             )

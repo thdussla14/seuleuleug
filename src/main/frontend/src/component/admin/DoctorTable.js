@@ -29,7 +29,6 @@ export default function DoctorTable(props) {
 
     // 1. 상태변수
     const item = props.item;
-    console.log(item);
     const [ rows , setRows ] = useState ([]);
 
     // 3. 컴포넌트 생명주기에 따른 함수 호출

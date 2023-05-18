@@ -12,6 +12,7 @@ import seuleuleug.domain.hospital.HospitalEntity;
 import seuleuleug.domain.hospital.HospitalEntityRepository;
 import seuleuleug.domain.hospital.PageDto;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,17 +43,15 @@ public class HospitalService {
         List<HospitalEntity> list = hospitalEntityRepository.findjoinList();
         List<HospitalDto> DtoList = new ArrayList<>();
         if(list.size()>0){
-            list.forEach((H)->{
-                DtoList.add(H.toDto());
-            });
+            list.forEach((H)->{DtoList.add(H.toDto());});
             return DtoList;
         }
         return null;
     }
 
-    // 검색 병원 출력
-    public List<HospitalDto> findhospital (String keyword ) {
-        List<HospitalEntity> list = hospitalEntityRepository.findBykeyword(keyword);
+    // 전체 병원 출력
+    public List<HospitalDto> alllist ( ) {
+        List<HospitalEntity> list = hospitalEntityRepository.findAll();
         List<HospitalDto> DtoList = new ArrayList<>();
         if(list.size()>0){
             list.forEach((H)->{ DtoList.add(H.toDto());});
@@ -61,7 +60,15 @@ public class HospitalService {
         return null;
     }
 
-
-
+    // 병원 제휴 등록
+    @Transactional
+    public boolean changestate(HospitalDto hospitalDto){
+        Optional<HospitalEntity> optionalHospitalEntity = hospitalEntityRepository.findById(hospitalDto.getHno());
+        if(optionalHospitalEntity.isPresent()){
+            optionalHospitalEntity.get().setHalliance(1);
+            return true;
+        }
+        return false;
+    }
 
 }

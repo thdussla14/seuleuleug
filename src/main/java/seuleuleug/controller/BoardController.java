@@ -71,6 +71,7 @@ public class BoardController {
         log.info("detail"+ bno);
         return boardService.getBoard(bno);
     }
+    // 게시물 삭제
     @DeleteMapping("")
     public boolean deletemy(@RequestParam int bno){
         log.info("deletemy"+ bno);

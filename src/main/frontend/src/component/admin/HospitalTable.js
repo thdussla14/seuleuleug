@@ -9,11 +9,15 @@ export default function HospitalTable(props) {
 
     const columns: GridColDef[] = [
       { field: 'hno',         headerName: '번호',       width: 50 ,type: 'number'},
-      { field: 'hname',       headerName: '병원명',     width: 150 },
+      { field: 'hname',       headerName: '병원명',     width: 100 },
       { field: 'halliance',   headerName: '제휴',       width: 100 ,
          renderCell : (params)=>(
              <strong>
-                 { params.value === 1 ? <DoctorTable item={params} /> : '' }
+                 { params.value === 1 ?
+                   <DoctorTable item={params} /> :
+                   <Button variant="contained" onClick={(e)=>setJoin(e, params)}
+                       style={{height:'20px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> 제휴 </Button>
+                 }
              </strong>)
       }
     ];
@@ -21,11 +25,18 @@ export default function HospitalTable(props) {
     // 1. 상태변수
     const [ rows , setRows ] = useState ([]);
     // 2. 제품 호출 axios
-    const getHList = () => {axios.get("/hospital/joinlist").then( r => {console.log(r); setRows(r.data)})}
+    const getHList = () => {axios.get("/hospital/alllist").then( r => {console.log(r); setRows(r.data)})}
     // 3. 컴포넌트 생명주기에 따른 함수 호출
     useEffect (()=>{ getHList();},[])
     // 4.
     const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
+
+    // 병원 제휴 상태 변경
+    const setJoin = (e,params) => {
+        console.log(params);
+        axios.put("/hospital/change",{"hno" :params.id })
+        .then( r => {console.log(r); alert('제휴 등록 완료'); window.location.reload();})
+    }
 
     return (<>
         <div style={{marginTop:'30px', textAlign:'center'}}>

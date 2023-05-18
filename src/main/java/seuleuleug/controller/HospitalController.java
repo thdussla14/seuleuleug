@@ -28,10 +28,14 @@ public class HospitalController {
     public List<HospitalDto> joinList ( ) {
         return hospitalService.joinList();
     }
-    // 제휴병원 리스트 출력
-    @GetMapping("/findlist")
-    public List<HospitalDto> findhospital (@RequestBody String keyword) {
-        return hospitalService.findhospital(keyword);
+    // 병원 리스트 출력
+    @GetMapping("/alllist")
+    public List<HospitalDto> alllist () {
+        return hospitalService.alllist();
     }
-    
+
+    // 병원 제휴 상태 변경
+    @PutMapping("/change")
+    public boolean changestate (@RequestBody HospitalDto hospitalDto) { return hospitalService.changestate(hospitalDto) ;}
+
 }
