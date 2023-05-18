@@ -32,13 +32,13 @@ export default function SimriTest(props) {
 
     return (
         <Container>
-            <TableContainer component={Paper}>
+            <TableContainer sx={{ mt: 5 }} component={Paper}>
                 <Table sx={{ Width: '100%' }} aria-label="customized table">
                     <TableHead>
-                        <TableRow>
-                            <StyledTableCell align="left">번호</StyledTableCell>
-                            <StyledTableCell align="center">테스트종류</StyledTableCell>
-                            <StyledTableCell align="center">참여하기</StyledTableCell>
+                        <TableRow sx={{ backgroundColor : "rgb(220, 190, 112)"}}>
+                            <TableCell sx={{ color : "white" }} align="left">번호</TableCell>
+                            <TableCell sx={{ color : "white" }} align="center">테스트종류</TableCell>
+                            <TableCell sx={{ color : "white" }} align="center">참여하기</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

@@ -32,11 +32,11 @@ public class HMemberController {
         return hMemberService.hupdate(hMemberDto);
     }
     // 의사 로그인
-    @GetMapping("/hlogin")
-    public HMemberDto hlogin( HMemberDto hMemberDto){
-        log.info("hlogin : " + hMemberDto);
-        return hMemberService.hlogin(hMemberDto);
-    }
+    /*@GetMapping("/hlogin")
+    public HMemberDto hlogin(@RequestParam("hmemail") String hmemail , @RequestParam("hpassword") String hpassword){
+        log.info("hlogin : " + hmemail + " / " + hpassword);
+        return hMemberService.hlogin(hmemail , hpassword);
+    }*/
     // 의사 정보 호출
     @GetMapping("/hcomment")
     public HMemberDto get(@RequestParam("hmemail") String hmemail) {

@@ -15,6 +15,9 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import seuleuleug.domain.hospital.HMemberDto;
+import seuleuleug.domain.hospital.HMemberEntity;
+import seuleuleug.domain.hospital.HMemberRepository;
 import seuleuleug.domain.member.MemberDto;
 import seuleuleug.domain.member.MemberEntity;
 import seuleuleug.domain.member.MemberEntityRepository;
@@ -34,35 +37,54 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
     @Autowired
     private MemberEntityRepository memberEntityRepository;
     @Autowired
+    private HMemberRepository hMemberRepository;
+    @Autowired
     private HttpServletRequest request;
 
     // 일반 회원 회원가입
     @Transactional
     public boolean signup(MemberDto memberDto){
-        // 비밀번호(=mphone) 암호화
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        memberDto.setMphone(passwordEncoder.encode(memberDto.getMphone()));
-        // 등급 부여
-        memberDto.setMrole("USER");
-        // 저장
-        MemberEntity entity = memberEntityRepository.save(memberDto.toEntity());
-        if(entity.getMno()>0){
-            return true;
+        // 이메일중복체크(의사&회원)
+        Optional<MemberEntity> mentityOptional = memberEntityRepository.findByMemail( memberDto.getMemail() );
+        Optional<HMemberEntity> hentityOptional = hMemberRepository.findByHmemail(memberDto.getMemail());
+
+        if(!mentityOptional.isPresent()){
+            if(!hentityOptional.isPresent()){
+                // 비밀번호(=mphone) 암호화
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                memberDto.setMphone(passwordEncoder.encode(memberDto.getMphone()));
+                // 등급 부여
+                memberDto.setMrole("USER");
+                // 저장
+                MemberEntity entity = memberEntityRepository.save(memberDto.toEntity());
+                if(entity.getMno()>0){
+                    return true;
+                }
+            }
         }
         return false;
     }
+
     // Oauth 유저 회원가입
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         // 1. 인증[로그인] 결과 토큰 확인
-        OAuth2UserService auth2UserService = new DefaultOAuth2UserService(); log.info("서비스 정보 : "+auth2UserService.loadUser( userRequest ));
+        OAuth2UserService auth2UserService = new DefaultOAuth2UserService();
         // 2. 전달받은 정보 객체
-        OAuth2User oAuth2User = auth2UserService.loadUser( userRequest ); log.info("회원정보 : "+ oAuth2User.getAttributes());
-        // 3. 카카오 정보 호출
-        Map<String , Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
-        Map<String , Object> profile = (Map<String, Object>) kakao_account.get("profile");
-        String email = (String) kakao_account.get("email");
-        log.info("회원정보 : "+ email );
+        OAuth2User oAuth2User = auth2UserService.loadUser( userRequest );
+        // 3. 클라이언트 id 식별 [ 응답된 JSON 구조 다르기 때문에 클라이언트ID별 (네이버 vs 카카오) 로 처리 ]
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
+        String email = null;
+        if( registrationId.equals("kakao") ) { // 만약에 카카오 회원이면
+            Map<String , Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
+            Map<String , Object> profile = (Map<String, Object>) kakao_account.get("profile");
+            email = (String) kakao_account.get("email");
+        }else if( registrationId.equals("naver")) { // 만약에 네이버 회원이면
+            Map<String, Object> response = (Map<String, Object>) oAuth2User.getAttributes().get("response");
+            email = (String) response.get("email");
+        }
+
         // 인가 객체 [ OAuth2User ---> MemberDto 통합Dto ( 일반+aouth ) ]
         MemberDto memberDto = new MemberDto();
         memberDto.setSocial( oAuth2User.getAttributes());
@@ -71,10 +93,10 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
             SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_USER");
             roleList.add(role);
         memberDto.setRoleList(roleList);
+
         // 1. DB 저장하기 전에 해당 이메일로 된 이메일 존재하는지 검사( DB중복 저장 방지 )
         Optional<MemberEntity> entityOptional = memberEntityRepository.findByMemail(email);
         if(!entityOptional.isPresent()){
-            log.info("확인2 : "+ entityOptional );
             memberDto.setMrole("USER");
             MemberEntity entity = memberEntityRepository.save(memberDto.toEntity());
             memberDto.setMno( entity.getMno());
@@ -82,7 +104,7 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
             MemberEntity entity = entityOptional.get();
             memberDto = entity.toDto();
         }
-        log.info("확인3 : "+ memberDto );
+
         return memberDto;
     }
     // 일반회원 로그인 시큐리티 전
@@ -101,31 +123,55 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
     }*/
     // 스프링 시큐리티 적용했을때 사용되는 로그인 메소드
     @Override
-    public UserDetails loadUserByUsername(String memail) throws UsernameNotFoundException {
-        // 입력받은 이메일로 아이디 찾기
-        Optional<MemberEntity> entityOptional = memberEntityRepository.findByMemail(memail);
-        if(entityOptional.isPresent()){
-            MemberEntity entity = entityOptional.get();
-
-            if( entity == null ){ return null; }
-            // 검증후 세션에 저장할 DTO 반환
-            MemberDto dto = entity.toDto();
-            //권한 목록
-            Set<GrantedAuthority> rolelist = new HashSet<>();
-            SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_"+entity.getMrole());
-            rolelist.add(role);
-            dto.setRoleList( rolelist );
-            return dto;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // 입력받은 이메일로 멤버 아이디 찾기
+        Optional<MemberEntity> mentityOptional = memberEntityRepository.findByMemail(email);
+        log.info("loadUserByUs"+email);
+        // 입력받은 이메일로 의사 아이디 찾기
+        Optional<HMemberEntity> hentityOptional = hMemberRepository.findByHmemail(email);
+        if(mentityOptional.isPresent()){
+            MemberEntity entity = mentityOptional.get();
+            // 유저 확인
+            if(entity.getMrole().equals("USER")){
+                // 검증후 세션에 저장할 DTO 반환
+                MemberDto dto = entity.toDto();
+                //권한 목록
+                Set<GrantedAuthority> rolelist = new HashSet<>();
+                SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_"+entity.getMrole());
+                rolelist.add(role);
+                dto.setRoleList( rolelist );
+                return dto;
+            }
+        }
+        if(hentityOptional.isPresent()){
+            HMemberEntity entity = hentityOptional.get();
+            // 의사 확인
+            if(entity.getHrole().equals("DOCTOR")){
+                // 검증후 세션에 저장할 DTO 반환
+                HMemberDto dto = entity.toDto();
+                //권한 목록
+                Set<GrantedAuthority> rolelist = new HashSet<>();
+                SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_"+entity.getHrole());
+                rolelist.add(role);
+                dto.setRoleList( rolelist );
+                return dto;
+            }
         }
         return null;
     }
     // 세션에 존재하는 회원정보[ 1. 로그인 , 2. 채팅 ]
     @Transactional
-    public MemberDto info() {
-        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 인증된 회원의 정보 호출
-        if( o.equals("anonymousUser") ){ return null; }
-        log.info((String) o);
-        return (MemberDto) o;
+    public String info() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if( principal.equals("anonymousUser") ){ return null; }
+        String username = null;
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().equals("[ROLE_DOCTOR]") ){
+            username = ((UserDetails) principal).getUsername();
+            return "DOCTOR "+username;
+        }else{
+            username = ((UserDetails) principal).getUsername();
+            return username;
+        }
     }
 
 }

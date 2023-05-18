@@ -54,12 +54,11 @@ export default function HospitalList( props ) {
 
     // 제휴 구분 css
     const styleCss = {
-        border: '1px solid rgb(112 170 220)',
+        border: '1px solid #DCBE70',
         padding: '0 20px',
         marginTop: '25px',
         borderRadius: '10px',
-        borderWidth: '2px',
-        background: 'aliceblue'
+        borderWidth: '2px'
     }
 
     return(<>

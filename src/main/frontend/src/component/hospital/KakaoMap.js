@@ -26,7 +26,7 @@ export default function KakaoMap(props) {
 
                 // 인포윈도우로 장소에 대한 설명을 표시합니다
                 var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;color:blue;text-align:center;padding:6px 0;"> '+ props.hname +' </div>'
+                    content: '<div style="width:150px;color:#DCBE70;text-align:center;padding:6px 0;"> '+ props.hname +' </div>'
                 });
                 infowindow.open(map, marker);
 

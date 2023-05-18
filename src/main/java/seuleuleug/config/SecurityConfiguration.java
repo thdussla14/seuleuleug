@@ -33,13 +33,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // super.configure(http);
         http
-                .formLogin()
-                    .loginPage("/member/login")                         // 로그인으로 사용된 페이지의 매핑 URL
-                    .loginProcessingUrl("/member/login")                // 로그인을 처리할 매핑 URL
-                    .successHandler(authSuccessFailHandler)             // 로그인 성공했을때 이동할 매핑 URL
-                    .failureHandler(authSuccessFailHandler)             // 로그인 실패했을때 이동할 매핑 URL
-                    .usernameParameter("memail") // 로그인시 사용된 계정 아이디 의 필드명
-                    .passwordParameter("mphone") // 로그인시 사용된 계정 패스워드의 필드명
+                .authorizeHttpRequests() // 1.인증[권한]에 따른 http 요청 제한
+                    .antMatchers("/board/user/**").hasRole("USER")
+                    .antMatchers("/board/doctor/**").hasRole("DOCTOR")
+                    .antMatchers("/**").permitAll()
+                .and()
+                    .formLogin()
+                        .loginPage("/member/login")                         // 로그인으로 사용된 페이지의 매핑 URL
+                        .loginProcessingUrl("/member/login")                // 로그인을 처리할 매핑 URL
+                        .successHandler(authSuccessFailHandler)             // 로그인 성공했을때 이동할 매핑 URL
+                        .failureHandler(authSuccessFailHandler)             // 로그인 실패했을때 이동할 매핑 URL
+                        .usernameParameter("email") // 로그인시 사용된 계정 아이디 의 필드명
+                        .passwordParameter("password") // 로그인시 사용된 계정 패스워드의 필드명
                 .and()
                         .logout()
                             .logoutRequestMatcher( new AntPathRequestMatcher("/member/logout")) // 로그아웃 처리 를 요청할 매핑 URL
