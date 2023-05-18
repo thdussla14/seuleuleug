@@ -60,7 +60,7 @@ export default function Login(props){
             if(r.data != false){
                 alert('로그인 성공');
                 window.location.href="/";
-            }else{
+            }else {
                 alert('로그인 실패');
             }
         })
