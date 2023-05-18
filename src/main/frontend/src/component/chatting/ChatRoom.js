@@ -1,26 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function ChatRoom(props) {
-    let chattingList = props.chattingRoomList.map((o) => {
+  const [chattingList, setChattingList] = useState([]);
 
-        console.log(o)
-        console.log(o.chatRoomId)
-        let hmname = null;
-        axios.get("/hmember/hcomment",{params : { hmemail : o.chatRoomId}}).then( r => {
-            console.log(r.data);
-            hmname = r.data.hmname;
-        })
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const promises = props.chattingRoomList.map(async (o) => {
+          console.log(o);
+          console.log(o.chatRoomId);
+          let hmname = null;
+          const response = await axios.get("/hmember/hcomment", { params: { hmemail: o.chatRoomId } });
+          console.log(response.data);
+          hmname = response.data.hmname;
 
-        return (
-            <div className={o.chatRoomId} >
-                <Link to={`/chatting/${o.chatRoomId}`} style={{color : 'black'}} >
+          return (
+            <div key={o.chatRoomId} className={o.chatRoomId}>
+              <Link to={`/chatting/${o.chatRoomId}`} style={{ color: 'black' }}>
                 {hmname} 의사 선생님
-                </Link>
+              </Link>
             </div>
-        );
-    });
+          );
+        });
 
-    return (<>{chattingList}</>);
+        const results = await Promise.all(promises);
+        setChattingList(results);
+      } catch (error) {
+        console.error(error);
+        // Handle error
+      }
+    }
+
+    fetchData();
+  }, [props.chattingRoomList]);
+
+  return <>{chattingList}</>;
 }
