@@ -21,7 +21,7 @@ public class LoginHandler extends TextWebSocketHandler {
     @Autowired
     private ChattingHandler chattingHandler;
 
-    private static List<LoginUserDto> loginUserDtoList = new ArrayList<>();
+    public static List<LoginUserDto> loginUserDtoList = new ArrayList<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {

@@ -9,7 +9,7 @@ export default function ChattingList(props){
 
     const [chattingRoomList , setChattingRoomList ] = useState([]);
     useEffect(()=>{
-        axios.get("/chatting/chatlist").then( r=>{
+        axios.get("/chatting/logindoctor").then( r=>{
                 console.log(r.data);
                 setChattingRoomList(r.data)
             })
