@@ -62,9 +62,9 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
                 }
             }
         }
-
         return false;
     }
+
     // Oauth 유저 회원가입
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -72,10 +72,18 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
         OAuth2UserService auth2UserService = new DefaultOAuth2UserService();
         // 2. 전달받은 정보 객체
         OAuth2User oAuth2User = auth2UserService.loadUser( userRequest );
-        // 3. 카카오 정보 호출
-        Map<String , Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
-        Map<String , Object> profile = (Map<String, Object>) kakao_account.get("profile");
-        String email = (String) kakao_account.get("email");
+        // 3. 클라이언트 id 식별 [ 응답된 JSON 구조 다르기 때문에 클라이언트ID별 (네이버 vs 카카오) 로 처리 ]
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
+        String email = null;
+        if( registrationId.equals("kakao") ) { // 만약에 카카오 회원이면
+            Map<String , Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
+            Map<String , Object> profile = (Map<String, Object>) kakao_account.get("profile");
+            email = (String) kakao_account.get("email");
+        }else if( registrationId.equals("naver")) { // 만약에 네이버 회원이면
+            Map<String, Object> response = (Map<String, Object>) oAuth2User.getAttributes().get("response");
+            email = (String) response.get("email");
+        }
 
         // 인가 객체 [ OAuth2User ---> MemberDto 통합Dto ( 일반+aouth ) ]
         MemberDto memberDto = new MemberDto();
@@ -85,6 +93,7 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
             SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_USER");
             roleList.add(role);
         memberDto.setRoleList(roleList);
+
         // 1. DB 저장하기 전에 해당 이메일로 된 이메일 존재하는지 검사( DB중복 저장 방지 )
         Optional<MemberEntity> entityOptional = memberEntityRepository.findByMemail(email);
         if(!entityOptional.isPresent()){
@@ -153,9 +162,6 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
     // 세션에 존재하는 회원정보[ 1. 로그인 , 2. 채팅 ]
     @Transactional
     public String info() {
-        //SecurityContextHolder : 시큐리티 정보 저장소
-        //SecurityContextHolder.getContext() : 시큐리티 저장된 정보 호출
-        //SecurityContextHolder.getContext().getAuthentication() : 인증 전체 정보 호출
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if( principal.equals("anonymousUser") ){ return null; }
         String username = null;

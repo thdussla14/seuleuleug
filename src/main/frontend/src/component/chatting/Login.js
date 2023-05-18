@@ -9,7 +9,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
 //import { LoginContext,LoginListProvider } from './LoginListProvider';
 /*
 const createWebSocket =() =>{
@@ -109,17 +109,21 @@ export default function Login(props){
                 </TabList>
                 </Box>
                 <TabPanel value="1">
-                    <form style={{display:'flex'}} className="user">
-                        <div>
-                            <TextField name="email"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="normal" size="small"/> <br/>
-                            <TextField name="password"      label="핸드폰"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
+                    <form className="user">
+                        <div style={{display:'flex'}}>
+                            <div>
+                                <TextField name="email"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="normal" size="small"/> <br/>
+                                <TextField name="password"      label="핸드폰"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
+                            </div>
+                            <div style={{marginTop:'20px'}}>
+                                <Button variant="contained" onClick={mlogin}
+                                    style={{height:'100px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
+                            </div>
                         </div>
-                        <div style={{marginTop:'20px'}}>
-                            <Button variant="contained" onClick={mlogin}
-                                style={{height:'100px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
-                        </div>
-                        <Link href="/oauth2/authorization/kakao">KAKAO</Link>
-
+                        <Stack sx={{ mt: 2 }} direction="row" spacing={2}>
+                            <Button variant="contained" style={{ width: '100%' , backgroundColor: '#F7E111'}} href="/oauth2/authorization/kakao"> KAKAO </Button>
+                            <Button variant="contained" style={{ width: '100%' , backgroundColor: '#03C75A'}} href="/oauth2/authorization/naver"> NAVER </Button>
+                        </Stack>
                     </form>
                 </TabPanel>
                 <TabPanel value="2">
