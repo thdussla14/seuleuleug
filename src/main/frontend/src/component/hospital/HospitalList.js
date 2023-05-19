@@ -3,12 +3,9 @@ import axios from 'axios';
 import Hospital from './Hospital';
 // ----------------------------------------------------------------
 import Container from '@mui/material/Container';
-import { Grid, Paper, Box, Stack, styled, Typography, Pagination, IconButton } from '@mui/material';
+import { Box, Pagination, IconButton } from '@mui/material';
 import { Input, InputLabel, InputAdornment } from '@mui/material';
 import { FormControl, MenuItem, Select } from '@mui/material';
-import SvgIcon from "@mui/material/SvgIcon";
-import { SvgIconComponent } from "@mui/icons-material";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SearchIcon from '@mui/icons-material/Search';
 
 
@@ -35,7 +32,6 @@ export default function HospitalList( props ) {
 
     // 페이징 번호 선택
     const selectPage = (e , value)=>{
-        console.log( value );
         pageInfo.page = value;
         setPageInfo( {...pageInfo} );
     }

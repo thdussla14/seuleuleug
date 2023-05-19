@@ -105,7 +105,7 @@ export default function Login(props){
                         </div>
                         <Stack sx={{ mt: 2 }} direction="row" spacing={2}>
                             <Button variant="contained" style={{ width: '100%' , backgroundColor: '#F7E111'}} href="/oauth2/authorization/kakao"> KAKAO </Button>
-                            <Button variant="contained" style={{ width: '100%' , backgroundColor: '#03C75A'}} href="/oauth2/authorization/naver"> NAVER </Button>
+                            <Button variant="contained" style={{ width: '100%' }} href="/oauth2/authorization/google"> GOOGLE </Button>
                         </Stack>
                     </form>
                 </TabPanel>

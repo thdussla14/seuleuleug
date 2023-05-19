@@ -3,13 +3,10 @@ import axios from 'axios';
 import KakaoMap from './KakaoMap';
 
 import Container from '@mui/material/Container';
-import { Paper, Box, Stack, styled, Typography, Pagination, IconButton } from '@mui/material';
-import { Input, InputLabel, InputAdornment } from '@mui/material';
-import { FormControl, MenuItem, Select } from '@mui/material';
+import { Paper, Box, Stack, styled, Typography, IconButton } from '@mui/material';
 import SvgIcon from "@mui/material/SvgIcon";
 import { SvgIconComponent } from "@mui/icons-material";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import SearchIcon from '@mui/icons-material/Search';
 import Link from '@mui/material/Link';
 
 
