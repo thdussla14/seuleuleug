@@ -7,7 +7,11 @@ import Avatar from "@mui/material/Avatar";
 
 export default function ChatRoom(props) {
   const [chattingList, setChattingList] = useState([]);
-
+  // 의사에게 상담요청 보내는 함수
+  const counsel = (email)=>{
+        const websocket = sessionStorage.getItem('websocket')
+        websocket.send(JSON.stringify({ type : "counsel", oEmail : email,receiveEmail : sessionStorage.getItem("email") }));
+  }
   useEffect(() => {
     console.log(props.chattingRoomList);
     async function fetchData() {
@@ -26,7 +30,7 @@ export default function ChatRoom(props) {
                 <div>
                   <Avatar alt="Remy Sharp"      src={doctor} />
                   {hmname} 의사 선생님
-                  <button type="button"> 상담신청 </button>
+                  <button onClick={counsel(o.hmeamil)} type="button"> 상담신청 </button>
                 </div>
 
               </Link>
