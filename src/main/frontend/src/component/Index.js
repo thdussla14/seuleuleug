@@ -8,7 +8,7 @@ import CheckEmail from './board/CheckEmail';
 import MyBoardList from './board/MyBoardList';
 import MyBoard from './board/MyBoard';
 import BoardList from './board/BoardList';
-import Hboard from './board/Hboard';
+import HBoard from './board/HBoard';
 import Comwrite from './board/Comwrite';
 import SignUp from './chatting/SignUp';
 import Login from './chatting/Login';
@@ -37,7 +37,7 @@ export default function Index(props) {
                 <Route path="/board/user/myboardlist"   element={<MyBoardList />} />
                 <Route path="/board/user/myboard"       element={<MyBoard />} />
                 <Route path="/board/doctor/boardlist"   element={<BoardList />} />
-                <Route path="/board/doctor/hboard"      element={<Hboard />} />
+                <Route path="/board/doctor/hboard"      element={<HBoard />} />
                 <Route path="/board/doctor/comwrite"    element={<Comwrite />} />
 
                 <Route path="/signup"                   element={<SignUp />} />
