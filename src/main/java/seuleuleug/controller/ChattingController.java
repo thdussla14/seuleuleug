@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import seuleuleug.domain.Chatting.ChatUserDto;
+import seuleuleug.domain.Chatting.LoginUserDto;
 import seuleuleug.socket.ChattingHandler;
+import seuleuleug.socket.LoginHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,6 +20,8 @@ public class ChattingController {
 
     @Autowired
     private ChattingHandler chattingHandler;
+    @Autowired
+    private LoginHandler loginHandler;
 
     @GetMapping("/chatlist")
     public List<ChatUserDto> getChattingList(){
@@ -25,6 +30,26 @@ public class ChattingController {
         for (ChatUserDto dto : result) {
             dto.setSession(null);
         }
+        return result;
+    }
+
+    @GetMapping("/logindoctor")
+    public List<LoginUserDto> getLoginDoctor(){
+        List<LoginUserDto> getlist = loginHandler.loginUserDtoList;
+        log.info(getlist.toString());
+        List<LoginUserDto> result = new ArrayList<>();
+        for (LoginUserDto dto : getlist) {
+            log.info("dto.getType : "+dto.getType());
+            boolean qwe= "\"doctor\"".equals(dto.getType());
+            log.info("qwe : "+qwe);
+            if("\"doctor\"".equals(dto.getType())){
+                result.add(LoginUserDto.builder()
+                        .type(dto.getType())
+                        .userEmail(dto.getUserEmail())
+                        .build());
+            }
+        }
+        log.info("result : " + result.toString());
         return result;
     }
 }

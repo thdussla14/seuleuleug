@@ -1,4 +1,4 @@
-import React , { useState , useEffect } from 'react';
+import React , { useState , useEffect, useRef } from 'react';
 import axios from 'axios';
 import {Box,AppBar,Toolbar,Typography,IconButton,Drawer,List,
 Divider,ListItem,ListItemText, ListItemButton,ListItemIcon}from '@mui/material';
@@ -18,33 +18,26 @@ import NightsStayIcon from '@mui/icons-material/NightsStay';
 
 export default function Header(props) {
 
-    let websocket = null;
+    const websocket = useRef(null);
 
     console.log(sessionStorage)
 
     const email = sessionStorage.getItem('email');
     const loginType = sessionStorage.getItem('loginType');
 
-    if(sessionStorage.length>0&&email!==null&&email!=="null"){
-        websocket = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
-        websocket.onopen = () => {
-            console.log('로그인 웹소켓 열림');
-            sendWebSocketMessage(loginType);
-        };
-    }
-
-
-    function sendWebSocketMessage(message) {
-      if (websocket.readyState === WebSocket.OPEN) {
-        console.log('Sending message:', message);
-        websocket.send(JSON.stringify(message));
-      } else {
-        console.log('WebSocket 연결 진행중');
-        setTimeout(() => {
-          sendWebSocketMessage(message);
-        }, 1000); // Retry after 1 second
-      }
-    }
+    useEffect( ()=>{
+        if(sessionStorage.length>0&&email!==null&&email!=="null"){
+            if(websocket.current==null){
+                console.log('rqweqw')
+                websocket.current = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
+                sessionStorage.setItem('websocket', websocket.current);
+                websocket.current.onopen = () => {
+                    console.log('로그인 웹소켓 열림');
+                    websocket.current.send(JSON.stringify({ type : "enter", loginType : loginType }));
+                };
+            }
+        }
+    } , [])
 
 
     if(sessionStorage.length<=0){
@@ -52,9 +45,11 @@ export default function Header(props) {
         console.log('세션스토리지 비어있음')
         sessionStorage.setItem('email', null);
         sessionStorage.setItem('loginType', null);
+        sessionStorage.setItem('websocket',null)
     }
     // 로그인
     useEffect( ()=>{
+
         axios.get("/member/info").then( r => {console.log(r);
             if( r.data != ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
                 // js 로컬 스토리지에 저장
@@ -74,6 +69,7 @@ export default function Header(props) {
     const logOut = () => {
         sessionStorage.setItem('email', null);
         sessionStorage.setItem('loginType', null);
+        sessionStorage.setItem('websocket', null);
         axios.get("/member/logout");
         window.location.href = '/';
     };

@@ -21,7 +21,7 @@ public class LoginHandler extends TextWebSocketHandler {
     @Autowired
     private ChattingHandler chattingHandler;
 
-    private static List<LoginUserDto> loginUserDtoList = new ArrayList<>();
+    public static List<LoginUserDto> loginUserDtoList = new ArrayList<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -35,46 +35,26 @@ public class LoginHandler extends TextWebSocketHandler {
                         .build());
         log.info("loginUserDtoList : " + loginUserDtoList);
     }
-
-    @Override
-    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        log.info("로긴핸들러에 메세지 들어옴 : " + message.getPayload());
-        String LoginType = (String) message.getPayload();
-        for (LoginUserDto loginUserDto : loginUserDtoList) {
-            if(loginUserDto.getUserEmail().equals(session.getAttributes().get("pathes"))){
-                loginUserDto.setType(LoginType);
-            }
-        }
-        log.info("loginUserDtoList : " + loginUserDtoList);
-        handleTextMessage(session, (TextMessage) message);
-    }
-
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        /*
-        log.info("get message : " + message.getPayload());
+     log.info("로긴핸들러에 메세지 들어옴 : " + message.getPayload());
         JSONObject jsonMessage = new JSONObject(message.getPayload());
-        log.info("jsonMessage : " + jsonMessage );
         String type = jsonMessage.getString("type");
-        log.info("type : " + type );
-        if("login".equals(type)) { // 로그인 한 경우
-            for (LoginUserDto dto : loginUserDtoList) {
-                if(dto.getSession().equals(session)){
-                    dto.setType(jsonMessage.getString("who"));
-                    dto.setUserEmail(jsonMessage.getString("userEmail"));
-                } // if e
-            } // for e
-        }else if("request".equals(type)){ // 일반 유저가 의사에게 상담 요청을 보낸 경우
-            log.info("request 로 옴");
-            for (LoginUserDto dto : loginUserDtoList) {
-                if (dto.getUserEmail().equals(jsonMessage.getString("userEmail")));
-                    String tochatmessage = " type : enter, chatRoomId : 123 ";
-                    TextMessage textMessage = new TextMessage(tochatmessage);
-                    chattingHandler.handleTextMessage(dto.getSession(),textMessage);
-
+        if("enter".equals(type)) {
+            String loginType = jsonMessage.getString("loginType");
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if(loginUserDto.getUserEmail().equals(session.getAttributes().get("pathes"))){
+                    loginUserDto.setType(loginType);
+                }
             }
-        }*/
-        log.info("get message : " + message);
+        }else if("counsel".equals(type)){
+            String toEmail = jsonMessage.getString("toEmail");
+            String receiveEmail = jsonMessage.getString("receiveEmail");
+            log.info("receiveEmail : " + receiveEmail);
+            log.info("toEmail : " + toEmail);
+        }
+
+        log.info("loginUserDtoList : " + loginUserDtoList);
 
     }
 
