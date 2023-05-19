@@ -40,18 +40,26 @@ public class LoginHandler extends TextWebSocketHandler {
      log.info("로긴핸들러에 메세지 들어옴 : " + message.getPayload());
         JSONObject jsonMessage = new JSONObject(message.getPayload());
         String type = jsonMessage.getString("type");
-        if("enter".equals(type)) {
+        if("enter".equals(type)) { // 로그인했을때
             String loginType = jsonMessage.getString("loginType");
             for (LoginUserDto loginUserDto : loginUserDtoList) {
                 if(loginUserDto.getUserEmail().equals(session.getAttributes().get("pathes"))){
                     loginUserDto.setType(loginType);
                 }
             }
-        }else if("counsel".equals(type)){
+        }else if("counsel".equals(type)){ // 의사에게 상담 신청할 때
             String toEmail = jsonMessage.getString("toEmail");
             String receiveEmail = jsonMessage.getString("receiveEmail");
             log.info("receiveEmail : " + receiveEmail);
             log.info("toEmail : " + toEmail);
+        }else if("answer".equals(type)){ // 의사가 상담요청에 대해 답을 줬을때
+            String answer = jsonMessage.getString("answer");
+            log.info("answer : " + answer);
+            if("yes".equals(answer)){ // 의사가 수락했을때
+                log.info("answer : " + answer);
+            }else if("no".equals(answer)){ // 의사가 거절했을때
+                log.info("answer : " + answer);
+            }
         }
 
         log.info("loginUserDtoList : " + loginUserDtoList);
