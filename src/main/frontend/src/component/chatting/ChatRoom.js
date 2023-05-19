@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import doctor from '../../doctor.PNG';
+import doctor from '../../doctor.png';
 import Avatar from "@mui/material/Avatar";
 
 
