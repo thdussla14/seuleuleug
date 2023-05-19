@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
-import { DataGrid, GridColDef, GridValueGetterParams, GridRowSelectionModel } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useSearchParams  } from 'react-router-dom';
 
 
@@ -23,7 +23,7 @@ export default function ChallengeResultList(props) {
             headerName: '상태',
             width: 50,
             editable: true,
-            renderCell: (params) => params.value==0 ? '미확인' : '확인',// renderCell will render the component
+            renderCell: (params) => params.value===0 ? '미확인' : '확인',// renderCell will render the component
         },
     ]
 
@@ -46,7 +46,7 @@ export default function ChallengeResultList(props) {
     const onDeleteHandler = () => {
         console.log("onDeleteHandler");
         let msg = window.confirm(" 정말 확인하시겠습니까? 복구가 불가능 합니다.")
-        if( msg == true ){ // 확인 선택시
+        if( msg === true ){ // 확인 선택시
             // 선택된 글귀 하나씩 서버에 전달
             rowSelectionModel.forEach( r => {
                 console.log(r)
@@ -61,7 +61,7 @@ export default function ChallengeResultList(props) {
         <div style={{marginTop:'30px'}}>
             <button type='button'
                 onClick ={ onDeleteHandler }
-                disabled={ rowSelectionModel.length == 0 ? true : false }
+                disabled={ rowSelectionModel.length === 0 ? true : false }
                 >
                     확인완료
             </button>

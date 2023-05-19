@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import seuleuleug.domain.challenges.ChallengeResultsDto;
-import seuleuleug.domain.challenges.ChallengeResultsEntity;
 import seuleuleug.domain.challenges.ChallengesDto;
 import seuleuleug.domain.hospital.PageDto;
 import seuleuleug.service.ChallengesService;

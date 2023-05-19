@@ -1,7 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import axios from 'axios'
-import Container from '@mui/material/Container';
-import { DataGrid, GridColDef, GridValueGetterParams, GridRowSelectionModel } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 export default function ChallengeTable(props) {
 
@@ -44,7 +43,7 @@ export default function ChallengeTable(props) {
     const onDeleteHandler = () => {
         console.log("onDeleteHandler");
         let msg = window.confirm(" 정말 삭제하시겠습니까? 복구가 불가능 합니다.")
-        if( msg == true ){ // 삭제 확인 선택시
+        if( msg === true ){ // 삭제 확인 선택시
             // 선택된 글귀 하나씩 서버에 전달
             rowSelectionModel.forEach( r => {
                 axios.delete("/challenge", {params : { chno : r }})
@@ -63,7 +62,7 @@ export default function ChallengeTable(props) {
         <div style={{marginTop:'30px'}}>
             <button type='button'
                 onClick ={ onDeleteHandler }
-                disabled={ rowSelectionModel.length == 0 ? true : false }
+                disabled={ rowSelectionModel.length === 0 ? true : false }
                 >
                     선택 삭제
             </button>

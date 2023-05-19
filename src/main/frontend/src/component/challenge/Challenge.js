@@ -1,4 +1,4 @@
-import React, {useState, useEffect , useRef} from 'react'
+import React, {useState, useEffect } from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -67,7 +67,7 @@ export default function Challenge(props) {
     let [ rows , setRows ] = useState([]);
     let [ pageInfo,setPageInfo] = useState({'page':1});
     let [ totalPage, setTotalPage ] = useState(1);
-    let [ totalCount, setTotalCount ] = useState(1);
+
     // 2. 제품호출 axios 함수
     useEffect( ()=>{
         axios.get('/challenge',{ params : pageInfo })
@@ -87,7 +87,7 @@ export default function Challenge(props) {
             console.log(data)
             setRows( r.data.challengesDtoList )
             setTotalPage(r.data.totalPage)
-            setTotalCount(r.data.totalCount)
+
             } )
             .catch( err => { console.log(err); })
     } , [pageInfo] )

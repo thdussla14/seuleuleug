@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import styles from '../../css/GovernmentInfo.css';
 
 export default function GovernmentInfo(props) {
@@ -28,11 +26,11 @@ export default function GovernmentInfo(props) {
 
     const choice = (e,no) => {
         let govArray = [];
-        if(no=='00'){
+        if(no==='00'){
             setGovInfoList([...govInfo])
         }else {
             govInfo.forEach(o=>{
-                if(o.card_body3.split('/')[1].split('-')[0].replace(" ","")==no){
+                if(o.card_body3.split('/')[1].split('-')[0].replace(" ","")===no){
                     govArray.push(o)
                 }
             })
