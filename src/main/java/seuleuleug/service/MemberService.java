@@ -149,12 +149,14 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
             if(entity.getHrole().equals("DOCTOR")){
                 // 검증후 세션에 저장할 DTO 반환
                 HMemberDto dto = entity.toDto();
-                //권한 목록
-                Set<GrantedAuthority> rolelist = new HashSet<>();
-                SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_"+entity.getHrole());
-                rolelist.add(role);
-                dto.setRoleList( rolelist );
-                return dto;
+                if( dto.getHmstate() == 1 ){
+                    //권한 목록
+                    Set<GrantedAuthority> rolelist = new HashSet<>();
+                    SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_"+entity.getHrole());
+                    rolelist.add(role);
+                    dto.setRoleList( rolelist );
+                    return dto;
+                }
             }
         }
         return null;
