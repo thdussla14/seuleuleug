@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {useEffect, useState, useRef} from 'react'
-import Container from '@mui/material/Container';
-import Chat from './Chat';
+import {useEffect, useState} from 'react'
 import ChatRoom from './ChatRoom';
 
 export default function ChattingList(props){

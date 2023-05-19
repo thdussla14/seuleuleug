@@ -18,7 +18,7 @@ import NightsStayIcon from '@mui/icons-material/NightsStay';
 
 export default function Header(props) {
 
-    const websocket = useRef(null);
+    let websocket = null;
 
     console.log(sessionStorage)
 
@@ -27,22 +27,20 @@ export default function Header(props) {
 
     useEffect( ()=>{
         if(sessionStorage.length>0&&email!==null&&email!=="null"){
-            if(websocket.current==null){
-                console.log('rqweqw')
-                websocket.current = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
-                sessionStorage.setItem('websocket', websocket.current);
-                websocket.current.onopen = () => {
-                    console.log('로그인 웹소켓 열림');
-                    websocket.current.send(JSON.stringify({ type : "enter", loginType : loginType }));
+            if(websocket==null){
+                websocket = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
+                console.log(websocket);
+                console.log(JSON.stringify(websocket));
+                websocket.onopen = () => {
+                    websocket.send(JSON.stringify({ type : "enter", loginType : loginType }));
                 };
+                sessionStorage.setItem('websocket', JSON.stringify(websocket));
             }
         }
     } , [])
 
 
     if(sessionStorage.length<=0){
-        console.log(sessionStorage)
-        console.log('세션스토리지 비어있음')
         sessionStorage.setItem('email', null);
         sessionStorage.setItem('loginType', null);
         sessionStorage.setItem('websocket',null)
@@ -60,7 +58,6 @@ export default function Header(props) {
                     sessionStorage.setItem("email" , r.data );
                     sessionStorage.setItem('loginType', "normal");
                 }
-                console.log(sessionStorage)
             }
         })
     }, [])
