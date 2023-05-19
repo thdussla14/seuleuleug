@@ -18,7 +18,7 @@ import NightsStayIcon from '@mui/icons-material/NightsStay';
 
 export default function Header(props) {
 
-    let websocket = null;
+    let websocket = useRef(null);
 
     console.log(sessionStorage)
 
@@ -27,14 +27,16 @@ export default function Header(props) {
 
     useEffect( ()=>{
         if(sessionStorage.length>0&&email!==null&&email!=="null"){
-            if(websocket===null){
-                websocket = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
-                console.log(websocket);
-                console.log(JSON.stringify(websocket));
-                websocket.onopen = () => {
-                    websocket.send(JSON.stringify({ type : "enter", loginType : loginType }));
+            if(websocket.current===null){
+                websocket.current = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
+                console.log(websocket.current);
+                if(websocket.current!==null){
+                    console.log(JSON.stringify(websocket.current));
+                }
+                websocket.current.onopen = () => {
+                    websocket.current.send(JSON.stringify({ type : "enter", loginType : loginType }));
                 };
-                sessionStorage.setItem('websocket', JSON.stringify(websocket));
+                sessionStorage.setItem('websocket', JSON.stringify(websocket.current));
             }
         }
     } , [])
@@ -103,7 +105,7 @@ export default function Header(props) {
             {"name":'GOVERMENT',"link":'/government/info'},{"name":'CHALLENGE',"link":'/challenge/challenge'},
             {"name":'HEART',"link":'/simritest/info'}].map((text, index) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton href={ text.link }>
+                <ListItemButton to={ text.link }>
                   <ListItemIcon>
                     {index === 0 ? <ChatIcon />           :
                      index === 1 ? <LocalHospitalIcon />  :

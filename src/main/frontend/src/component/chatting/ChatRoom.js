@@ -11,7 +11,7 @@ export default function ChatRoom(props) {
   const counsel = (email)=>{
         const websocket = JSON.parse(sessionStorage.getItem('websocket'))
         console.log(websocket);
-        websocket.current.send(JSON.stringify({ type : "counsel", toEmail : email,receiveEmail : sessionStorage.getItem("email") }));
+        websocket.send(JSON.stringify({ type : "counsel", toEmail : email,receiveEmail : sessionStorage.getItem("email") }));
   }
   useEffect(() => {
     console.log(props.chattingRoomList);
