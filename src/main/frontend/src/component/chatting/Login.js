@@ -28,7 +28,7 @@ export default function Login(props){
         let loginForm = document.querySelectorAll(".user")[0];
         let loginFormData = new FormData(loginForm);
         axios.post("/member/login", loginFormData ).then( r=>{
-            if(r.data != false){
+            if(r.data !== false){
                 alert('로그인 성공');
                 window.location.href="/";
             }else{
@@ -56,8 +56,7 @@ export default function Login(props){
         let loginFormData = new FormData(loginForm);
 
         axios.post("/member/login", loginFormData ).then( r=>{
-            console.log(r.data);
-            if(r.data != false){
+            if(r.data !== false){
                 alert('로그인 성공');
                 window.location.href="/";
             }else {

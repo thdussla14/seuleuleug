@@ -1,4 +1,4 @@
-import React , { useState , useEffect, useRef } from 'react';
+import React , { useEffect, useRef } from 'react';
 import axios from 'axios';
 import {Box,AppBar,Toolbar,Typography,IconButton,Drawer,List,
 Divider,ListItem,ListItemText, ListItemButton,ListItemIcon}from '@mui/material';
@@ -27,7 +27,7 @@ export default function Header(props) {
 
     useEffect( ()=>{
         if(sessionStorage.length>0&&email!==null&&email!=="null"){
-            if(websocket==null){
+            if(websocket===null){
                 websocket = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
                 console.log(websocket);
                 console.log(JSON.stringify(websocket));
@@ -49,9 +49,9 @@ export default function Header(props) {
     useEffect( ()=>{
 
         axios.get("/member/info").then( r => {console.log(r);
-            if( r.data != ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
+            if( r.data !== ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
                 // js 로컬 스토리지에 저장
-                if(r.data.split(' ')[0] == 'DOCTOR'){
+                if(r.data.split(' ')[0] === 'DOCTOR'){
                     sessionStorage.setItem("email" , r.data.split(' ')[1] );
                     sessionStorage.setItem('loginType', "doctor");
                 }else{
@@ -116,7 +116,7 @@ export default function Header(props) {
               </ListItem>
             ))}
           </List>
-          { sessionStorage.getItem('email') == 'null' ? (
+          { sessionStorage.getItem('email') === 'null' ? (
               <>
               <Divider />
                 <List>
@@ -149,7 +149,7 @@ export default function Header(props) {
                 </List>
                 <Divider />
                 <List>
-                { loginType == "doctor" ?
+                { loginType === "doctor" ?
                   (<>
                     <ListItem key='LIST' disablePadding>
                       <ListItemButton href='/board/doctor/boardlist'>
@@ -160,7 +160,7 @@ export default function Header(props) {
                       </ListItemButton>
                      </ListItem>
                     </>)
-                  : loginType == "admin" ?
+                  : loginType === "admin" ?
                   (<>
                       <ListItem key='ADMIN' disablePadding>
                         <ListItemButton href='/admin/dashboard'>

@@ -1,8 +1,7 @@
-import React, {useState,useEffect} from 'react'
+import React, { useState, useEffect} from 'react'
 import axios from 'axios'
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import { DataGrid, GridColDef, GridValueGetterParams, GridRowSelectionModel } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import DoctorTable from './DoctorTable';
 
 export default function HospitalTable(props) {
@@ -25,7 +24,7 @@ export default function HospitalTable(props) {
     // 1. 상태변수
     const [ rows , setRows ] = useState ([]);
     // 2. 제품 호출 axios
-    const getHList = () => {axios.get("/hospital/alllist").then( r => {console.log(r); setRows(r.data)})}
+    const getHList = () => {axios.get("/hospital/alllist").then( r => {setRows(r.data)})}
     // 3. 컴포넌트 생명주기에 따른 함수 호출
     useEffect (()=>{ getHList();},[])
     // 4.
@@ -35,7 +34,7 @@ export default function HospitalTable(props) {
     const setJoin = (e,params) => {
         console.log(params);
         axios.put("/hospital/change",{"hno" :params.id })
-        .then( r => {console.log(r); alert('제휴 등록 완료'); window.location.reload();})
+        .then( r => {alert('제휴 등록 완료'); window.location.reload();})
     }
 
     return (<>
