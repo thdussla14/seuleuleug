@@ -25,9 +25,8 @@ export default function DashBoard(props) {
         console.log(cname.value)
         axios.post("/board/category/write", {"cname": cname.value})
             .then((r) =>  {
-                console.log(r)
-                if(r.data == true)
-                    {console.log(r); alert('카테고리 등록 성공했습니다.'); cname.value='';
+                if(r.data === true)
+                    {alert('카테고리 등록 성공했습니다.'); cname.value='';
                       setValue("1");;}
             })
     }
@@ -38,9 +37,8 @@ export default function DashBoard(props) {
         console.log(wcontent.value)
         axios.post("/word", {"wcontent": wcontent.value})
             .then((r) => {
-                console.log(r)
-                if(r.data == true)
-                    {console.log(r); alert('응원글귀 등록 성공했습니다.'); wcontent.value='';
+                if(r.data === true)
+                    {alert('응원글귀 등록 성공했습니다.'); wcontent.value='';
                      setValue("2");;}
             })
     }

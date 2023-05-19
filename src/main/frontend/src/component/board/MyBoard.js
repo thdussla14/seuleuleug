@@ -20,7 +20,7 @@ export default function MyBoard(props) {
          console.log(searchParams)
          console.log(searchParams.get("bno"))
          axios.get('/board/detail',{ params : { bno : searchParams.get("bno")}})
-             .then(  r => { console.log(r); setItem(r.data)})
+             .then(  r => { setItem(r.data)})
              .catch( e => { console.log(e);})
      }, [])
     // 해당 게시물 삭제

@@ -12,7 +12,7 @@ export default function CategoryTable(props) {
     // 1. 상태변수
     const [ rows , setRows ] = useState ([]);
     // 2. 제품 호출 axios
-    const getCategory = () => {axios.get("/board/category/list").then( r => {console.log(r); setRows(r.data)})}
+    const getCategory = () => {axios.get("/board/category/list").then( r => { setRows(r.data)})}
     // 3. 컴포넌트 생명주기에 따른 함수 호출
     useEffect (()=>{ getCategory();},[])
     // 4.

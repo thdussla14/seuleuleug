@@ -1,9 +1,7 @@
 import React, {useState,useEffect} from 'react'
-import { useSearchParams  } from 'react-router-dom';
 import axios from 'axios'
 import Container from '@mui/material/Container';
 import { Paper , Stack , styled } from '@mui/material';
-import CheckPasswordModal from './CheckPasswordModal';
 
 export default function BoardList(props) {
 
@@ -12,14 +10,11 @@ export default function BoardList(props) {
     const [ items , setItems ] = useState([]);
     useEffect(()=>{
          axios.get('/board/alllist')
-             .then(  (r) => { console.log(r); setItems(r.data);})
+             .then(  (r) => { setItems(r.data);})
              .catch( (e) => { console.log(e);})
     }, [])
     // 2. 게시글 선택 이벤트 -> 게시글번호 파라미터값으로 가지고 상세보기 페이지로 전환
     const Handler = (e) => {
-        console.log(e.target.value)
-        console.log(e.target);
-        console.log(e.target.text);
         window.location.href = "/board/doctor/hboard?bno="+e.target.value
     }
     // css
