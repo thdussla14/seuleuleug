@@ -28,7 +28,7 @@ export default function Header(props) {
     useEffect( ()=>{
         if(sessionStorage.length>0&&email!==null&&email!=="null"){
             if(websocket===null){
-                websocket = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
+                websocket = new WebSocket("ws://ec2-43-201-66-165.ap-northeast-2.compute.amazonaws.com:8080/intoHomePage/"+email);
                 console.log(websocket);
                 console.log(JSON.stringify(websocket));
                 websocket.onopen = () => {
