@@ -52,6 +52,11 @@ public class LoginHandler extends TextWebSocketHandler {
             String receiveEmail = jsonMessage.getString("receiveEmail");
             log.info("receiveEmail : " + receiveEmail);
             log.info("toEmail : " + toEmail);
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if (loginUserDto.getUserEmail().equals(toEmail)){
+                    //loginUserDto.getSession().sendMessage();
+                }
+            }
         }else if("answer".equals(type)){ // 의사가 상담요청에 대해 답을 줬을때
             String answer = jsonMessage.getString("answer");
             log.info("answer : " + answer);

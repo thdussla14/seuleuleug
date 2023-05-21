@@ -1,4 +1,4 @@
-import React , { useEffect, useRef } from 'react';
+import React , { useEffect, useRef, useContext  } from 'react';
 import axios from 'axios';
 import {Box,AppBar,Toolbar,Typography,IconButton,Drawer,List,
 Divider,ListItem,ListItemText, ListItemButton,ListItemIcon}from '@mui/material';
@@ -15,16 +15,16 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import DescriptionIcon from '@mui/icons-material/Description';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
+import { WebSocketContext } from './chatting/WebSocketContext';
 
 export default function Header(props) {
-
-    let websocket = useRef(null);
+    const websocket = useContext(WebSocketContext);
 
     console.log(sessionStorage)
 
     const email = sessionStorage.getItem('email');
     const loginType = sessionStorage.getItem('loginType');
-
+    /*
     useEffect( ()=>{
         if(sessionStorage.length>0&&email!==null&&email!=="null"){
             if(websocket.current===null){
@@ -40,7 +40,7 @@ export default function Header(props) {
             }
         }
     } , [])
-
+    */
 
     if(sessionStorage.length<=0){
         sessionStorage.setItem('email', null);
