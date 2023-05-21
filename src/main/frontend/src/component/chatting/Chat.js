@@ -5,10 +5,7 @@ import { useParams } from 'react-router-dom'; // HTTP 경로 상의 매개변수
 import '../../css/Chat.css';
 
 export default function Chat(props){
-    let [socket, setSocket] = useState(null);
     let [messages, setMessages] = useState([]);
-
-
     console.log(sessionStorage.getItem('email'))
 
     const params = useParams();

@@ -1,4 +1,4 @@
-import React, {useState, useEffect , useRef} from 'react'
+import React, {useRef} from 'react'
 import axios from 'axios'
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
@@ -12,7 +12,7 @@ export default function ChallengeWrite(props) {
     const onWriteHandler = () => {
         const writeFormData = new FormData( writeForm.current );
         axios.post( '/challenge' , writeFormData ).then( r=>{
-            if( r.data == true ){
+            if( r.data === true ){
                 alert('등록성공');
                 window.location.href = '/admin/dashboard'
             }

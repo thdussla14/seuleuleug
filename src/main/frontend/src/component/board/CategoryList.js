@@ -12,7 +12,7 @@ export default function CategoryList(props) {
     let [ list, setList ] = useState([]); // {} 객체 , [] 배열/리스트
     useEffect(()=>{
         axios.get("/board/category/list")
-            .then( r => {console.log(r); setList(r.data);})
+            .then( r => {setList(r.data);})
             .catch( e => { console.log(e);})
     }, [])
 

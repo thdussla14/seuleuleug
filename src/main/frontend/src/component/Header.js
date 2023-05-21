@@ -18,7 +18,7 @@ import NightsStayIcon from '@mui/icons-material/NightsStay';
 
 export default function Header(props) {
 
-    const websocket = useRef(null);
+    let websocket = null;
 
     console.log(sessionStorage)
 
@@ -29,12 +29,13 @@ export default function Header(props) {
         if(sessionStorage.length>0&&email!==null&&email!=="null"){
             if(websocket.current==null){
                 console.log('rqweqw')
-                websocket.current = new WebSocket("ws://43.201.66.165:8080/intoHomePage/"+email);
+                websocket.current = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
                 sessionStorage.setItem('websocket', websocket.current);
                 websocket.current.onopen = () => {
                     console.log('로그인 웹소켓 열림');
                     websocket.current.send(JSON.stringify({ type : "enter", loginType : loginType }));
                 };
+                sessionStorage.setItem('websocket', JSON.stringify(websocket));
             }
         }
     } , [])
@@ -51,16 +52,15 @@ export default function Header(props) {
     useEffect( ()=>{
 
         axios.get("/member/info").then( r => {console.log(r);
-            if( r.data != ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
+            if( r.data !== ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
                 // js 로컬 스토리지에 저장
-                if(r.data.split(' ')[0] == 'DOCTOR'){
+                if(r.data.split(' ')[0] === 'DOCTOR'){
                     sessionStorage.setItem("email" , r.data.split(' ')[1] );
                     sessionStorage.setItem('loginType', "doctor");
                 }else{
                     sessionStorage.setItem("email" , r.data );
                     sessionStorage.setItem('loginType', "normal");
                 }
-                console.log(sessionStorage)
             }
         })
     }, [])
@@ -119,7 +119,7 @@ export default function Header(props) {
               </ListItem>
             ))}
           </List>
-          { sessionStorage.getItem('email') == 'null' ? (
+          { sessionStorage.getItem('email') === 'null' ? (
               <>
               <Divider />
                 <List>
@@ -152,7 +152,7 @@ export default function Header(props) {
                 </List>
                 <Divider />
                 <List>
-                { loginType == "doctor" ?
+                { loginType === "doctor" ?
                   (<>
                     <ListItem key='LIST' disablePadding>
                       <ListItemButton href='/board/doctor/boardlist'>
@@ -163,7 +163,7 @@ export default function Header(props) {
                       </ListItemButton>
                      </ListItem>
                     </>)
-                  : loginType == "admin" ?
+                  : loginType === "admin" ?
                   (<>
                       <ListItem key='ADMIN' disablePadding>
                         <ListItemButton href='/admin/dashboard'>

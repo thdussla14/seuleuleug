@@ -1,12 +1,12 @@
 import React, {useState, useEffect , useRef} from 'react'
 import { useSearchParams  } from 'react-router-dom';
 import axios from 'axios'
-import Container from '@mui/material/Container';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import styles from '../../css/Challenge.css';
 import PersonIcon from '@mui/icons-material/Person';
 import Box from '@mui/material/Box';
+
 
 let today = new Date();
 let year = today.getFullYear();
@@ -28,7 +28,7 @@ export default function ChallengeDetail(props) {
     const [ items , setItems ] = useState([]);
     const [ imgs , setImgs ] = useState();
     const [ itemByMno , SetItemByMno ] = useState([]);
-    const [ date , setDate ] = useState();
+
     const imageInput = useRef();
 
     useEffect(()=>{
@@ -57,7 +57,7 @@ export default function ChallengeDetail(props) {
         console.log(writeFormData)
         axios.post( '/challenge/results' , writeFormData )
             .then( r=>{
-                if( r.data == true ){
+                if( r.data === true ){
                     alert('등록성공');
                     window.location.reload();
                 }
@@ -128,10 +128,10 @@ export default function ChallengeDetail(props) {
                 <div name="chcontent"     id="chcontent">{items.chcontent}</div>
             </div>
         </div>
-        {login=='null' ?
+        {login==='null' ?
             <Box className="login" onClick={(e)=>goLogin(e)} >로그인하고 참여하기</Box>
             :
-            itemByMno == "" ?
+            itemByMno === "" ?
                 <form ref={ writeForm } className="login">
 
                     <input type="file" style={{ display: "none" }} ref={imageInput} name="simg" id="simg" />
@@ -151,7 +151,7 @@ export default function ChallengeDetail(props) {
                         <button type="button" onClick={postResult} className="btn">제출</button>
                     </form>
                     :
-                    itemByMno[0].sstate == 0 ?
+                    itemByMno[0].sstate === 0 ?
                         <div className="login">
                         {Math.abs(((new Date(itemByMno[0].cdate)).getTime() - (new Date(itemByMno[itemByMno.length-1].cdate)).getTime()) / (1000 * 60 * 60 * 24))+1}
                         일째 도전 중 {itemByMno.length}일 성공
