@@ -37,6 +37,7 @@ public class ChattingController {
     public List<LoginUserDto> getLoginDoctor(){
         List<LoginUserDto> result = new ArrayList<>();
         for (LoginUserDto dto : loginHandler.loginUserDtoList) {
+            log.info("확인 : " + dto.getType());
             if("doctor".equals(dto.getType())){
                 result.add(LoginUserDto.builder()
                         .type(dto.getType())

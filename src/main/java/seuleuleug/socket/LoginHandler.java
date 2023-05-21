@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import seuleuleug.domain.Chatting.LoginUserDto;
@@ -48,17 +47,31 @@ public class LoginHandler extends TextWebSocketHandler {
                 }
             }
         }else if("counsel".equals(type)){ // 의사에게 상담 신청할 때
-            String toEmail = jsonMessage.getString("toEmail");
-            String receiveEmail = jsonMessage.getString("receiveEmail");
-            log.info("receiveEmail : " + receiveEmail);
-            log.info("toEmail : " + toEmail);
+            String doctor = jsonMessage.getString("doctor");
+            String normal = jsonMessage.getString("normal");
+            log.info("normal email : " + normal);
+            log.info("doctor email : " + doctor);
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if (loginUserDto.getUserEmail().equals(doctor)){
+                    JSONObject payload = new JSONObject();
+                    payload.put("normal", normal);
+                    TextMessage textMessage = new TextMessage(payload.toString());
+                    loginUserDto.getSession().sendMessage(textMessage);;
+                }
+            }
         }else if("answer".equals(type)){ // 의사가 상담요청에 대해 답을 줬을때
             String answer = jsonMessage.getString("answer");
+            String doctor = jsonMessage.getString("doctor");
+            String normal = jsonMessage.getString("normal");
             log.info("answer : " + answer);
-            if("yes".equals(answer)){ // 의사가 수락했을때
-                log.info("answer : " + answer);
-            }else if("no".equals(answer)){ // 의사가 거절했을때
-                log.info("answer : " + answer);
+            JSONObject payload = new JSONObject();
+            payload.put("answer", answer);
+            payload.put("doctor", doctor);
+            TextMessage textMessage = new TextMessage(payload.toString());
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if(loginUserDto.getUserEmail().equals(normal)){
+                    loginUserDto.getSession().sendMessage(textMessage);
+                }
             }
         }
 
