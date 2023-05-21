@@ -42,6 +42,16 @@ public class ChattingHandler extends TextWebSocketHandler {
                 if(chatUserDto.getSessionId().equals(session.getId())){
                     chatUserDto.setType(jsonMessage.getString("who"));
                 }
+                if(chatUserDto.getChatRoomId().equals((String) session.getAttributes().get("pathes"))){
+                    String intoMessage = null;
+                    if ("normal".equals(jsonMessage.getString("who"))){
+                        intoMessage = "회원이 입장하였습니다.";
+                    }else if("doctor".equals(jsonMessage.getString("who"))){
+                        intoMessage = "의사가 입장하였습니다.";
+                    }
+                    TextMessage textMessage = new TextMessage(intoMessage);
+                    chatUserDto.getSession().sendMessage(textMessage);
+                }
             }
         } else if ("msg".equals(type)) {
             String senderChatRoomId = (String) session.getAttributes().get("pathes");

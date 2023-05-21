@@ -37,7 +37,7 @@ export default function ChatRoom(props) {
                 <div>
                   <Avatar alt="Remy Sharp"      src={doctor} />
                   {hmname} 의사 선생님
-                  <button onClick={counsel(o.userEmail)} type="button"> 상담신청 </button>
+                  <button onClick={() => counsel(o.userEmail)} type="button"> 상담신청 </button>
                 </div>
               {/*</Link>*/}
             </div>

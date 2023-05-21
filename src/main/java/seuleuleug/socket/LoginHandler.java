@@ -61,11 +61,18 @@ public class LoginHandler extends TextWebSocketHandler {
             }
         }else if("answer".equals(type)){ // 의사가 상담요청에 대해 답을 줬을때
             String answer = jsonMessage.getString("answer");
-            String toEmail = jsonMessage.getString("toEmail");
+            String doctor = jsonMessage.getString("doctor");
+            String normal = jsonMessage.getString("normal");
             log.info("answer : " + answer);
             JSONObject payload = new JSONObject();
             payload.put("answer", answer);
+            payload.put("doctor", doctor);
             TextMessage textMessage = new TextMessage(payload.toString());
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if(loginUserDto.getUserEmail().equals(normal)){
+                    loginUserDto.getSession().sendMessage(textMessage);
+                }
+            }
         }
 
         log.info("loginUserDtoList : " + loginUserDtoList);
