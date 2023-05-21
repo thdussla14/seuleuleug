@@ -18,7 +18,7 @@ import NightsStayIcon from '@mui/icons-material/NightsStay';
 import { WebSocketContext } from './chatting/WebSocketContext';
 
 export default function Header(props) {
-    const websocket = useContext(WebSocketContext);
+    let websocket = useContext(WebSocketContext);
 
     console.log(sessionStorage)
 
