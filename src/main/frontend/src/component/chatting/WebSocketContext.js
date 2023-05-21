@@ -4,6 +4,7 @@ import React, { createContext, useState, useEffect } from 'react';
 const WebSocketContext = createContext();
 
 const WebSocketProvider = ({ children }) => {
+
   const [websocket, setWebSocket] = useState(null);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const WebSocketProvider = ({ children }) => {
                 console.log('일반회원에게 메세지 전달 : ' + e)
                 console.log(e)
                 let message = JSON.parse(e.data);
-                let doctor = message.doctor;
+                let doctor  = message.doctor;
                 console.log(message);
                 console.log(message.doctor);
                 console.log(message.answer);

@@ -95,7 +95,7 @@ export default function Login(props){
                         <div style={{display:'flex'}}>
                             <div>
                                 <TextField name="email"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="normal" size="small"/> <br/>
-                                <TextField name="password"      label="핸드폰"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
+                                <TextField name="password"   label="핸드폰"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
                             </div>
                             <div style={{marginTop:'20px'}}>
                                 <Button variant="contained" onClick={mlogin}

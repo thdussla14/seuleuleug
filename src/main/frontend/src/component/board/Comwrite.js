@@ -36,7 +36,7 @@ export default function Comwrite(props) {
         axios.post("/board/cwrite",info)
             .then((r) => {
                 console.log(r);
-                 if(r.data===true){alert('답글 등록되었습니다.') ; sendmail(); }
+                 if(r.data===true){alert('답글 등록되었습니다.') ; sendmail(); window.location.href="/board/doctor/boardlist" }
                  else if(r.data===false){alert('답글 등록에 실패하였습니다.'); window.location.href="/" }
                  }
             )

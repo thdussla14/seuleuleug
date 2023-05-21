@@ -22,7 +22,7 @@ export default function CheckPasswordModal(props) {
      item.bpassword = document.querySelector('#bpassword').value;
      axios.post('/board/checkpw',  item )
          .then((r) => {
-             if(r.data === true){window.location.href="/board/user/myboard?bno="+item.bno;}
+             if(r.data === true){window.location.href="/board/myboard?bno="+item.bno;}
              else{alert('비밀번호가 일치하지 않습니다.'); window.location.href='/'}
          })
   }

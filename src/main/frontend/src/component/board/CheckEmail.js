@@ -13,7 +13,7 @@ export default function CheckEmail(props) {
         console.log(bemail)
         axios.get('/board/check', {params : {bemail:bemail}  })
             .then((r) => {
-                if(r.data === true){window.location.href='/board/user/myboardlist?bemail='+bemail;}
+                if(r.data === true){window.location.href='/board/myboardlist?bemail='+bemail;}
                 else{alert('해당 이메일로 등록한 게시물이 없습니다.'); window.location.href='/'}
             })
     }
