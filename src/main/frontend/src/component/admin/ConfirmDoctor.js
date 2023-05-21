@@ -57,7 +57,7 @@ export default function ChildModal(props) {
         aria-describedby="child-modal-description"
       >
         <Box sx={style}>
-          <img style={{width:'200px',height:'200px'}} src={'http://localhost:8080/static/media/'+item.row.hmcertification} />
+          <img style={{width:'200px',height:'200px'}} src={'/static/media/'+item.row.hmcertification} />
           <Button
               value={item.id}
               onClick={onupdate}

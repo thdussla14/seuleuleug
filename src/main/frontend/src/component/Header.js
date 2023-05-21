@@ -29,7 +29,7 @@ export default function Header(props) {
         if(sessionStorage.length>0&&email!==null&&email!=="null"){
             if(websocket.current==null){
                 console.log('rqweqw')
-                websocket.current = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
+                websocket.current = new WebSocket("ws://43.201.66.165:8080/intoHomePage/"+email);
                 sessionStorage.setItem('websocket', websocket.current);
                 websocket.current.onopen = () => {
                     console.log('로그인 웹소켓 열림');

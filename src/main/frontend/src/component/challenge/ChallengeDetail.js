@@ -44,7 +44,7 @@ export default function ChallengeDetail(props) {
                 setItems(r.data);
                 r.data.chfiles.forEach(e=>{
                     console.log(e.uuidFile)
-                    setImgs("http://localhost:8080/static/media/"+e.uuidFile)
+                    setImgs("/static/media/"+e.uuidFile)
                 })
             })
             .catch( (e) => { console.log(e);})
@@ -73,7 +73,7 @@ export default function ChallengeDetail(props) {
             itemData =[]
             r.data.forEach(e=>{
                 let item = {
-                    img: "http://localhost:8080/static/media/"+e.uuidFile,
+                    img: "/static/media/"+e.uuidFile,
                     title: e.sno,
                 }
                 itemDatas.push(item)
