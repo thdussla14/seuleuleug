@@ -43,13 +43,13 @@ public class ChattingHandler extends TextWebSocketHandler {
                     chatUserDto.setType(jsonMessage.getString("who"));
                 }
                 if(chatUserDto.getChatRoomId().equals((String) session.getAttributes().get("pathes"))){
-                    String intoMessage = null;
+                    JSONObject payload = new JSONObject();
                     if ("normal".equals(jsonMessage.getString("who"))){
-                        intoMessage = "회원이 입장하였습니다.";
+                        payload.put("message", "회원이 입장하였습니다.");
                     }else if("doctor".equals(jsonMessage.getString("who"))){
-                        intoMessage = "의사가 입장하였습니다.";
+                        payload.put("message", "의사가 입장하였습니다.");
                     }
-                    TextMessage textMessage = new TextMessage(intoMessage);
+                    TextMessage textMessage = new TextMessage(payload.toString());
                     chatUserDto.getSession().sendMessage(textMessage);
                 }
             }
