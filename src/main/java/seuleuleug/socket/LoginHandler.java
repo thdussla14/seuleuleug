@@ -28,10 +28,22 @@ public class LoginHandler extends TextWebSocketHandler {
         log.info("session1111: " + session);
         String email = (String) session.getAttributes().get("pathes");
         log.info("user email: " + email);
-        loginUserDtoList.add(LoginUserDto.builder()
-                        .session(session)
-                        .userEmail(email)
-                        .build());
+        boolean userExists = false;
+        for (LoginUserDto existingUser : loginUserDtoList) {
+            if (existingUser.getUserEmail().equals(email)) {
+                userExists = true;
+                break;
+            }
+        }
+        if (!userExists) {
+            loginUserDtoList.add(LoginUserDto.builder()
+                    .session(session)
+                    .userEmail(email)
+                    .build());
+            log.info("유저를 추가했습니다.");
+        } else {
+            log.info("유저가 이미 접속중입니다.");
+        }
         log.info("loginUserDtoList : " + loginUserDtoList);
     }
     @Override

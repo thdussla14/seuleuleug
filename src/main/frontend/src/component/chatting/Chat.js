@@ -70,6 +70,7 @@ export default function Chat(props){
         const data = JSON.stringify(msg);
         console.log(data);
         clientSocket.current.send(data);
+        document.querySelector('.input').value = ''
     }
 
     return (
@@ -89,7 +90,6 @@ export default function Chat(props){
             onKeyPress={(event) => {
               if (event.key === 'Enter') {
                 sendMessage(event.target.value);
-                event.target.value = '';
               }
             }}
           />

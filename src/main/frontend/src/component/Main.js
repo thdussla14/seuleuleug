@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState, useContext  } from 'react';
+import axios from 'axios';
 import Container from '@mui/material/Container';
 import styles from '../css/main.css';
 import Fortune from './board/Fortune';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import doctor from '../doctor.png';  // img 호출
+import MainChat from './chatting/MainChat';
 
 export default function Main(props) {
+    const [chattingRoomList , setChattingRoomList ] = useState([]);
+    useEffect(()=>{
+        axios.get("/chatting/logindoctor").then( r=>{
+                console.log(r.data);
+                setChattingRoomList(r.data)
+            })
+    },[]);
 
     return (
         <Container>
@@ -23,9 +32,7 @@ export default function Main(props) {
                     margin="50px 0px"
                     backgroundColor="white"
                 >
-                  <Avatar alt="Remy Sharp"      src={doctor} />
-                  <Avatar alt="Travis Howard"   src={doctor}  />
-                  <Avatar alt="Cindy Baker"     src={doctor}  />
+                <MainChat chattingRoomList={chattingRoomList}/>
                 </Stack>
                 <div className="btnBox">
                     <div className="bwrite"> <a href="/board/write">        글쓰기   </a> </div>
