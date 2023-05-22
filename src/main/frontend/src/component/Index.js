@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter , Routes , Route } from 'react-router-dom';
 import Header from './Header';
+import Footer from './Footer';
 import Main from './Main';
 import DashBoard from './admin/DashBoard';
 import Write from './board/Write';
@@ -27,7 +28,6 @@ export default function Index(props) {
     return (<>
     {/*<LoginListProvider>*/}
         <BrowserRouter>
-
             <Header />
             <Routes >
                 <Route path="/"                         element={<Main />} />
@@ -55,6 +55,7 @@ export default function Index(props) {
                 <Route path="/challenge/challengedetail" element={<ChallengeDetail />} />
                 <Route path="/challenge/challengeResultList" element={<ChallengeResultList />} />
             </Routes>
+            <Footer />
         </BrowserRouter>
     {/*</LoginListProvider>*/}
 
