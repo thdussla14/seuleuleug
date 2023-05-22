@@ -66,7 +66,6 @@ export default function Header(props) {
     const logOut = () => {
         sessionStorage.setItem('email', null);
         sessionStorage.setItem('loginType', null);
-        sessionStorage.setItem('websocket', null);
         axios.get("/member/logout");
         window.location.href = '/';
     };
