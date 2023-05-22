@@ -33,7 +33,7 @@ export default function ChatRoom(props) {
           return (
             <div key={o.chatRoomId} className={o.chatRoomId}>
                 <div>
-                  <Avatar alt="Remy Sharp"      src={'/static/media/'+response.data.hmpimg} />
+                  <Avatar alt="Remy Sharp"      src={response.data.hmpimg} />
                   {hmname} 의사 선생님
                   <button onClick={() => counsel(o.userEmail)} type="button"> 상담신청 </button>
                 </div>
