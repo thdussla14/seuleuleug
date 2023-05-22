@@ -75,7 +75,7 @@ export default function Challenge(props) {
                 data = [];
                 r.data.challengesDtoList.forEach((i)=>{
                 let datas = {
-                                src: "/static/media/"+i.chfiles[0].uuidFile,
+                                src: i.chfiles[0].uuidFile,
                                 title: i.chname,
                                 channel: "오늘부터 시작",
                                 views: i.count+"명",
