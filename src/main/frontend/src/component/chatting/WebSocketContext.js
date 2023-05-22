@@ -7,10 +7,10 @@ const WebSocketProvider = ({ children }) => {
   const [websocket, setWebSocket] = useState(null);
 
   useEffect(() => {
-    if(websocket==null){
+    if(sessionStorage.getItem("email")!=="null"&sessionStorage.getItem("websocket")=="null"){
         const email = sessionStorage.getItem("email");
         const loginType = sessionStorage.getItem("loginType");
-        const newWebSocket = new WebSocket("ws://ec2-43-201-66-165.ap-northeast-2.compute.amazonaws.com:8080/intoHomePage/" + email);
+        const newWebSocket = new WebSocket("ws://localhost:8080/intoHomePage/" + email);
         newWebSocket.onopen = () => {
           newWebSocket.send(JSON.stringify({ type: "enter", loginType: loginType }));
         };
