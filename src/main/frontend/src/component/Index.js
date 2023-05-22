@@ -26,7 +26,7 @@ import ChallengeResultList from'./challenge/ChallengeResultList.js'
 export default function Index(props) {
     return (<>
     {/*<LoginListProvider>*/}
-        <BrowserRouter>gi
+        <BrowserRouter>
             <Header />
             <Routes >
                 <Route path="/"                         element={<Main />} />
