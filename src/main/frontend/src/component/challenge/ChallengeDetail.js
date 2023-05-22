@@ -131,7 +131,7 @@ export default function ChallengeDetail(props) {
         {login==='null' ?
             <Box className="login" onClick={(e)=>goLogin(e)} >로그인하고 참여하기</Box>
             :
-            itemByMno === "" ?
+            itemByMno == "" ?
                 <form ref={ writeForm } className="login">
 
                     <input type="file" style={{ display: "none" }} ref={imageInput} name="simg" id="simg" />
@@ -151,7 +151,7 @@ export default function ChallengeDetail(props) {
                         <button type="button" onClick={postResult} className="btn">제출</button>
                     </form>
                     :
-                    itemByMno[0].sstate === 0 ?
+                    itemByMno[0].sstate == 0 ?
                         <div className="login">
                         {Math.abs(((new Date(itemByMno[0].cdate)).getTime() - (new Date(itemByMno[itemByMno.length-1].cdate)).getTime()) / (1000 * 60 * 60 * 24))+1}
                         일째 도전 중 {itemByMno.length}일 성공
