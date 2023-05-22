@@ -21,6 +21,7 @@ public class CommentDto {
     private int     hmno;
     private String  hmname;
     private String  hmemail;
+    private String  hmpimg;
 
     private String  hname;
 
