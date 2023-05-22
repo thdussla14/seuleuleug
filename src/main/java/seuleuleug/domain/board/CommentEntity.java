@@ -39,6 +39,7 @@ public class CommentEntity {
                 .hmno(this.hMemberEntity.getHmno())
                 .hmemail(this.hMemberEntity.getHmemail())
                 .hmname(this.hMemberEntity.getHmname())
+                .hmpimg(this.hMemberEntity.getHmpimg())
                 .bno(this.boardEntity.getBno())
                 .rno(this.rno)
                 .rcontent(this.rcontent)
