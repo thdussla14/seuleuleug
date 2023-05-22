@@ -26,7 +26,7 @@ public class ChattingController {
     @GetMapping("/chatlist")
     public List<ChatUserDto> getChattingList(){
         List<ChatUserDto> result = chattingHandler.getChatUserDtoList();
-        log.info(result.toString());
+        //log.info(result.toString());
         for (ChatUserDto dto : result) {
             dto.setSession(null);
         }
@@ -37,7 +37,7 @@ public class ChattingController {
     public List<LoginUserDto> getLoginDoctor(){
         List<LoginUserDto> result = new ArrayList<>();
         for (LoginUserDto dto : loginHandler.loginUserDtoList) {
-            log.info("확인 : " + dto.getType());
+            //log.info("확인 : " + dto.getType());
             if("doctor".equals(dto.getType())){
                 result.add(LoginUserDto.builder()
                         .type(dto.getType())
@@ -45,7 +45,7 @@ public class ChattingController {
                         .build());
             }
         }
-        log.info("result : " + result.toString());
+        //log.info("result : " + result.toString());
         return result;
     }
 }
