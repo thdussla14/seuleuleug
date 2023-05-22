@@ -23,19 +23,24 @@ export default function SingUp(props){
     let memail = useRef(null);
     let mphone = useRef(null);
     const signup = ()=>{
-        let info = {
-            memail : memail.current.value,
-            mphone : mphone.current.value
+        let memailj = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/
+        if( memailj.test(memail.current.value) ){
+            let info = {
+                    memail : memail.current.value,
+                    mphone : mphone.current.value
+                }
+                axios.post("/member/singup", info ).then( r=>{
+                    console.log(r.data);
+                    if(r.data==true){
+                        alert('회원 가입 완료');
+                        window.location.href="/";
+                    }else{
+                        alert('이미 사용중인 아이디[이메일] 입니다.');
+                    }
+                })
+        }else{
+            alert('이메일 형식에 맞게 입력하여 주십시오.')
         }
-        axios.post("/member/singup", info ).then( r=>{
-            console.log(r.data);
-            if(r.data==true){
-                alert('회원 가입 완료');
-                window.location.href="/";
-            }else{
-                alert('이미 사용중인 아이디[이메일] 입니다.');
-            }
-        })
     }
     // 의사 회원가입
     const inputform = useRef(null);
@@ -46,20 +51,27 @@ export default function SingUp(props){
         console.log(hno)
         setHno(hno);
     }
+    let hmemail = useRef(null);
     const hsignup = ()=>{
-        const formData = new FormData(inputform.current);
-        console.log(formData)
-        formData.set("hno", hno);
-        axios.post('/hmember/hsignup',formData)
-            .then(r=>{
-                if( r.data == true){
-                    alert('회원 가입 완료');
-                    window.location.href="/";
-                }
-                else {
-                    alert('이미 사용중인 아이디[이메일] 입니다.');
-                }
-        })
+        let memailj = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/
+        if( memailj.test(hmemail.current.value) ){
+            const formData = new FormData(inputform.current);
+            console.log(formData)
+            formData.set("hno", hno);
+            axios.post('/hmember/hsignup',formData)
+                .then(r=>{
+                    if( r.data == true){
+                        alert('회원 가입 완료');
+                        window.location.href="/";
+                    }
+                    else {
+                        alert('이미 사용중인 아이디[이메일] 입니다.');
+                    }
+            })
+        }else{
+            alert('이메일 형식에 맞게 입력하여 주십시오.')
+        }
+
     }
 
 
@@ -76,7 +88,7 @@ export default function SingUp(props){
                 <div style={{display:'flex'}} >
                     <div>
                         <TextField id="memail"      label="이메일"   variant="outlined"  inputRef={memail} margin="normal" size="small" />
-                        <TextField id="mphone"      label="핸드폰"   variant="outlined"  inputRef={mphone} margin="normal" size="small" />
+                        <TextField id="mphone"      label="비밀번호"   variant="outlined"  inputRef={mphone} margin="normal" size="small" />
                     </div>
                     <div style={{marginTop:'20px'}}>
                         <Button variant="contained" onClick={signup}
@@ -87,7 +99,7 @@ export default function SingUp(props){
                 <TabPanel value="2">
                     <JoinHospitalList hospitalChange= {hospitalChange} />
                     <form ref={inputform}>
-                        <TextField name="hmemail"     label="이메일"    variant="outlined"  margin="normal" size="small" />
+                        <TextField name="hmemail"     label="이메일"    variant="outlined"  margin="normal" size="small" inputRef={hmemail} />
                         <TextField name="hpassword"   label="비밀번호"  variant="outlined"  margin="normal" size="small" />
                         <TextField name="hmname"      label="이름"     variant="outlined"  margin="normal" size="small" />
                         <TextField name="hmphone"     label="전화번호"  variant="outlined"  margin="normal" size="small" />
