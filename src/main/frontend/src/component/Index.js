@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter , Routes , Route } from 'react-router-dom';
 import Header from './Header';
+import Footer from './Footer';
 import Main from './Main';
 import DashBoard from './admin/DashBoard';
 import Write from './board/Write';
@@ -27,21 +28,20 @@ export default function Index(props) {
     return (<>
     {/*<LoginListProvider>*/}
         <BrowserRouter>
-
             <Header />
             <Routes >
                 <Route path="/"                         element={<Main />} />
                 <Route path="/admin/dashboard"          element={<DashBoard />} />
                 <Route path="/board/write"              element={<Write />} />
                 <Route path="/board/checkemail"         element={<CheckEmail />} />
-                <Route path="/board/user/myboardlist"   element={<MyBoardList />} />
-                <Route path="/board/user/myboard"       element={<MyBoard />} />
+                <Route path="/board/myboardlist"        element={<MyBoardList />} />
+                <Route path="/board/myboard"            element={<MyBoard />} />
                 <Route path="/board/doctor/boardlist"   element={<BoardList />} />
                 <Route path="/board/doctor/hboard"      element={<HBoard />} />
                 <Route path="/board/doctor/comwrite"    element={<Comwrite />} />
 
                 <Route path="/signup"                   element={<SignUp />} />
-                <Route path="/member/login"                    element={<Login />} />
+                <Route path="/member/login"             element={<Login />} />
 
                 <Route path="/chattinglist"             element={<ChattingList />} />
                 <Route path="/chatting/:chatRoomId"     element={<Chat />} />
@@ -55,6 +55,7 @@ export default function Index(props) {
                 <Route path="/challenge/challengedetail" element={<ChallengeDetail />} />
                 <Route path="/challenge/challengeResultList" element={<ChallengeResultList />} />
             </Routes>
+            <Footer />
         </BrowserRouter>
     {/*</LoginListProvider>*/}
 
