@@ -9,7 +9,7 @@ export default function GovernmentInfo(props) {
     const [govInfoList, setGovInfoList] = useState([])
 
     const getGovInfo = () => {
-        axios.get('http://localhost:8080/crawling')
+        axios.get('/crawling')
         .then(r => {
             console.log(r.data)
             setGovInfo(r.data)

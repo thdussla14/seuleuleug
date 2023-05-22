@@ -28,7 +28,7 @@ export default function Login(props){
         let loginForm = document.querySelectorAll(".user")[0];
         let loginFormData = new FormData(loginForm);
         axios.post("/member/login", loginFormData ).then( r=>{
-            if(r.data != false){
+            if(r.data !== false){
                 alert('로그인 성공');
                 window.location.href="/";
             }else{
@@ -56,8 +56,7 @@ export default function Login(props){
         let loginFormData = new FormData(loginForm);
 
         axios.post("/member/login", loginFormData ).then( r=>{
-            console.log(r.data);
-            if(r.data != false){
+            if(r.data !== false){
                 alert('로그인 성공');
                 window.location.href="/";
             }else {
@@ -105,7 +104,7 @@ export default function Login(props){
                         </div>
                         <Stack sx={{ mt: 2 }} direction="row" spacing={2}>
                             <Button variant="contained" style={{ width: '100%' , backgroundColor: '#F7E111'}} href="/oauth2/authorization/kakao"> KAKAO </Button>
-                            <Button variant="contained" style={{ width: '100%' , backgroundColor: '#03C75A'}} href="/oauth2/authorization/naver"> NAVER </Button>
+                            <Button variant="contained" style={{ width: '100%' }} href="/oauth2/authorization/google"> GOOGLE </Button>
                         </Stack>
                     </form>
                 </TabPanel>

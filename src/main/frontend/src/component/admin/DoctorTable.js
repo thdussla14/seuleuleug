@@ -32,7 +32,7 @@ export default function DoctorTable(props) {
     const [ rows , setRows ] = useState ([]);
 
     // 3. 컴포넌트 생명주기에 따른 함수 호출
-    useEffect (()=>{ setRows(item.row.list)},[])
+    useEffect (()=>{ setRows(item.row.list); },[item])
     // 4.
     const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
 
@@ -40,11 +40,11 @@ export default function DoctorTable(props) {
     const onDeleteHandler = () => {
         console.log("onDeleteHandler");
         let msg = window.confirm(" 정말 삭제하시겠습니까? 복구가 불가능 합니다.")
-        if( msg == true ){ // 삭제 확인 선택시
+        if( msg === true ){ // 삭제 확인 선택시
             // 선택된 글귀 하나씩 서버에 전달
             rowSelectionModel.forEach( r => {
                 axios.delete("/hmember", {params : { "hmno" : r }})
-                    .then( (r)=> {console.log(r); alert('삭제 완료'); window.location.reload();} );
+                    .then( (r)=> { alert('삭제 완료'); window.location.reload();} );
             })
         }
     }
@@ -89,7 +89,7 @@ export default function DoctorTable(props) {
                     setRowSelectionModel(newRowSelectionModel);
                   }}
                 />
-                <Button variant="contained" onClick ={ onDeleteHandler } disabled={ rowSelectionModel.length == 0 ? true : false }
+                <Button variant="contained" onClick ={ onDeleteHandler } disabled={ rowSelectionModel.length === 0 ? true : false }
                     style={{height:'30px', margin:'10px', backgroundColor: '#DCBE70'}}>
                     선택 삭제
                 </Button>

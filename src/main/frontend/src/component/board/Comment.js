@@ -1,6 +1,5 @@
 import React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
 import styles from '../../css/Comment.css';
 
 export default function Comment(props){
@@ -11,7 +10,7 @@ export default function Comment(props){
     return (
         <div className="wrapper">
            <div>
-               <Avatar alt={comment.hmname}  src={'http://localhost:8080/static/media/'+comment.hmpimg} />
+               <Avatar alt={comment.hmname}  src={'/static/media/'+comment.hmpimg} />
            </div>
            <div className="contentContainer">
                 <div className="nameText" style={{fontSize:'12px'}}>      {comment.hmname} 의사

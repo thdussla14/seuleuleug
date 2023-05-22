@@ -1,4 +1,4 @@
-import React , { useState , useEffect, useRef } from 'react';
+import React , { useEffect, useRef, useContext  } from 'react';
 import axios from 'axios';
 import {Box,AppBar,Toolbar,Typography,IconButton,Drawer,List,
 Divider,ListItem,ListItemText, ListItemButton,ListItemIcon}from '@mui/material';
@@ -15,10 +15,10 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import DescriptionIcon from '@mui/icons-material/Description';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
+import { WebSocketContext } from './chatting/WebSocketContext';
 
 export default function Header(props) {
-
-    const websocket = useRef(null);
+    let websocket = useContext(WebSocketContext);
 
     console.log(sessionStorage)
 
@@ -27,22 +27,20 @@ export default function Header(props) {
 
     useEffect( ()=>{
         if(sessionStorage.length>0&&email!==null&&email!=="null"){
-            if(websocket.current==null){
-                console.log('rqweqw')
-                websocket.current = new WebSocket("ws://localhost:8080/intoHomePage/"+email);
-                sessionStorage.setItem('websocket', websocket.current);
-                websocket.current.onopen = () => {
-                    console.log('로그인 웹소켓 열림');
-                    websocket.current.send(JSON.stringify({ type : "enter", loginType : loginType }));
+            if(websocket===null){
+                websocket = new WebSocket("ws://ec2-43-201-66-165.ap-northeast-2.compute.amazonaws.com:8080/intoHomePage/"+email);
+                console.log(websocket);
+                console.log(JSON.stringify(websocket));
+                websocket.onopen = () => {
+                    websocket.send(JSON.stringify({ type : "enter", loginType : loginType }));
                 };
+                sessionStorage.setItem('websocket', JSON.stringify(websocket));
             }
         }
     } , [])
 
 
     if(sessionStorage.length<=0){
-        console.log(sessionStorage)
-        console.log('세션스토리지 비어있음')
         sessionStorage.setItem('email', null);
         sessionStorage.setItem('loginType', null);
         sessionStorage.setItem('websocket',null)
@@ -51,16 +49,15 @@ export default function Header(props) {
     useEffect( ()=>{
 
         axios.get("/member/info").then( r => {console.log(r);
-            if( r.data != ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
+            if( r.data !== ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
                 // js 로컬 스토리지에 저장
-                if(r.data.split(' ')[0] == 'DOCTOR'){
+                if(r.data.split(' ')[0] === 'DOCTOR'){
                     sessionStorage.setItem("email" , r.data.split(' ')[1] );
                     sessionStorage.setItem('loginType', "doctor");
                 }else{
                     sessionStorage.setItem("email" , r.data );
                     sessionStorage.setItem('loginType', "normal");
                 }
-                console.log(sessionStorage)
             }
         })
     }, [])
@@ -106,7 +103,7 @@ export default function Header(props) {
             {"name":'GOVERMENT',"link":'/government/info'},{"name":'CHALLENGE',"link":'/challenge/challenge'},
             {"name":'HEART',"link":'/simritest/info'}].map((text, index) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton href={ text.link }>
+                <ListItemButton to={ text.link }>
                   <ListItemIcon>
                     {index === 0 ? <ChatIcon />           :
                      index === 1 ? <LocalHospitalIcon />  :
@@ -119,7 +116,7 @@ export default function Header(props) {
               </ListItem>
             ))}
           </List>
-          { sessionStorage.getItem('email') == 'null' ? (
+          { sessionStorage.getItem('email') === 'null' ? (
               <>
               <Divider />
                 <List>
@@ -152,7 +149,7 @@ export default function Header(props) {
                 </List>
                 <Divider />
                 <List>
-                { loginType == "doctor" ?
+                { loginType === "doctor" ?
                   (<>
                     <ListItem key='LIST' disablePadding>
                       <ListItemButton href='/board/doctor/boardlist'>
@@ -163,7 +160,7 @@ export default function Header(props) {
                       </ListItemButton>
                      </ListItem>
                     </>)
-                  : loginType == "admin" ?
+                  : loginType === "admin" ?
                   (<>
                       <ListItem key='ADMIN' disablePadding>
                         <ListItemButton href='/admin/dashboard'>

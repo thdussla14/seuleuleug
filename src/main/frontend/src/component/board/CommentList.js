@@ -14,7 +14,7 @@ export default function CommentList(props){
                     else{setItem(r.data) ;}}
             )
             .catch( e => { console.log(e);})
-    }, [])
+    }, [props])
 
     if( item.length === 0){
         // 답변이 없는 경우

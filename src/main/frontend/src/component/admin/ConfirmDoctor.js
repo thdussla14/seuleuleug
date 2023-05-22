@@ -39,7 +39,7 @@ export default function ChildModal(props) {
         console.log(e);
         console.log(e.target.value);
         axios.put("/hmember/hupdate",  { "hmno" : e.target.value } )
-            .then( (r)=> {console.log(r.data) ; alert('승인 완료'); window.location.href="/admin/dashboard"});
+            .then( (r)=> {alert('승인 완료'); window.location.href="/admin/dashboard"});
     }
 
     return (
@@ -57,7 +57,7 @@ export default function ChildModal(props) {
         aria-describedby="child-modal-description"
       >
         <Box sx={style}>
-          <img style={{width:'200px',height:'200px'}} src={'http://localhost:8080/static/media/'+item.row.hmcertification} />
+          <img style={{width:'200px',height:'200px'}} alt={item.row.hmno} src={'/static/media/'+item.row.hmcertification} />
           <Button
               value={item.id}
               onClick={onupdate}

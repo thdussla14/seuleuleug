@@ -35,14 +35,10 @@ public class ChattingController {
 
     @GetMapping("/logindoctor")
     public List<LoginUserDto> getLoginDoctor(){
-        List<LoginUserDto> getlist = loginHandler.loginUserDtoList;
-        log.info(getlist.toString());
         List<LoginUserDto> result = new ArrayList<>();
-        for (LoginUserDto dto : getlist) {
-            log.info("dto.getType : "+dto.getType());
-            boolean qwe= "\"doctor\"".equals(dto.getType());
-            log.info("qwe : "+qwe);
-            if("\"doctor\"".equals(dto.getType())){
+        for (LoginUserDto dto : loginHandler.loginUserDtoList) {
+            log.info("확인 : " + dto.getType());
+            if("doctor".equals(dto.getType())){
                 result.add(LoginUserDto.builder()
                         .type(dto.getType())
                         .userEmail(dto.getUserEmail())

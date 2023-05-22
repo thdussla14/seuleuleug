@@ -16,7 +16,7 @@ export default function ChallengeResultList(props) {
             headerName: '이미지',
             width: 150,
             editable: true,
-            renderCell: (params) => <img style={{width:'150px'}} src={"http://localhost:8080/static/media/"+params.value} />, // renderCell will render the component
+            renderCell: (params) => <img style={{width:'150px'}} src={"/static/media/"+params.value} />, // renderCell will render the component
         },
         {
             field: 'sstate',

@@ -80,9 +80,8 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
             Map<String , Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
             Map<String , Object> profile = (Map<String, Object>) kakao_account.get("profile");
             email = (String) kakao_account.get("email");
-        }else if( registrationId.equals("naver")) { // 만약에 네이버 회원이면
-            Map<String, Object> response = (Map<String, Object>) oAuth2User.getAttributes().get("response");
-            email = (String) response.get("email");
+        }else if( registrationId.equals("google")) { // 만약에 구글 회원이면
+            email = (String) oAuth2User.getAttributes().get("email");
         }
 
         // 인가 객체 [ OAuth2User ---> MemberDto 통합Dto ( 일반+aouth ) ]

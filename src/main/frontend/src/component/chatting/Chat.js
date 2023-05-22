@@ -5,10 +5,7 @@ import { useParams } from 'react-router-dom'; // HTTP 경로 상의 매개변수
 import '../../css/Chat.css';
 
 export default function Chat(props){
-    let [socket, setSocket] = useState(null);
     let [messages, setMessages] = useState([]);
-
-
     console.log(sessionStorage.getItem('email'))
 
     const params = useParams();
@@ -21,7 +18,7 @@ export default function Chat(props){
             if(sessionStorage.getItem('loginType')==="doctor"){
                 chatRoomId = sessionStorage.getItem('email');
                 console.log(chatRoomId);
-                clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
+                clientSocket.current = new WebSocket("ws://ec2-43-201-66-165.ap-northeast-2.compute.amazonaws.com:8080/chat/"+chatRoomId);
                 clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
                     console.log('의사가 서버 접속했습니다');
                     console.log(clientSocket.current);
@@ -30,7 +27,7 @@ export default function Chat(props){
             }else if(sessionStorage.getItem('loginType')==="normal"){
                 chatRoomId = params.chatRoomId;
                 console.log(chatRoomId);
-                clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
+                clientSocket.current = new WebSocket("ws://ec2-43-201-66-165.ap-northeast-2.compute.amazonaws.com:8080/chat/"+chatRoomId);
                 clientSocket.current.onopen = (e)=>{  // 서버에 접속했을때
                     console.log('일반회원이 서버 접속했습니다');
                     console.log(clientSocket.current);
