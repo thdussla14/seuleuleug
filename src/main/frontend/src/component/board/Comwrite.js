@@ -49,7 +49,7 @@ export default function Comwrite(props) {
     return(<Container>
         <div className="wrapper">
            <div>
-               <Avatar alt={doctor.hmname}  src={'/static/media/'+doctor.hmpimg} />
+               <Avatar alt={doctor.hmname}  src={doctor.hmpimg} />
            </div>
            <div className="contentContainer">
                 <div className="nameText">   {doctor.hmname}  의사   </div>

@@ -24,10 +24,10 @@ public class LoginHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("로그인 서버 접속");
-        log.info("session1111: " + session);
+        //log.info("로그인 서버 접속");
+        //log.info("session1111: " + session);
         String email = (String) session.getAttributes().get("pathes");
-        log.info("user email: " + email);
+        //log.info("user email: " + email);
         boolean userExists = false;
         for (LoginUserDto existingUser : loginUserDtoList) {
             if (existingUser.getUserEmail().equals(email)) {
@@ -40,9 +40,9 @@ public class LoginHandler extends TextWebSocketHandler {
                     .session(session)
                     .userEmail(email)
                     .build());
-            log.info("유저를 추가했습니다.");
+            //log.info("유저를 추가했습니다.");
         } else {
-            log.info("유저가 이미 접속중입니다.");
+            //log.info("유저가 이미 접속중입니다.");
         }
         log.info("loginUserDtoList : " + loginUserDtoList);
     }
