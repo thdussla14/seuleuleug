@@ -33,7 +33,7 @@ export default function MainChat(props) {
           return (
             <div key={o.chatRoomId} className={o.chatRoomId}>
                 <div>
-                  <Avatar alt="Remy Sharp"      src={'/static/media/'+response.data.hmpimg} />
+                  <Avatar alt="Remy Sharp"      src={response.data.hmpimg} />
                 </div>
             </div>
           );
