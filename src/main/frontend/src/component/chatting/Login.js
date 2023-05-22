@@ -36,17 +36,6 @@ export default function Login(props){
             }
         })
     }
-    function sendWebSocketMessage(message) {
-      if (websocket.readyState === WebSocket.OPEN) {
-        console.log('Sending message:', message);
-        websocket.send(JSON.stringify("qweqweqwe"));
-      } else {
-        console.log('WebSocket connection is still connecting...');
-        setTimeout(() => {
-          sendWebSocketMessage(message);
-        }, 1000); // Retry after 1 second
-      }
-    }
     // 의사 로그인
     let inputHmemail = useRef(null);
     let inputHpassword = useRef(null);
