@@ -29,6 +29,7 @@ export default function ChatRoom(props) {
             const promises = props.chattingRoomList.map(async (o) => {
               console.log(o);
               console.log(o.userEmail);
+              console.log(o.isChatting)
               let hmname = null;
               const response = await axios.get("/hmember/hcomment", { params: { hmemail: o.userEmail } });
               console.log(response.data);
@@ -40,7 +41,7 @@ export default function ChatRoom(props) {
                        <div> {response.data.hmname} 의사 선생님</div>
                        <div>소속병원 : {response.data.hname}</div>
                       {
-                            (o.Chatting===false||o.Chatting==="false")?
+                            (o.isChatting===false||o.isChatting==="false")?
                             <button onClick={() => counsel(o.userEmail)} type="button"> 상담신청 </button>
                             : <button disabled="disabled" type="button"> 상담중 </button>
                       }

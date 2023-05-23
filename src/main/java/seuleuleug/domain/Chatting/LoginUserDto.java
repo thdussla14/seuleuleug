@@ -11,5 +11,5 @@ public class LoginUserDto {
     private WebSocketSession session; // 들어와있는 세션
     private String type;              // 로그인형태 ( 의사, 일반회원, 비로그인)
     private String userEmail;         // 식별을 위한 이메일
-    private boolean isChatting;       // 채팅 중 여부 확인을 위한 boolean
+    private boolean isChatting;       // 상담 중 여부 확인을 위한 boolean
 }
