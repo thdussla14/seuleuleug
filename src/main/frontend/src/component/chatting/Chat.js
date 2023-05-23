@@ -81,7 +81,7 @@ export default function Chat(props){
     }
 
     const getDoctorInfo = ()=>{
-        const response = axios.get("/hmember/hcomment",{ params: { hmemail : chatRoomId })
+        const response = axios.get("/hmember/hcomment",{ params: { hmemail : chatRoomId }})
         return(<div>
             <Avatar alt="Remy Sharp"      src={response.data.hmpimg} />
             <div> {response.data.hmname} 의사 선생님</div>
