@@ -78,6 +78,7 @@ public class LoginHandler extends TextWebSocketHandler {
             String answer = jsonMessage.getString("answer");
             String doctor = jsonMessage.getString("doctor");
             String normal = jsonMessage.getString("normal");
+            log.info("answer : " + answer);
             if(answer.equals("true")||answer.equals(true)){
                 for (LoginUserDto loginUserDto : loginUserDtoList) {
                     if(loginUserDto.getUserEmail().equals(doctor)){
@@ -94,6 +95,18 @@ public class LoginHandler extends TextWebSocketHandler {
                 if(loginUserDto.getUserEmail().equals(normal)){
                     loginUserDto.getSession().sendMessage(textMessage);
                     loginUserDto.setChatting(true);
+                }
+            }
+        }else if("inRoom".equals(type)){
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if(loginUserDto.getSession().equals(session)){
+                    loginUserDto.setChatting(true);
+                }
+            }
+        }else if("outRoom".equals(type)){
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if(loginUserDto.getSession().equals(session)){
+                    loginUserDto.setChatting(false);
                 }
             }
         }

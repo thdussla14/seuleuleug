@@ -82,11 +82,21 @@ public class ChattingHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         log.info("서버에서 나감");
         JSONObject payload = new JSONObject();
+        String chatRoomId = null;
         for (ChatUserDto chatUserDto : chatUserDtoList) {
-            if("normal".equals(chatUserDto.getType())){
-                payload.put("message", "회원이 퇴장하였습니다.");
-            }else if("doctor".equals(chatUserDto.getType())){
-                payload.put("message", "의사가 퇴장하였습니다.");
+            if(chatUserDto.getSession().equals(session)){
+                if("normal".equals(chatUserDto.getType())){
+                    payload.put("message", "회원이 퇴장하였습니다.");
+                }else if("doctor".equals(chatUserDto.getType())){
+                    payload.put("message", "의사가 퇴장하였습니다.");
+                }
+                chatRoomId = chatUserDto.getChatRoomId();
+            }
+        }
+        for (ChatUserDto chatUserDto : chatUserDtoList) {
+            if(chatUserDto.getChatRoomId().equals(chatRoomId)){
+                TextMessage textMessage = new TextMessage(payload.toString());
+                chatUserDto.getSession().sendMessage(textMessage);
             }
         }
         chatUserDtoList.removeIf(chatUserDto -> chatUserDto.getSessionId().equals(session.getId()));

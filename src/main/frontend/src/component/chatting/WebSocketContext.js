@@ -1,17 +1,19 @@
 import React, { createContext, useState, useEffect } from 'react';
-
+import { useNavigate } from "react-router-dom";
 
 const WebSocketContext = createContext();
 
 const WebSocketProvider = ({ children }) => {
 
   const [websocket, setWebSocket] = useState(null);
+  const navigate = useNavigate();
+  console.log(websocket)
 
   useEffect(() => {
     if(sessionStorage.getItem("email")!=="null"&sessionStorage.getItem("websocket")=="null"){
         const email = sessionStorage.getItem("email");
         const loginType = sessionStorage.getItem("loginType");
-        const newWebSocket = new WebSocket("ws://ec2-13-209-3-7.ap-northeast-2.compute.amazonaws.com:8080/intoHomePage/" + email);
+        const newWebSocket = new WebSocket("ws://localhost:8080/intoHomePage/" + email);
         newWebSocket.onopen = () => {
           newWebSocket.send(JSON.stringify({ type: "enter", loginType: loginType }));
         };
@@ -32,7 +34,9 @@ const WebSocketProvider = ({ children }) => {
                     doctor : sessionStorage.getItem("email")
                     }))
                 if(answer){
-                    window.location.href="/chatting/"+sessionStorage.getItem("email");
+                    let doctorEmail = sessionStorage.getItem("email");
+                    navigate('/chatting/' + doctorEmail);
+                    //window.location.href="/chatting/"+ sessionStorage.getItem("email");
                 }
             };
         }else if(loginType==="normal"){
@@ -48,7 +52,11 @@ const WebSocketProvider = ({ children }) => {
                 if(message.answer==="true"){
                     let answer = window.confirm('상담을 시작합니다.');
                     if(answer){
-                        window.location.href="/chatting/"+doctor;
+                        //history.push(`/chatting/${doctor}`);
+                        navigate('/chatting/' + doctor);
+                        //window.history.pushState(null, null, '/chatting/' + doctor);
+                    }else{
+                        alert('의사가 요청을 거절하였습니다.')
                     }
                 }
             };

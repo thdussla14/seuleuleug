@@ -25,7 +25,6 @@ import ChallengeResultList from'./challenge/ChallengeResultList.js'
 
 export default function Index(props) {
     return (<>
-    {/*<LoginListProvider>*/}
         <BrowserRouter>
             <Header />
             <Routes >
@@ -55,7 +54,6 @@ export default function Index(props) {
                 <Route path="/challenge/challengeResultList" element={<ChallengeResultList />} />
             </Routes>
         </BrowserRouter>
-    {/*</LoginListProvider>*/}
 
     </>)
 }
