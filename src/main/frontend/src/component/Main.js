@@ -7,6 +7,8 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import doctor from '../doctor.png';  // img 호출
 import MainChat from './chatting/MainChat';
+import Chip from '@mui/material/Chip';
+import FaceIcon from '@mui/icons-material/Face';
 
 export default function Main(props) {
 
@@ -24,9 +26,15 @@ export default function Main(props) {
         <Container>
             <div className="Main">
                 <div className="Fortune">
-                    <h3> Fortune Cookie </h3>
                     <Fortune />
                 </div>
+                <div>
+                    심리상담의 사회적 편견에서 벗어나, <br/>
+                    자신의 고민을 말하는데 부담이 없고 <br/>
+                    심리상담의 허들을 낮출 수 있는 곳
+                </div>
+                <Chip icon={<FaceIcon />} label="실시간 상담 가능 의사"
+                    style={{position: 'relative', top: '68px', left: '-74px', background: 'lemonchiffon'}} />
                 <Stack direction="row" spacing={2}
                     justifyContent="center"
                     alignItems="center"

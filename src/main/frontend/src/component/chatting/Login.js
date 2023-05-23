@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -56,6 +57,11 @@ export default function Login(props){
                             style={{height:'100px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
                     </div>
                 </div>
+                <ButtonGroup variant="text" aria-label="text button group">
+                  <Button href="#">SignUp</Button>
+                  <Button href="#">FindID</Button>
+                  <Button href="#">FindPW</Button>
+                </ButtonGroup>
                 <Stack sx={{ mt: 2 }} direction="row" spacing={2}>
                     <Button variant="contained" style={{ width: '100%' , backgroundColor: '#F7E111'}} href="/oauth2/authorization/kakao"> KAKAO </Button>
                     <Button variant="contained" style={{ width: '100%' }} href="/oauth2/authorization/google"> GOOGLE </Button>

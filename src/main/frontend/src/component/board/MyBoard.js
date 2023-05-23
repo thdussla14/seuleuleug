@@ -17,40 +17,40 @@ export default function MyBoard(props) {
     // 해당 게시물 정보 가져오기
     const [ item , setItem ] = useState({});
     useEffect(()=>{
-         console.log(searchParams)
-         console.log(searchParams.get("bno"))
-         axios.get('/board/detail',{ params : { bno : searchParams.get("bno")}})
-             .then(  r => { setItem(r.data)})
-             .catch( e => { console.log(e);})
-     }, [])
+        console.log(searchParams)
+        console.log(searchParams.get("bno"))
+        axios.get('/board/detail',{ params : { bno : searchParams.get("bno")}})
+            .then(  r => { setItem(r.data)})
+            .catch( e => { console.log(e);})
+    }, [])
     // 해당 게시물 삭제
     const deletemy = ( ) => {
-         axios.delete('/board',{ params : { bno : searchParams.get("bno")}})
-             .then(  r => { console.log(r);
+        axios.delete('/board',{ params : { bno : searchParams.get("bno")}})
+            .then(  r => { console.log(r);
                         if(r.data === true){
                             alert('해당 고민글이 삭제되었습니다.'); window.location.href="/"
                         }
                         else{alert('삭제 실패하였습니다.')}
                     }
-             )
+            )
     }
 
     return (<>
         <Card sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                <Chip label={item.cname} />
-            </Typography>
-            <Typography variant="h5" component="div" style={{margin: '10px'}}>
-              {item.btitle}
-            </Typography>
-            <Typography variant="body2" style={{height:'200px', margin: '10px'}}>
-              {item.bcontent}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" onClick={deletemy}> 삭제 </Button>
-          </CardActions>
+            <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    <Chip label={item.cname} />
+                </Typography>
+                <Typography variant="h5" component="div" style={{margin: '10px'}}>
+                    {item.btitle}
+                </Typography>
+                <Typography variant="body2" style={{height:'200px', margin: '10px'}}>
+                    {item.bcontent}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small" onClick={deletemy}> 삭제 </Button>
+            </CardActions>
         </Card>
         <div>
             <CommentList bno={ searchParams.get("bno")} />
