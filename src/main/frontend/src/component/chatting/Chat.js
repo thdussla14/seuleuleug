@@ -1,5 +1,6 @@
 import React from 'react'
 import {useEffect, useState, useRef} from 'react'
+import axios from 'axios';
 import Container from '@mui/material/Container';
 import { useParams,useHistory  } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 import '../../css/Chat.css';
@@ -80,7 +81,7 @@ export default function Chat(props){
     }
 
     const getDoctorInfo = ()=>{
-        const response = axios.get("/hmember/hcomment",{ params: { hmemail: chatRoomId })
+        const response = axios.get("/hmember/hcomment",{ params: { hmemail : chatRoomId })
         return(<div>
             <Avatar alt="Remy Sharp"      src={response.data.hmpimg} />
             <div> {response.data.hmname} 의사 선생님</div>
