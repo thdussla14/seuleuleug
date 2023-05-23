@@ -1,6 +1,7 @@
 import React from 'react'
 import {useEffect, useState, useRef} from 'react'
 import axios from 'axios';
+import Avatar from "@mui/material/Avatar";
 import Container from '@mui/material/Container';
 import { useParams  } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 import '../../css/Chat.css';
