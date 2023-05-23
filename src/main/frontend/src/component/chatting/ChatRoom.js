@@ -13,7 +13,7 @@ export default function ChatRoom(props) {
       // 의사에게 상담요청 보내는 함수
     const counsel = (email)=>{
         //const websocket = JSON.parse(sessionStorage.getItem('websocket'))
-        if(websocket===null||websocket==="null"){
+        if(sessionStorage.getItem("email")==="null"||websocket==="null"){
             alert('로그인 후 사용 가능한 기능입니다.')
             window.location.href="/member/login";
         }
@@ -40,7 +40,7 @@ export default function ChatRoom(props) {
                        <div> {response.data.hmname} 의사 선생님</div>
                        <div>소속병원 : {response.data.hname}</div>
                       {
-                            o.isChatting===false||o.isChatting==="false"?
+                            (o.Chatting===false||o.Chatting==="false")?
                             <button onClick={() => counsel(o.userEmail)} type="button"> 상담신청 </button>
                             : <button disabled="disabled" type="button"> 상담중 </button>
                       }
