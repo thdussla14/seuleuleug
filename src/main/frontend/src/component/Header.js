@@ -204,6 +204,10 @@ export default function Header(props) {
                 <NightsStayIcon />
                 스르륵
               </Typography>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 , color:'white', textAlign:'right' }} >
+                { email == "null" ? (<><LoginIcon onClick={() => window.location.replace('/member/login')} /></>)
+                : (<> {email.split("@")[0]}님 <LogoutIcon onClick={logOut} /> </>)}
+               </Typography>
             </Toolbar>
           </AppBar>
         </Box>

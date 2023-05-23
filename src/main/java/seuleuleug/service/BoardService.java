@@ -11,6 +11,8 @@ import seuleuleug.domain.board.*;
 import seuleuleug.domain.fortune.WordEntity;
 import seuleuleug.domain.hospital.HMemberEntity;
 import seuleuleug.domain.hospital.HMemberRepository;
+import seuleuleug.domain.member.MemberEntity;
+import seuleuleug.domain.member.MemberEntityRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class BoardService {
     CommentEntityRepository commentEntityRepository;
     @Autowired
     HMemberRepository hMemberRepository;
+    @Autowired
+    MemberEntityRepository memberEntityRepository;
 
     // 카테고리 등록
     public boolean writeCategory(CategoryDto categoryDto){
@@ -65,6 +69,25 @@ public class BoardService {
         // 비밀번호 암호화
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         boardDto.setBpassword(passwordEncoder.encode(boardDto.getBpassword()));
+        // 게시물 저장
+        BoardEntity boardEntity = boardEntityRepository.save(boardDto.toboardEntity());
+        boardEntity.setCategoryEntity(categoryEntity);
+        return 4;
+    }
+    // 로그인 회원 글작성
+    @Transactional
+    public byte userwriteBoard(BoardDto boardDto){
+        log.info("writeBoard"+boardDto);
+        // 카테고리 번호를 이용한 카테고리 entity 찾기
+        Optional<CategoryEntity> optionalCategoryEntity =
+                categoryEntityRepository.findById(boardDto.getCno());
+        if(!optionalCategoryEntity.isPresent()){return 1;}
+        CategoryEntity categoryEntity = optionalCategoryEntity.get();
+        // 비밀번호 호출
+        Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(boardDto.getBemail());
+        if(!optionalMemberEntity.isPresent()){
+            boardDto.setBpassword(optionalMemberEntity.get().getMphone());
+        }
         // 게시물 저장
         BoardEntity boardEntity = boardEntityRepository.save(boardDto.toboardEntity());
         boardEntity.setCategoryEntity(categoryEntity);

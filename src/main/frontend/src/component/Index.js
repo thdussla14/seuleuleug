@@ -4,6 +4,7 @@ import Header from './Header';
 import Main from './Main';
 import DashBoard from './admin/DashBoard';
 import Write from './board/Write';
+import UserWrite from './board/UserWrite';
 import CheckEmail from './board/CheckEmail';
 import MyBoardList from './board/MyBoardList';
 import MyBoard from './board/MyBoard';
@@ -32,6 +33,7 @@ export default function Index(props) {
                 <Route path="/"                         element={<Main />} />
                 <Route path="/admin/dashboard"          element={<DashBoard />} />
                 <Route path="/board/write"              element={<Write />} />
+                <Route path="/board/user/UserWrite"     element={<UserWrite />} />
                 <Route path="/board/checkemail"         element={<CheckEmail />} />
                 <Route path="/board/myboardlist"        element={<MyBoardList />} />
                 <Route path="/board/myboard"            element={<MyBoard />} />

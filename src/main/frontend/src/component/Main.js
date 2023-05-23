@@ -9,6 +9,7 @@ import doctor from '../doctor.png';  // img 호출
 import MainChat from './chatting/MainChat';
 
 export default function Main(props) {
+
     const [chattingRoomList , setChattingRoomList ] = useState([]);
     useEffect(()=>{
         axios.get("/chatting/logindoctor").then( r=>{
@@ -16,6 +17,8 @@ export default function Main(props) {
                 setChattingRoomList(r.data)
             })
     },[]);
+
+    const logemail = sessionStorage.getItem("email"); console.log(logemail);
 
     return (
         <Container>
@@ -35,8 +38,8 @@ export default function Main(props) {
                 <MainChat chattingRoomList={chattingRoomList}/>
                 </Stack>
                 <div className="btnBox">
-                    <div className="bwrite"> <a href="/board/write">        글쓰기   </a> </div>
-                    <div className="MY">     <a href="/board/checkemail">    MY     </a> </div>
+                    <div className="bwrite"> <a href={ logemail == "null" ? "/board/write" :"/board/user/userwrite" }>        글쓰기   </a> </div>
+                    <div className="MY">     <a href={ logemail == "null" ? "/board/checkemail" : "/board/myboardlist?bemail="+logemail }>    MY     </a> </div>
                 </div>
             </div>
         </Container>
