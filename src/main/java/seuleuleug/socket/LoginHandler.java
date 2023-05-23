@@ -38,6 +38,7 @@ public class LoginHandler extends TextWebSocketHandler {
         if (!userExists) {
             loginUserDtoList.add(LoginUserDto.builder()
                     .session(session)
+                    .isChatting(false)
                     .userEmail(email)
                     .build());
             //log.info("유저를 추가했습니다.");
@@ -69,12 +70,21 @@ public class LoginHandler extends TextWebSocketHandler {
                     payload.put("normal", normal);
                     TextMessage textMessage = new TextMessage(payload.toString());
                     loginUserDto.getSession().sendMessage(textMessage);;
+
+
                 }
             }
         }else if("answer".equals(type)){ // 의사가 상담요청에 대해 답을 줬을때
             String answer = jsonMessage.getString("answer");
             String doctor = jsonMessage.getString("doctor");
             String normal = jsonMessage.getString("normal");
+            if(answer.equals("true")||answer.equals(true)){
+                for (LoginUserDto loginUserDto : loginUserDtoList) {
+                    if(loginUserDto.getUserEmail().equals(doctor)){
+                        loginUserDto.setChatting(true);
+                    }
+                }
+            }
             log.info("answer : " + answer);
             JSONObject payload = new JSONObject();
             payload.put("answer", answer);
@@ -83,6 +93,7 @@ public class LoginHandler extends TextWebSocketHandler {
             for (LoginUserDto loginUserDto : loginUserDtoList) {
                 if(loginUserDto.getUserEmail().equals(normal)){
                     loginUserDto.getSession().sendMessage(textMessage);
+                    loginUserDto.setChatting(true);
                 }
             }
         }

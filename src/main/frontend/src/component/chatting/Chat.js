@@ -1,12 +1,18 @@
 import React from 'react'
 import {useEffect, useState, useRef} from 'react'
 import Container from '@mui/material/Container';
-import { useParams } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
+import { useParams,useHistory  } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 import '../../css/Chat.css';
 
 export default function Chat(props){
     let [messages, setMessages] = useState([]);
     console.log(sessionStorage.getItem('email'))
+
+    const history = useHistory();
+
+    const handleClick = () => {
+        history.push('/');
+    };
 
     const params = useParams();
     let chatRoomId = null;
@@ -73,8 +79,18 @@ export default function Chat(props){
         document.querySelector('.input').value = ''
     }
 
+    const getDoctorInfo = ()=>{
+        const response = axios.get("/hmember/hcomment",{ params: { hmemail: chatRoomId })
+        return(<div>
+            <Avatar alt="Remy Sharp"      src={response.data.hmpimg} />
+            <div> {response.data.hmname} 의사 선생님</div>
+            <div>소속병원 : {response.data.hname}</div>
+        </div>)
+    }
+
     return (
       <Container className="container">
+        <button onClick={handleClick} >나가기</button>
         {messages.map((message, index) => (
           <p
             key={index}

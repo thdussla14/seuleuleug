@@ -42,6 +42,7 @@ public class ChattingController {
                 result.add(LoginUserDto.builder()
                         .type(dto.getType())
                         .userEmail(dto.getUserEmail())
+                        .isChatting(dto.isChatting())
                         .build());
             }
         }
