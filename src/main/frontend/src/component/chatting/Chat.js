@@ -2,17 +2,16 @@ import React from 'react'
 import {useEffect, useState, useRef} from 'react'
 import axios from 'axios';
 import Container from '@mui/material/Container';
-import { useParams,useHistory  } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
+import { useParams  } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 import '../../css/Chat.css';
 
 export default function Chat(props){
     let [messages, setMessages] = useState([]);
     console.log(sessionStorage.getItem('email'))
 
-    const history = useHistory();
 
     const handleClick = () => {
-        history.push('/');
+        window.location.href="/"
     };
 
     const params = useParams();
