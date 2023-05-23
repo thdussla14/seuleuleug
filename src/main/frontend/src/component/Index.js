@@ -21,11 +21,12 @@ import Challenge from './challenge/Challenge';
 import SimriTest from './info/SimriTest';
 import ChallengeDetail from './challenge/ChallengeDetail.js'
 import ChallengeResultList from'./challenge/ChallengeResultList.js'
-//import { LoginContext, LoginListProvider} from './chatting/LoginListProvider';
+import {WebSocketProvider} from './chatting/WebSocketContext';
 
 export default function Index(props) {
     return (<>
         <BrowserRouter>
+            <WebSocketProvider>
             <Header />
             <Routes >
                 <Route path="/"                         element={<Main />} />
@@ -53,6 +54,7 @@ export default function Index(props) {
                 <Route path="/challenge/challengedetail" element={<ChallengeDetail />} />
                 <Route path="/challenge/challengeResultList" element={<ChallengeResultList />} />
             </Routes>
+            </WebSocketProvider>
         </BrowserRouter>
 
     </>)

@@ -27,7 +27,7 @@ export default function Chat(props){
     const sendMessageToLoginSocket = (msg)=>{
         console.log(loginSocket);
         console.log(msg)
-        let text = "type : " + msg
+        let text = "{ type : " + msg + " } ";
         loginSocket.send(JSON.stringify(text));
     }
 
