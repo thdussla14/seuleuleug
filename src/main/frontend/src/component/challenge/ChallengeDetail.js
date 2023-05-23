@@ -6,7 +6,10 @@ import ImageListItem from '@mui/material/ImageListItem';
 import styles from '../../css/Challenge.css';
 import PersonIcon from '@mui/icons-material/Person';
 import Box from '@mui/material/Box';
-
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 let today = new Date();
 let year = today.getFullYear();
@@ -101,23 +104,11 @@ export default function ChallengeDetail(props) {
         imageInput.current.click();
     };
 
-    /*const App = () => {
-      // useRef를 이용해 input태그에 접근한다.
-        const imageInput = useRef();
-
-      // 버튼클릭시 input태그에 클릭이벤트를 걸어준다.
-        const onCickImageUpload = () => {
-        imageInput.current.click();
-        };
-
-      // input태그는 display:"none" 을 이용해 안보이게 숨겨준다.
-        return (
-            <>
-                <input type="file" style={{ display: "none" }} ref={imageInput} name="simg" id="simg" />
-                <button type="button" onClick={onCickImageUpload} className="btn">파일선택</button>
-            </>
-        );
-    };*/
+    // 탭 전환
+    const [value, setValue] = React.useState('1');
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    }
 
     return(<div>
         <div className="divs">
@@ -154,26 +145,45 @@ export default function ChallengeDetail(props) {
                     itemByMno[0].sstate == 0 ?
                         <div className="login">
                         {Math.abs(((new Date(itemByMno[0].cdate)).getTime() - (new Date(itemByMno[itemByMno.length-1].cdate)).getTime()) / (1000 * 60 * 60 * 24))+1}
-                        일째 도전 중 {itemByMno.length}일 성공
-                        오늘 : 참여완료[미인증]</div>
+                        일째 도전 중 {itemByMno.length}일 성공</div>
                         :
                         <div className="login">
                         {Math.abs(((new Date(itemByMno[0].cdate)).getTime() - (new Date(itemByMno[itemByMno.length-1].cdate)).getTime()) / (1000 * 60 * 60 * 24))+1}
-                        일째 도전 중 {itemByMno.length}일 성공
-                        오늘 : 참여완료[인증]</div>
+                        일째 도전 중 {itemByMno.length}일 성공</div>
         }
-        <ImageList  cols={3} rowHeight={120}>
-            {itemData.map((item) => (
-                <ImageListItem key={item.img}>
-                <img
-                    src={`${item.img}?w=120&h=120&fit=crop&auto=format`}
-                    srcSet={`${item.img}?w=120&h=120&fit=crop&auto=format&dpr=2 2x`}
-                    alt={item.title}
-                    loading="lazy"
-                />
-                </ImageListItem>
-            ))}
-        </ImageList>
+        <Box sx={{ width: '100%', typography: 'body1' }}>
+            <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }} >
+                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                        <Tab label="나의 인증 현황"      value="1" />
+                        <Tab label="참가자 인증 현황"  value="2" />
+                    </TabList>
+                </Box>
+                <TabPanel value="1">
+                    <div style={{display:'flex'}} >
+                        나의 인증 현황
+                    </div>
+                </TabPanel>
+                <TabPanel value="2">
+                    <ImageList  cols={3} rowHeight={120}>
+                        {itemData.map((item) => (
+                            <ImageListItem key={item.img}>
+                            <img
+                                src={`${item.img}?w=120&h=120&fit=crop&auto=format`}
+                                srcSet={`${item.img}?w=120&h=120&fit=crop&auto=format&dpr=2 2x`}
+                                alt={item.title}
+                                loading="lazy"
+                            />
+                            </ImageListItem>
+                        ))}
+                    </ImageList>
+                </TabPanel>
+            </TabContext>
+        </Box>
+
+
+
+
 
     </div>)
 }
