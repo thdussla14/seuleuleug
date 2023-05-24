@@ -37,7 +37,17 @@ export default function MainChat(props) {
           return (
             <div key={o.chatRoomId} className={o.chatRoomId}>
                 <div>
-                  <Avatar alt="Remy Sharp"  onClick={() => counsel(o.userEmail)}  src={response.data.hmpimg} />
+                    {
+                          (o.chatting===false||o.chatting==="false")?
+                          <div>
+                            <Avatar alt="Remy Sharp"  onClick={() => counsel(o.userEmail)}  src={response.data.hmpimg} />
+                            <div style={{fontSize:'10px'}} >상담가능</div>
+                          </div>
+                          : <div>
+                            <Avatar alt="Remy Sharp" src={response.data.hmpimg} />
+                            <div style={{fontSize:'10px' , color:'red' }} >상담중</div>
+                          </div>
+                    }
                 </div>
             </div>
           );

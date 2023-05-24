@@ -38,7 +38,7 @@ export default function Main(props) {
                 <Stack direction="row" spacing={2}
                     justifyContent="center"
                     alignItems="center"
-                    height= "80px"
+                    height= "112px"
                     borderRadius="20px"
                     margin="50px 0px"
                     backgroundColor="white"

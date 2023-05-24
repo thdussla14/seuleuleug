@@ -13,7 +13,7 @@ const WebSocketProvider = ({ children }) => {
     if(sessionStorage.getItem("email")!=="null"&sessionStorage.getItem("websocket")=="null"){
         const email = sessionStorage.getItem("email");
         const loginType = sessionStorage.getItem("loginType");
-        const newWebSocket = new WebSocket("ws://ec2-13-209-3-7.ap-northeast-2.compute.amazonaws.com:8080/intoHomePage/" + email);
+        const newWebSocket = new WebSocket("ws://http://ec2-13-209-3-7.ap-northeast-2.compute.amazonaws.com/:8080/intoHomePage/" + email);
         newWebSocket.onopen = () => {
           newWebSocket.send(JSON.stringify({ type: "enter", loginType: loginType }));
         };

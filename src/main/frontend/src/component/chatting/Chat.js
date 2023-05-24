@@ -47,7 +47,7 @@ export default function Chat(props){
             // 채팅방에 들어온 사람이 의사인지 일반 회원인지 구분하여 소켓에 전달하는 정보 구분
             if(sessionStorage.getItem('loginType')==="doctor"){
                 chatRoomId = sessionStorage.getItem('email');
-                clientSocket.current = new WebSocket("ws://ec2-13-209-3-7.ap-northeast-2.compute.amazonaws.com:8080/chat/"+chatRoomId);
+                clientSocket.current = new WebSocket("ws://http://ec2-13-209-3-7.ap-northeast-2.compute.amazonaws.com/:8080/chat/"+chatRoomId);
                 clientSocket.current.onopen = async (e)=>{  // 서버에 접속했을때
                     console.log('의사가 서버 접속했습니다');
                     console.log(clientSocket.current);
@@ -58,7 +58,7 @@ export default function Chat(props){
                 }
             }else if(sessionStorage.getItem('loginType')==="normal"){
                 chatRoomId = params.chatRoomId;
-                clientSocket.current = new WebSocket("ws://ec2-13-209-3-7.ap-northeast-2.compute.amazonaws.com:8080/chat/"+chatRoomId);
+                clientSocket.current = new WebSocket("ws://http://ec2-13-209-3-7.ap-northeast-2.compute.amazonaws.com/:8080/chat/"+chatRoomId);
                 clientSocket.current.onopen = async (e)=>{  // 서버에 접속했을때
                     console.log('일반회원이 서버 접속했습니다');
                     console.log(clientSocket.current);
