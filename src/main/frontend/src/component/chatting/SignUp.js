@@ -13,35 +13,6 @@ import JoinHospitalList from './JoinHospitalList';
 
 export default function SingUp(props){
 
-    // 탭 전환
-    const [value, setValue] = React.useState('1');
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    }
-
-    // 일반 회원가입
-    let memail = useRef(null);
-    let mphone = useRef(null);
-    const signup = ()=>{
-        let memailj = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/
-        if( memailj.test(memail.current.value) ){
-            let info = {
-                    memail : memail.current.value,
-                    mphone : mphone.current.value
-                }
-                axios.post("/member/singup", info ).then( r=>{
-                    console.log(r.data);
-                    if(r.data==true){
-                        alert('회원 가입 완료');
-                        window.location.href="/";
-                    }else{
-                        alert('이미 사용중인 아이디[이메일] 입니다.');
-                    }
-                })
-        }else{
-            alert('이메일 형식에 맞게 입력하여 주십시오.')
-        }
-    }
     // 의사 회원가입
     const inputform = useRef(null);
 
@@ -51,6 +22,7 @@ export default function SingUp(props){
         console.log(hno)
         setHno(hno);
     }
+
     let hmemail = useRef(null);
     const hsignup = ()=>{
         let memailj = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/
@@ -71,47 +43,23 @@ export default function SingUp(props){
         }else{
             alert('이메일 형식에 맞게 입력하여 주십시오.')
         }
-
     }
 
-
-    return(<Container>
-            <Box sx={{ width: '100%', typography: 'body1' }}>
-              <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="MAIN"      value="1" />
-                    <Tab label="HOSPITAL"  value="2" />
-                  </TabList>
-                </Box>
-                <TabPanel value="1">
-                <div style={{display:'flex'}} >
-                    <div>
-                        <TextField id="memail"      label="이메일"   variant="outlined"  inputRef={memail} margin="normal" size="small" />
-                        <TextField id="mphone"      label="비밀번호"   variant="outlined"  inputRef={mphone} margin="normal" size="small" />
-                    </div>
-                    <div style={{marginTop:'20px'}}>
-                        <Button variant="contained" onClick={signup}
-                            style={{height:'56px', margin:'10px', backgroundColor: '#DCBE70'}}> SIGNUP </Button>
-                    </div>
-                </div>
-                </TabPanel>
-                <TabPanel value="2">
-                    <JoinHospitalList hospitalChange= {hospitalChange} />
-                    <form ref={inputform}>
-                        <TextField name="hmemail"     label="이메일"    variant="outlined"  margin="normal" size="small" inputRef={hmemail} />
-                        <TextField name="hpassword"   label="비밀번호"  variant="outlined"  margin="normal" size="small" />
-                        <TextField name="hmname"      label="이름"     variant="outlined"  margin="normal" size="small" />
-                        <TextField name="hmphone"     label="전화번호"  variant="outlined"  margin="normal" size="small" />
-                        <TextField name="doctorpimg"  label="프로필사진"  InputLabelProps={{ shrink: true}}  variant="outlined" margin="normal" size="small"
-                         accept="image/png, image/jpeg, image/gif"   type="file" />
-                        <TextField name="doctorcertification" label="의사증명서" InputLabelProps={{ shrink: true}}  variant="outlined" margin="normal" size="small"
-                         accept="image/png, image/jpeg, image/gif"   type="file" />
-                        <Button variant="contained" onClick={hsignup}
-                            style={{height:'56px', margin:'10px', backgroundColor: '#DCBE70'}}> SIGNUP </Button>
-                    </form>
-                </TabPanel>
-              </TabContext>
-            </Box>
-    </Container>)
+    return(
+        <Container>
+            <JoinHospitalList hospitalChange= {hospitalChange} />
+            <form ref={inputform}>
+                <TextField name="hmemail"     label="이메일"    variant="outlined"  margin="normal" size="small" inputRef={hmemail} />
+                <TextField name="hpassword"   label="비밀번호"  variant="outlined"  margin="normal" size="small" />
+                <TextField name="hmname"      label="이름"     variant="outlined"  margin="normal" size="small" />
+                <TextField name="hmphone"     label="전화번호"  variant="outlined"  margin="normal" size="small" />
+                <TextField name="doctorpimg"  label="프로필사진"  InputLabelProps={{ shrink: true}}  variant="outlined" margin="normal" size="small"
+                    accept="image/png, image/jpeg, image/gif"   type="file" />
+                <TextField name="doctorcertification" label="의사증명서" InputLabelProps={{ shrink: true}}  variant="outlined" margin="normal" size="small"
+                    accept="image/png, image/jpeg, image/gif"   type="file" />
+                <Button variant="contained" onClick={hsignup}
+                    style={{height:'56px', margin:'10px', backgroundColor: '#DCBE70'}}> SIGNUP </Button>
+            </form>
+        </Container>
+    )
 }

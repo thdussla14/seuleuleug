@@ -10,6 +10,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import stamp from '../../stamp.png';  // img 호출
 
 let today = new Date();
 let year = today.getFullYear();
@@ -26,7 +27,7 @@ export default function ChallengeDetail(props) {
     const writeForm = useRef(null);
     let [login,setLogin] = useState(sessionStorage.getItem("email"));
     let [itemData,setItemData] = useState([]);
-    let itemDatas = []
+    let [itemData2,setItemData2] = useState([]);
     const [ searchParams , setSearchParams ]  = useSearchParams();
     const [ items , setItems ] = useState([]);
     const [ imgs , setImgs ] = useState();
@@ -79,10 +80,10 @@ export default function ChallengeDetail(props) {
                     img: e.uuidFile,
                     title: e.sno,
                 }
-                itemDatas.push(item)
-                console.log(itemDatas)
+                itemData.push(item)
+                console.log(itemData)
             })
-            setItemData( [...itemDatas] )
+            setItemData( [...itemData] )
         })
         .catch( (e) => { console.log(e);})
     }
@@ -94,6 +95,17 @@ export default function ChallengeDetail(props) {
         }
         axios.get('/challenge/resultsinfo',{params : info})
             .then( r => {
+                itemData =[]
+                r.data.forEach(e=>{
+                    let item = {
+                        img: e.uuidFile,
+                        title: e.sno,
+                        sstate: e.sstate,
+                    }
+                    itemData.push(item)
+                    console.log(itemData)
+                })
+                setItemData2( [...itemData] )
                 console.log(r);
                 SetItemByMno(r.data)
             })
@@ -156,13 +168,31 @@ export default function ChallengeDetail(props) {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }} >
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="나의 인증 현황"      value="1" />
-                        <Tab label="참가자 인증 현황"  value="2" />
+                        <Tab label="오늘 참가자 인증 현황"  value="2" />
                     </TabList>
                 </Box>
                 <TabPanel value="1">
-                    <div style={{display:'flex'}} >
-                        나의 인증 현황
-                    </div>
+                {itemByMno == "" ?
+                    <div>로그인 해주세요</div>
+                :
+                    <ImageList  cols={3} rowHeight={120}>
+                        {itemData2.map((item) => (
+                            <ImageListItem key={item.img}>
+                            {item.sstate == '0' ?
+                            <></>
+                            :
+                            <img src={stamp} className='stamp' />
+                            }
+                            <img
+                                src={`${item.img}?w=120&h=120&fit=crop&auto=format`}
+                                srcSet={`${item.img}?w=120&h=120&fit=crop&auto=format&dpr=2 2x`}
+                                alt={item.title}
+                                loading="lazy"
+                            />
+                            </ImageListItem>
+                        ))}
+                    </ImageList>
+                }
                 </TabPanel>
                 <TabPanel value="2">
                     <ImageList  cols={3} rowHeight={120}>

@@ -22,6 +22,7 @@ import SimriTest from './info/SimriTest';
 import ChallengeDetail from './challenge/ChallengeDetail.js'
 import ChallengeResultList from'./challenge/ChallengeResultList.js'
 //import { LoginContext, LoginListProvider} from './chatting/LoginListProvider';
+import Find from './chatting/Find';
 
 export default function Index(props) {
     return (<>
@@ -41,6 +42,7 @@ export default function Index(props) {
 
                 <Route path="/signup"                   element={<SignUp />} />
                 <Route path="/member/login"             element={<Login />} />
+                <Route path="/member/find"              element={<Find />} />
 
                 <Route path="/chattinglist"             element={<ChattingList />} />
                 <Route path="/chatting/:chatRoomId"     element={<Chat />} />

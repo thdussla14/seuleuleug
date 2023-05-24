@@ -17,6 +17,7 @@ import java.util.UUID;
 public class HMemberController {
     @Autowired
     private HMemberService hMemberService;
+
     // 의사 회원가입
     @PostMapping("/hsignup")
     public boolean hsignup(HMemberDto hMemberDto){
@@ -25,28 +26,43 @@ public class HMemberController {
         log.info("result : " + result);
         return result;
     }
-    // 의사 승인
 
+    // 의사 승인
     @PutMapping("/hupdate")
     public boolean hupdate(@RequestBody HMemberDto hMemberDto){
         return hMemberService.hupdate(hMemberDto);
     }
+
     // 의사 로그인
     /*@GetMapping("/hlogin")
     public HMemberDto hlogin(@RequestParam("hmemail") String hmemail , @RequestParam("hpassword") String hpassword){
         log.info("hlogin : " + hmemail + " / " + hpassword);
         return hMemberService.hlogin(hmemail , hpassword);
     }*/
+
     // 의사 정보 호출
     @GetMapping("/hcomment")
     public HMemberDto get(@RequestParam("hmemail") String hmemail) {
         log.info("hmemail : " + hmemail );
         return hMemberService.get(hmemail);
     }
+
     // 의사 정보 삭제
     @DeleteMapping("")
     public boolean delete(@RequestParam("hmno") int hmno){
         log.info("delete : " + hmno);
         return hMemberService.delete(hmno);
     }
+
+    // 의사 아이디 찾기
+    @PostMapping("/findid")
+    public String findId(@RequestBody HMemberDto dto){return hMemberService.findId(dto);}
+
+    // 의사 비밀번호 찾기
+    @PostMapping("/findpwd")
+    public String findPwd(@RequestBody HMemberDto dto){return hMemberService.findPwd(dto);}
+
+    // 회원탈퇴
+    @DeleteMapping("deletemember")
+    public boolean deleteMember(@RequestParam String hpassword){return hMemberService.deleteMember(hpassword);}
 }

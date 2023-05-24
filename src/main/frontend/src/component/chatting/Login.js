@@ -13,11 +13,6 @@ import Stack from '@mui/material/Stack';
 //import { LoginContext,LoginListProvider } from './LoginListProvider';
 
 export default function Login(props){
-    // 탭 전환
-    const [value, setValue] = React.useState('1');
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    }
 
     // 일반로그인
     let inputMemail = useRef(null);

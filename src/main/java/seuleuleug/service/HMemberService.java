@@ -2,11 +2,16 @@ package seuleuleug.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import seuleuleug.domain.board.BoardEntity;
 import seuleuleug.domain.challenges.FileDto;
 import seuleuleug.domain.hospital.*;
 import seuleuleug.domain.member.MemberEntity;
@@ -17,6 +22,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -121,4 +127,63 @@ public class HMemberService {
         return false;
     }
 
+    // 의사 아이디 찾기
+    @Transactional
+    public String findId(HMemberDto dto){
+        System.out.println(dto);
+        Optional<HMemberEntity> entity = hMemberRepository.findByHmnameAndHmphone(dto.getHmname(), dto.getHmphone());
+        if( entity.isPresent() ){
+            return entity.get().getHmemail();
+        }
+        return null;
+    }
+
+    // 의사 비밀번호 찾기
+    @Transactional
+    public String findPwd(HMemberDto dto){
+        System.out.println(dto);
+        boolean result = hMemberRepository.existsByHmemailAndHmphone(dto.getHmemail(), dto.getHmphone());
+        if(result){
+            Random random = new Random();
+            // 표현할 난수 문자 목록
+            String ranStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            // 임시비밀번호 만들기
+            String updatePwd = "";
+            for( int i = 0 ; i<12 ; i++ ) { // 12자리수
+                // ranStr 문자열에서 0인덱스~마지막인덱스 의 난수 인덱스 만들기
+                int ran = random.nextInt( ranStr.length() );
+                updatePwd += ranStr.charAt( ran );    // 난수로 생성된 인덱스의 문자1개 추출해서 대입
+            } // for end
+            System.out.println( "updatePwd : " + updatePwd );
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            Optional<HMemberEntity> entityOptional = hMemberRepository.findByHmemail( dto.getHmemail() );
+            if(entityOptional.isPresent()){
+                HMemberEntity entity = entityOptional.get();
+                entity.setHpassword( passwordEncoder.encode( updatePwd ));
+            }
+            return updatePwd;
+        }
+        return null;
+    }
+    
+    // 회원탈퇴
+    @Transactional
+    public boolean deleteMember(String hpassword){
+        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 1. 인증된 인증 정보  찾기
+        if( o.equals("anonymousUser") ){ return false; }
+        HMemberDto loginDto = (HMemberDto) o;   // 2. 형변환
+        Optional<HMemberEntity> hMemberEntityOptional = hMemberRepository.findByHmemail( loginDto.getHmemail() );
+
+        //Optional<HMemberEntity> hMemberEntityOptional = hMemberRepository.findByHmemail( hmemail );
+        if(hMemberEntityOptional.isPresent()){
+            HMemberEntity entity = hMemberEntityOptional.get();
+            // 암호화 된 비밀번호와 입력받은 비밀번호 비교
+            if( new BCryptPasswordEncoder().matches( hpassword , entity.getHpassword() )){
+                hMemberRepository.delete( entity );
+                return true;
+            }
+        }
+        return false;
+    }
 }
