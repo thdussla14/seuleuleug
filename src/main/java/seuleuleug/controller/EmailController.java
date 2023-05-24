@@ -27,7 +27,7 @@ public class EmailController {
 
         BoardDto dto = boardService.getBoard(boardDto.getBno());
 
-        String url = "http://localhost:80/board/myboard?bno="+boardDto.getBno();
+        String url = "http://ec2-13-209-3-7.ap-northeast-2.compute.amazonaws.com:8080/board/myboard?bno="+boardDto.getBno();
 
 
         EmailMessage emailMessage = EmailMessage.builder()
