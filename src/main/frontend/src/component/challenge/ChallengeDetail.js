@@ -173,7 +173,7 @@ export default function ChallengeDetail(props) {
                 </Box>
                 <TabPanel value="1">
                 {itemByMno == "" ?
-                    <div>로그인 해주세요</div>
+                    <div></div>
                 :
                     <ImageList  cols={3} rowHeight={120}>
                         {itemData2.map((item) => (
