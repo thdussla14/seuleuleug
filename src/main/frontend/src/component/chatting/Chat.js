@@ -23,14 +23,15 @@ export default function Chat(props){
     const handleClick = () => {
         window.location.href="/"
     };
-
+    /*
     const sendMessageToLoginSocket = (msg)=>{
         console.log(loginSocket);
         console.log(msg)
-        let text = "{ type : " + msg + " } ";
+        let text = "{ type : " + `${msg}`+  " }" ;
         loginSocket.send(JSON.stringify(text));
+        loginSocket.send(JSON.stringify({ type : "inRoom" }));
     }
-
+    */
     const params = useParams();
     let chatRoomId = null;
     const [doctorInfo, setDoctorInfo] = useState(null);
@@ -51,7 +52,7 @@ export default function Chat(props){
                     clientSocket.current.send(JSON.stringify({ type : "enter", who : "doctor" }));
                     const doctorData = await getDoctorInfo(chatRoomId); // 의사 정보 검색
                     setDoctorInfo(doctorData);
-                    console.log(loginSocket);
+                    loginSocket.send(JSON.stringify({ type : "inRoom" }));
                 }
             }else if(sessionStorage.getItem('loginType')==="normal"){
                 chatRoomId = params.chatRoomId;
@@ -63,12 +64,12 @@ export default function Chat(props){
                     clientSocket.current.send(JSON.stringify({  type : "enter", who : "normal"  }));
                     const doctorData = await getDoctorInfo(chatRoomId); // 의사 정보 검색
                     setDoctorInfo(doctorData);
-                    console.log(loginSocket);
+                    loginSocket.send(JSON.stringify({ type : "inRoom" }));
                 }
             }
             clientSocket.current.onclose = (e)=>{
                 console.log('서버 나갔습니다');
-                    sendMessageToLoginSocket("outRoom")
+                loginSocket.send(JSON.stringify({ type : "outRoom" }));
                 console.log(clientSocket.current);
             }// 서버에서 나갔을때
             clientSocket.current.onerror = (e)=>{
@@ -77,7 +78,7 @@ export default function Chat(props){
             } // 에러 발생 시
             clientSocket.current.onmessage = (e)=>{ // 서버에서 메세지가 왔을때
                     console.log('서버소켓으로부터 메세지 수신');
-                    sendMessageToLoginSocket("inRoom")
+                    //sendMessageToLoginSocket("inRoom")
                     console.log(e.data)
                     let data =  JSON.parse(e.data)
                     console.log(data)
