@@ -24,7 +24,7 @@ public class EmailService {
             mimeMessageHelper.setFrom("panda6209@naver.com");                    //  메일 발신자
             mimeMessageHelper.setTo(emailMessage.getTo());                        // 메일 수신자
             mimeMessageHelper.setSubject(emailMessage.getSubject());              // 메일 제목
-            mimeMessageHelper.setText(emailMessage.getMessage(), false);    // 메일 본문 내용, HTML 여부
+            mimeMessageHelper.setText(emailMessage.getMessage(), true);    // 메일 본문 내용, HTML 여부
             javaMailSender.send(mimeMessage);
             log.info("Success!!");
         } catch (Exception e) {
