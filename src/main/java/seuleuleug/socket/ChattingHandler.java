@@ -80,8 +80,10 @@ public class ChattingHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        log.info("서버에서 나감");
+        log.info("채팅 서버에서 나감");
         JSONObject payload = new JSONObject();
+        log.info("리스트 삭제 전 : chatUserDtoList :" + chatUserDtoList);
+        chatUserDtoList.removeIf(chatUserDto -> chatUserDto.getSessionId().equals(session.getId()));
         String chatRoomId = null;
         for (ChatUserDto chatUserDto : chatUserDtoList) {
             if(chatUserDto.getSession().equals(session)){
@@ -99,7 +101,7 @@ public class ChattingHandler extends TextWebSocketHandler {
                 chatUserDto.getSession().sendMessage(textMessage);
             }
         }
-        chatUserDtoList.removeIf(chatUserDto -> chatUserDto.getSessionId().equals(session.getId()));
+        log.info("리스트 삭제 후 : chatUserDtoList :" + chatUserDtoList);
     }
 
     public List<ChatUserDto> getChatUserDtoList() {

@@ -6,11 +6,12 @@ import Container from '@mui/material/Container';
 import { useParams  } from 'react-router-dom'; // HTTP 경로 상의 매개변수 호출 해주는 함수
 import '../../css/Chat.css';
 import { WebSocketContext } from './WebSocketContext';
+import { useNavigate } from "react-router-dom";
 
 export default function Chat(props){
     let [messages, setMessages] = useState([]);
     console.log(sessionStorage.getItem('email'))
-
+    const navigate = useNavigate();
     const [loginSocket, setLoginSocket] = useState(useContext(WebSocketContext));
     //const websocket = useContext(WebSocketContext); //useContext에서 로그인 소켓 얻기
     /*
@@ -21,7 +22,8 @@ export default function Chat(props){
 
 
     const handleClick = () => {
-        window.location.href="/"
+        clientSocket.current.close();
+        navigate('/');
     };
     /*
     const sendMessageToLoginSocket = (msg)=>{
@@ -40,6 +42,7 @@ export default function Chat(props){
 
 
     useEffect(() => {
+        console.log(clientSocket.current)
         if(!clientSocket.current){
             // 채팅방에 들어온 사람이 의사인지 일반 회원인지 구분하여 소켓에 전달하는 정보 구분
             if(sessionStorage.getItem('loginType')==="doctor"){
