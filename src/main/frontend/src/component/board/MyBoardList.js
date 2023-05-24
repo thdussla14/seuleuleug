@@ -14,7 +14,9 @@ export default function MyBoardList(props) {
     const [ items , setItems ] = useState([]);
     useEffect(()=>{
          axios.get('/board/mylist',  { params : { bemail : searchParams.get("bemail")}})
-             .then(  (r) => { console.log(r); setItems(r.data);})
+             .then(  (r) => { console.log(r);
+                if(r.data == ""){alert('해당 이메일로 등록한 게시물이 없습니다.'); window.location.href='/';}
+                setItems(r.data); })
              .catch( (e) => { console.log(e);})
     }, [])
 
