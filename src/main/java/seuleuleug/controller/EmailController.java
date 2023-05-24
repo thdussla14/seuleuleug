@@ -27,11 +27,13 @@ public class EmailController {
 
         BoardDto dto = boardService.getBoard(boardDto.getBno());
 
+        String url = "http://localhost:8080/board/myboard?bno="+boardDto.getBno();
+
         EmailMessage emailMessage = EmailMessage.builder()
                 .from("panda6209@naver.com")
                 .to(dto.getBemail())
                 .subject("[Seuleuleug] 고민글에 답변이 달렸습니다.")
-                .message(dto.getBtitle()+" 고민글에 답변이 달렸습니다. 확인해보세요~ ")
+                .message(dto.getBtitle()+" <br/> 고민글에 답변이 달렸습니다. 확인해보세요~ <br/>"+url)
                 .build();
         emailService.sendMail(emailMessage);
         return new ResponseEntity(HttpStatus.OK);
