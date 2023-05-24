@@ -47,25 +47,22 @@ export default function Login(props){
     return(<Container>
 
             <form className="user" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <div style={{display:'flex'}}>
+                <div style={{display:'flex', marginTop:'20px'}}>
                     <div>
-                        <TextField name="email"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="normal" size="small"/> <br/>
-                        <TextField name="password"   label="비밀번호"   variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
+                        <TextField name="email"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="none" size="small"/> <br/>
+                        <TextField name="password"   label="비밀번호" variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
                     </div>
-                    <div style={{marginTop:'20px'}}>
+                    <div >
                         <Button variant="contained" onClick={mlogin}
-                            style={{height:'100px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
+                            style={{height:'95px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
                     </div>
                 </div>
-                <ButtonGroup variant="text" aria-label="text button group">
-                  <Button href="#">SignUp</Button>
-                  <Button href="#">FindID</Button>
-                  <Button href="#">FindPW</Button>
+                <ButtonGroup variant="text" aria-label="text button group" sx={{ width: '90%'}} >
+                  <Button style={{ width: '100%' }} href="#">SignUp</Button>
+                  <Button style={{ width: '100%' }} href="#">Find  </Button>
                 </ButtonGroup>
-                <Stack sx={{ mt: 2 }} direction="row" spacing={2}>
-                    <Button variant="contained" style={{ width: '100%' , backgroundColor: '#F7E111'}} href="/oauth2/authorization/kakao"> KAKAO </Button>
-                    <Button variant="contained" style={{ width: '100%' }} href="/oauth2/authorization/google"> GOOGLE </Button>
-                </Stack>
+                  <Button variant="contained" style={{ width: '100%' , backgroundColor: '#F7E111'}} href="/oauth2/authorization/kakao"> KAKAO </Button> <br/>
+                  <Button variant="contained" style={{ width: '100%' }} href="/oauth2/authorization/google"> GOOGLE </Button>
             </form>
 
     </Container>)

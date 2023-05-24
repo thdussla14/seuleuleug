@@ -81,17 +81,19 @@ public class BoardService {
         // 카테고리 번호를 이용한 카테고리 entity 찾기
         Optional<CategoryEntity> optionalCategoryEntity =
                 categoryEntityRepository.findById(boardDto.getCno());
-        if(!optionalCategoryEntity.isPresent()){return 1;}
-        CategoryEntity categoryEntity = optionalCategoryEntity.get();
-        // 비밀번호 호출
-        Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(boardDto.getBemail());
-        if(!optionalMemberEntity.isPresent()){
-            boardDto.setBpassword(optionalMemberEntity.get().getMphone());
+        if(optionalCategoryEntity.isPresent()){
+            CategoryEntity categoryEntity = optionalCategoryEntity.get();
+            // 비밀번호 호출
+            Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(boardDto.getBemail());
+            if(optionalMemberEntity.isPresent()){
+                boardDto.setBpassword(optionalMemberEntity.get().getMphone());
+                // 게시물 저장
+                BoardEntity boardEntity = boardEntityRepository.save(boardDto.toboardEntity());
+                boardEntity.setCategoryEntity(categoryEntity);
+                return 4;
+            }
         }
-        // 게시물 저장
-        BoardEntity boardEntity = boardEntityRepository.save(boardDto.toboardEntity());
-        boardEntity.setCategoryEntity(categoryEntity);
-        return 4;
+        return 3;
     }
     // 이메일 확인
     public boolean checkemail(String bemail){

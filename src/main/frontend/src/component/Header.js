@@ -17,6 +17,7 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
 import { WebSocketContext } from './chatting/WebSocketContext';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import OutboundIcon from '@mui/icons-material/Outbound';
 
 export default function Header(props) {
     let websocket = useContext(WebSocketContext);
@@ -70,6 +71,11 @@ export default function Header(props) {
         axios.get("/member/logout");
         window.location.href = '/';
     };
+
+    // 회원탈퇴
+    const signout = () => {
+        sessionStorage.getItem('email')==''?alert('의사회원탈퇴'):alert('안녕')
+    }
 
     // Drawer
     const [state, setState] = React.useState({ left: false });
@@ -144,6 +150,14 @@ export default function Header(props) {
                             <LogoutIcon />
                         </ListItemIcon>
                         <ListItemText primary='LOGOUT' />
+                    </ListItemButton>
+                    </ListItem>
+                    <ListItem key='탈퇴' disablePadding>
+                    <ListItemButton onClick={signout} >
+                        <ListItemIcon>
+                            <OutboundIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='탈퇴' />
                     </ListItemButton>
                     </ListItem>
                 </List>

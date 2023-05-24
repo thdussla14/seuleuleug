@@ -17,25 +17,12 @@ export default function MyBoardList(props) {
              .then(  (r) => { console.log(r); setItems(r.data);})
              .catch( (e) => { console.log(e);})
     }, [])
-    //css
-    const Item = styled(Paper)(({ theme }) => ({
-      backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-      ...theme.typography.body2,
-      padding: theme.spacing(1),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    }));
 
     return (<>
        <Container>
             <h3 style={{textAlign:'center'}}> 내글 목록 </h3>
             <Stack spacing={2}>
-                {items.map((i)=>(
-                    <Item>
-                        <h3 > {i.btitle} </h3>
-                        <CheckPasswordModal item={i} />
-                    </Item>
-                ))}
+                {items.map((i)=>(<CheckPasswordModal item={i} />))}
             </Stack>
         </Container>
     </>)
