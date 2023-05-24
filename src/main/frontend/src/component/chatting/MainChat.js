@@ -13,6 +13,10 @@ export default function MainChat(props) {
       // 의사에게 상담요청 보내는 함수
     const counsel = (email)=>{
         //const websocket = JSON.parse(sessionStorage.getItem('websocket'))
+        if(sessionStorage.getItem("email")==="null"||websocket==="null"){
+            alert('로그인 후 사용 가능한 기능입니다.')
+            window.location.href="/member/login";
+        }
         console.log(websocket);
         console.log(email);
         websocket.send(JSON.stringify({ type : "counsel", doctor : email, normal : sessionStorage.getItem("email") }));

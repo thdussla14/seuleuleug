@@ -49,3 +49,20 @@
   color: #FFFFFF;
   cursor: pointer;
 }
+
+.doctorInfoBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.doctorName {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.hospital {
+  font-size: 14px;
+  color: gray;
+  margin-left: 10px;
+}

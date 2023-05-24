@@ -80,20 +80,28 @@ public class LoginHandler extends TextWebSocketHandler {
             String normal = jsonMessage.getString("normal");
             if(answer.equals("true")||answer.equals(true)){
                 for (LoginUserDto loginUserDto : loginUserDtoList) {
-                    if(loginUserDto.getUserEmail().equals(doctor)){
-                        loginUserDto.setChatting(true);
-                    }
+                    if(loginUserDto.getUserEmail().equals(doctor)){loginUserDto.setChatting(true);}
                 }
             }
-            log.info("answer : " + answer);
             JSONObject payload = new JSONObject();
-            payload.put("answer", answer);
-            payload.put("doctor", doctor);
+            payload.put("answer", answer);            payload.put("doctor", doctor);
             TextMessage textMessage = new TextMessage(payload.toString());
             for (LoginUserDto loginUserDto : loginUserDtoList) {
                 if(loginUserDto.getUserEmail().equals(normal)){
                     loginUserDto.getSession().sendMessage(textMessage);
                     loginUserDto.setChatting(true);
+                }
+            }
+        }else if("inRoom".equals(type)){
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if(loginUserDto.getSession().equals(session)){
+                    loginUserDto.setChatting(true);
+                }
+            }
+        }else if("outRoom".equals(type)){
+            for (LoginUserDto loginUserDto : loginUserDtoList) {
+                if(loginUserDto.getSession().equals(session)){
+                    loginUserDto.setChatting(false);
                 }
             }
         }

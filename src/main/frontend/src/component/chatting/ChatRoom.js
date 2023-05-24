@@ -29,19 +29,20 @@ export default function ChatRoom(props) {
             const promises = props.chattingRoomList.map(async (o) => {
               console.log(o);
               console.log(o.userEmail);
-              console.log(o.isChatting)
+              console.log(o.chatting)
               let hmname = null;
               const response = await axios.get("/hmember/hcomment", { params: { hmemail: o.userEmail } });
               console.log(response.data);
               return (
                 <div key={o.chatRoomId} className={o.chatRoomId}>
-                    <div>
+                    <div style={{display:'flex'}}>
                       <Avatar alt="Remy Sharp"      src={response.data.hmpimg} />
-
-                       <div> {response.data.hmname} 의사 선생님</div>
-                       <div>소속병원 : {response.data.hname}</div>
+                        <div>
+                            <div> {response.data.hmname} 의사 선생님</div>
+                            <div>소속병원 : {response.data.hname}</div>
+                       </div>
                       {
-                            (o.isChatting===false||o.isChatting==="false")?
+                            (o.chatting===false||o.chatting==="false")?
                             <button onClick={() => counsel(o.userEmail)} type="button"> 상담신청 </button>
                             : <button disabled="disabled" type="button"> 상담중 </button>
                       }
