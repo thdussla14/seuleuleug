@@ -44,7 +44,6 @@ export default function Chat(props){
             // 채팅방에 들어온 사람이 의사인지 일반 회원인지 구분하여 소켓에 전달하는 정보 구분
             if(sessionStorage.getItem('loginType')==="doctor"){
                 chatRoomId = sessionStorage.getItem('email');
-                console.log(chatRoomId);
                 clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
                 clientSocket.current.onopen = async (e)=>{  // 서버에 접속했을때
                     console.log('의사가 서버 접속했습니다');
@@ -56,7 +55,6 @@ export default function Chat(props){
                 }
             }else if(sessionStorage.getItem('loginType')==="normal"){
                 chatRoomId = params.chatRoomId;
-                console.log(chatRoomId);
                 clientSocket.current = new WebSocket("ws://localhost:8080/chat/"+chatRoomId);
                 clientSocket.current.onopen = async (e)=>{  // 서버에 접속했을때
                     console.log('일반회원이 서버 접속했습니다');
@@ -78,13 +76,8 @@ export default function Chat(props){
             } // 에러 발생 시
             clientSocket.current.onmessage = (e)=>{ // 서버에서 메세지가 왔을때
                     console.log('서버소켓으로부터 메세지 수신');
-                    //sendMessageToLoginSocket("inRoom")
-                    console.log(e.data)
                     let data =  JSON.parse(e.data)
-                    console.log(data)
-                    //msgContent.push(data); // 배열에 내용 추가
                     setMessages( (messages) => [ ...messages, data ] ); // 재 렌더링
-                    console.log(messages);
             }
         }
     }, [chatRoomId]);
@@ -95,15 +88,12 @@ export default function Chat(props){
 
 
     function sendMessage(message) {
-        console.log(message);
-        console.log(typeof(message));
         let msg = {
             message : message,
             type : "msg",
             sender : sessionStorage.getItem('email')
         }
         const data = JSON.stringify(msg);
-        console.log(data);
         clientSocket.current.send(data);
         document.querySelector('.input').value = ''
     }

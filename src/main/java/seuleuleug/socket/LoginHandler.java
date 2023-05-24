@@ -78,18 +78,13 @@ public class LoginHandler extends TextWebSocketHandler {
             String answer = jsonMessage.getString("answer");
             String doctor = jsonMessage.getString("doctor");
             String normal = jsonMessage.getString("normal");
-            log.info("answer : " + answer);
             if(answer.equals("true")||answer.equals(true)){
                 for (LoginUserDto loginUserDto : loginUserDtoList) {
-                    if(loginUserDto.getUserEmail().equals(doctor)){
-                        loginUserDto.setChatting(true);
-                    }
+                    if(loginUserDto.getUserEmail().equals(doctor)){loginUserDto.setChatting(true);}
                 }
             }
-            log.info("answer : " + answer);
             JSONObject payload = new JSONObject();
-            payload.put("answer", answer);
-            payload.put("doctor", doctor);
+            payload.put("answer", answer);            payload.put("doctor", doctor);
             TextMessage textMessage = new TextMessage(payload.toString());
             for (LoginUserDto loginUserDto : loginUserDtoList) {
                 if(loginUserDto.getUserEmail().equals(normal)){
