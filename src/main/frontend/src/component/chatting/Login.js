@@ -52,12 +52,12 @@ export default function Login(props){
                             style={{height:'95px', marginLeft:'10px', backgroundColor: '#DCBE70'}}> LOGIN </Button>
                     </div>
                 </div>
-                <ButtonGroup variant="text" aria-label="text button group" sx={{ width: '90%'}} >
-                  <Button style={{ width: '100%' }} href="#">SignUp</Button>
-                  <Button style={{ width: '100%' }} href="#">Find  </Button>
+                <ButtonGroup variant="text" aria-label="text button group" sx={{ width: '90%', margin:'10px'}} >
+                  <Button style={{ width: '100%' }} href="/signup">SignUp</Button>
+                  <Button style={{ width: '100%' }} href="/member/find">Find  </Button>
                 </ButtonGroup>
-                  <Button variant="contained" style={{ width: '100%' , backgroundColor: '#F7E111'}} href="/oauth2/authorization/kakao"> KAKAO </Button> <br/>
-                  <Button variant="contained" style={{ width: '100%' }} href="/oauth2/authorization/google"> GOOGLE </Button>
+                  <Button variant="contained" style={{ width: '90%' , backgroundColor: '#F7E111'}} href="/oauth2/authorization/kakao"> KAKAO </Button> <br/>
+                  <Button variant="contained" style={{ width: '90%' }} href="/oauth2/authorization/google"> GOOGLE </Button>
             </form>
 
     </Container>)

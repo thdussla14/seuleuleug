@@ -75,11 +75,11 @@ export default function Header(props) {
     // 회원탈퇴(의사)
     const deleteHMember = ()=>{
         let hpassword = prompt('비밀번호를 입력하세요. 회원 탈퇴 후 복구할 수 없습니다.');
-        axios.post("/hmember/deletemember", {params : {'hpassword':hpassword}} ).then( r=>{
+        axios.delete("/hmember/deletemember", {params : {'hpassword':hpassword}} ).then( r=>{
             console.log(r.data);
             if(r.data == true){
                 alert('회원탈퇴 되었습니다.');
-                window.location.href="/";
+                logOut()
             }else{
                 alert('비밀번호가 올바르지 않습니다.');
             }
@@ -88,13 +88,13 @@ export default function Header(props) {
 
     // 회원탈퇴(일반)
     const deleteMember = ()=>{
-        let confirm  = confirm('회원 탈퇴 후 복구할 수 없습니다.');
-        if(confirm==true){
-            axios.post("/member/delete").then( r=>{
+        let confirm1  = window.confirm('회원 탈퇴 후 복구할 수 없습니다.');
+        if(confirm1){
+            axios.delete("/member/delete").then( r=>{
                 console.log(r.data);
                 if(r.data == true){
                     alert('회원탈퇴 되었습니다.');
-                    window.location.href="/";
+                    logOut()
                 }else{
                     alert('실패했습니다. 관리자 문의 ');
                 }
@@ -104,7 +104,7 @@ export default function Header(props) {
 
     // 회원탈퇴
     const signout = () => {
-        sessionStorage.getItem('email')==''?alert('의사회원탈퇴'):alert('안녕')
+        sessionStorage.getItem('loginType')=='doctor'?deleteHMember():deleteMember()
     }
 
     // Drawer

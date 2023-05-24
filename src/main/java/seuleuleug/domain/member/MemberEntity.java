@@ -24,7 +24,7 @@ public class MemberEntity {
     @Column
     private String mrole;       // 회원등급
 
-    @OneToMany(mappedBy = "memberEntity")
+    @OneToMany(mappedBy = "memberEntity" , cascade = CascadeType.ALL)
     @Builder.Default
     private List<ChallengeResultsEntity> challengeResultsEntityList = new ArrayList<>();
 

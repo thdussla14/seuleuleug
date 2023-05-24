@@ -34,7 +34,7 @@ export default function Main(props) {
                     심리상담의 허들을 낮출 수 있는 곳
                 </div>
                 <Chip icon={<FaceIcon />} label="실시간 상담 가능 의사"
-                    style={{position: 'relative', top: '68px', left: '-74px', background: 'lemonchiffon'}} />
+                    style={{position: 'relative', top: '68px', left: '-74px', background: 'lemonchiffon', border:'1px solid black'}} />
                 <Stack direction="row" spacing={2}
                     justifyContent="center"
                     alignItems="center"
