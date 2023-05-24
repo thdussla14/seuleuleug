@@ -70,8 +70,8 @@ export default function Header(props) {
         window.location.href = '/';
     };
 
-    // 회원탈퇴
-    const deleteMember = ()=>{
+    // 회원탈퇴(의사)
+    const deleteHMember = ()=>{
         let hpassword = prompt('비밀번호를 입력하세요. 회원 탈퇴 후 복구할 수 없습니다.');
         axios.post("/hmember/deletemember", {params : {'hpassword':hpassword}} ).then( r=>{
             console.log(r.data);
@@ -82,6 +82,22 @@ export default function Header(props) {
                 alert('비밀번호가 올바르지 않습니다.');
             }
         })
+    }
+
+    // 회원탈퇴(일반)
+    const deleteMember = ()=>{
+        let confirm  = confirm('회원 탈퇴 후 복구할 수 없습니다.');
+        if(confirm==true){
+            axios.post("/member/delete").then( r=>{
+                console.log(r.data);
+                if(r.data == true){
+                    alert('회원탈퇴 되었습니다.');
+                    window.location.href="/";
+                }else{
+                    alert('실패했습니다. 관리자 문의 ');
+                }
+            })
+        }
     }
 
     // Drawer

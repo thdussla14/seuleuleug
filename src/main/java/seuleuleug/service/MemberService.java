@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import seuleuleug.domain.hospital.HMemberDto;
 import seuleuleug.domain.hospital.HMemberEntity;
 import seuleuleug.domain.hospital.HMemberRepository;
@@ -175,4 +176,19 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
         }
     }
 
+    // 회원탈퇴
+    @Transactional
+    public boolean delete(){
+        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 1. 인증된 인증 정보  찾기
+        if( o.equals("anonymousUser") ){ return false; }
+        MemberDto loginDto = (MemberDto) o;   // 2. 형변환
+        Optional<MemberEntity> optionalMemberEntity = memberEntityRepository.findByMemail(loginDto.getMemail());
+
+        if(optionalMemberEntity.isPresent()){
+            MemberEntity entity = optionalMemberEntity.get();
+            memberEntityRepository.delete( entity );
+            return true;
+        }
+        return false;
+    }
 }

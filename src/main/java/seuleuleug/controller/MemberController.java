@@ -29,6 +29,11 @@ public class MemberController {
         String result = memberService.info();
         return  result;
     }
+    
+    // 회원탈퇴
+    @DeleteMapping("/delete")
+    public boolean delete(){return memberService.delete();}
+    
     /* 시큐리티 사용 전
     @GetMapping("/login")
     public MemberDto login(@RequestParam("memail") String memail, @RequestParam("mphone") String mphone ){
