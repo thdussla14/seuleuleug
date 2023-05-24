@@ -16,6 +16,8 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
 import { WebSocketContext } from './chatting/WebSocketContext';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import OutboundIcon from '@mui/icons-material/Outbound';
 
 export default function Header(props) {
     let websocket = useContext(WebSocketContext);
@@ -100,6 +102,11 @@ export default function Header(props) {
         }
     }
 
+    // 회원탈퇴
+    const signout = () => {
+        sessionStorage.getItem('email')==''?alert('의사회원탈퇴'):alert('안녕')
+    }
+
     // Drawer
     const [state, setState] = React.useState({ left: false });
     const toggleDrawer = (anchor, open) => (event) => {
@@ -124,85 +131,93 @@ export default function Header(props) {
                     </ListItemIcon>
                     <ListItemText primary='HOME' />
                 </ListItemButton>
-              </ListItem>
-          </List>
-          <Divider />
-          <List>
+                </ListItem>
+            </List>
+            <Divider />
+            <List>
             {[{"name":'CHAT',"link":'/chattinglist'},{"name":'HOSPITAL',"link":'/hospital/hospitallist'},
             {"name":'GOVERMENT',"link":'/government/info'},{"name":'CHALLENGE',"link":'/challenge/challenge'},
             {"name":'HEART',"link":'/simritest/info'}].map((text, index) => (
-              <ListItem key={text} disablePadding>
+                <ListItem key={text} disablePadding>
                 <ListItemButton to={ text.link }>
-                  <ListItemIcon>
-                    {index === 0 ? <ChatIcon />           :
-                     index === 1 ? <LocalHospitalIcon />  :
-                     index === 2 ? <AccountBalanceIcon /> :
-                     index === 3 ? <MilitaryTechIcon />
-                     : <VolunteerActivismIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text.name} />
+                    <ListItemIcon>
+                        {index === 0 ? <ChatIcon />           :
+                        index === 1 ? <LocalHospitalIcon />  :
+                        index === 2 ? <AccountBalanceIcon /> :
+                        index === 3 ? <MilitaryTechIcon />
+                        : <VolunteerActivismIcon />}
+                    </ListItemIcon>
+                    <ListItemText primary={text.name} />
                 </ListItemButton>
-              </ListItem>
+                </ListItem>
             ))}
-          </List>
-          { sessionStorage.getItem('email') === 'null' ? (
-              <>
-              <Divider />
+            </List>
+            { sessionStorage.getItem('email') === 'null' ? (
+            <>
+            <Divider />
                 <List>
-                  {[{"name":'LOGIN',"link":'/member/login'},{"name":'SIGNUP',"link":'/signup'}].map((text, index) => (
+                {[{"name":'LOGIN',"link":'/member/login'},{"name":'SIGNUP',"link":'/signup'}].map((text, index) => (
                     <ListItem key={text} disablePadding>
-                      <ListItemButton href={ text.link }>
+                    <ListItemButton href={ text.link }>
                         <ListItemIcon>
-                          { index === 0 ? <LoginIcon />      :
-                            index === 1 ? <HowToRegIcon />
-                          : <AdminPanelSettingsIcon />}
+                            { index === 0 ? <LoginIcon />
+                            : index === 1 ? <HowToRegIcon />
+                            : <AdminPanelSettingsIcon />}
                         </ListItemIcon>
                         <ListItemText primary={text.name} />
-                      </ListItemButton>
+                    </ListItemButton>
                     </ListItem>
-                  ))}
+                ))}
                 </List>
-              </>
+            </>
             ) : (
-              <>
+            <>
                 <Divider />
                 <List>
                     <ListItem key='LOGOUT' disablePadding>
-                      <ListItemButton onClick={logOut} >
+                    <ListItemButton onClick={logOut} >
                         <ListItemIcon>
-                           <LogoutIcon />
+                            <LogoutIcon />
                         </ListItemIcon>
                         <ListItemText primary='LOGOUT' />
-                      </ListItemButton>
+                    </ListItemButton>
+                    </ListItem>
+                    <ListItem key='탈퇴' disablePadding>
+                    <ListItemButton onClick={signout} >
+                        <ListItemIcon>
+                            <OutboundIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='탈퇴' />
+                    </ListItemButton>
                     </ListItem>
                 </List>
                 <Divider />
                 <List>
                 { loginType === "doctor" ?
-                  (<>
+                (<>
                     <ListItem key='LIST' disablePadding>
-                      <ListItemButton href='/board/doctor/boardlist'>
-                        <ListItemIcon>
-                            <DescriptionIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='LIST' />
-                      </ListItemButton>
-                     </ListItem>
-                    </>)
-                  : loginType === "admin" ?
-                  (<>
-                      <ListItem key='ADMIN' disablePadding>
-                        <ListItemButton href='/admin/dashboard'>
-                          <ListItemIcon>
-                              <AdminPanelSettingsIcon />
-                          </ListItemIcon>
-                          <ListItemText primary='ADMIN' />
+                        <ListItemButton href='/board/doctor/boardlist'>
+                            <ListItemIcon>
+                                <DescriptionIcon />
+                            </ListItemIcon>
+                            <ListItemText primary='LIST' />
                         </ListItemButton>
-                       </ListItem>
+                    </ListItem>
+                </>)
+                : loginType === "admin" ?
+                (<>
+                    <ListItem key='ADMIN' disablePadding>
+                        <ListItemButton href='/admin/dashboard'>
+                            <ListItemIcon>
+                                <AdminPanelSettingsIcon />
+                            </ListItemIcon>
+                            <ListItemText primary='ADMIN' />
+                        </ListItemButton>
+                    </ListItem>
                     </>):(<>  </>)
                 }
                 </List>
-              </>
+                </>
             )}
         </Box>
     );
@@ -210,32 +225,35 @@ export default function Header(props) {
     return (
     <>
         <Box sx={{ flexGrow: 1 , marginBottom:'20px'}}>
-          <AppBar position="static" style={{ backgroundColor: "#DCBE70" }}>
+        <AppBar position="static" style={{ backgroundColor: "#DCBE70" }}>
             <Toolbar>
-              <React.Fragment key='left' >
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                onClick={toggleDrawer('left', true)}
-                sx={{ mr: 2 }}
-              >
-                <MenuIcon />
-              </IconButton>
-                <Drawer
-                  anchor='left'
-                  open={state['left']}
-                  onClose={toggleDrawer('left', false)}
+                <React.Fragment key='left' >
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    onClick={toggleDrawer('left', true)}
+                    sx={{ mr: 2 }}
                 >
-                  {list('left')}
+                <MenuIcon />
+                </IconButton>
+                <Drawer
+                    anchor='left'
+                    open={state['left']}
+                    onClose={toggleDrawer('left', false)}
+                >
+                    {list('left')}
                 </Drawer>
                 </React.Fragment>
-              <Typography variant="h6" component="a" sx={{ flexGrow: 1 }} href="/"  >
-                <NightsStayIcon />
-                스르륵
-              </Typography>
+                <Typography variant="h5" component="a" sx={{ flexGrow: 1 }} href="/"  >
+                    스르륵 <span style={{ fontSize: '15px' }}> 익명 심리 상담 플랫폼  </span>
+                </Typography>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 , color:'white', textAlign:'right' }} >
+                    { email == "null" ? (<><AccountCircleIcon onClick={() => window.location.replace('/member/login')} /></>)
+                    : (<> <LogoutIcon onClick={logOut} /> </>)}
+                </Typography>
             </Toolbar>
-          </AppBar>
+        </AppBar>
         </Box>
     </>
     );

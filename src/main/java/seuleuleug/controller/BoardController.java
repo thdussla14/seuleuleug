@@ -41,6 +41,12 @@ public class BoardController {
         log.info("boardDto"+boardDto);
         return   boardService.writeBoard(boardDto);
     }
+    // 로그인 회원 글작성 [ 카테고리번호, 제목, 내용 입력 ]
+    @PostMapping("/user/bwrite")
+    public byte userwriteBoard(@RequestBody BoardDto boardDto) {
+        log.info("boardDto"+boardDto);
+        return   boardService.userwriteBoard(boardDto);
+    }
     // 이메일 확인
     @GetMapping("/check")
     public boolean checkemail(@RequestParam String bemail) {
