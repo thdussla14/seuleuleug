@@ -9,6 +9,7 @@ import doctor from '../doctor.png';  // img 호출
 import MainChat from './chatting/MainChat';
 import Chip from '@mui/material/Chip';
 import FaceIcon from '@mui/icons-material/Face';
+import main from '../main.png';  // img 호출
 
 export default function Main(props) {
 
@@ -18,6 +19,7 @@ export default function Main(props) {
                 console.log(r.data);
                 setChattingRoomList(r.data)
             })
+
     },[]);
 
     const logemail = sessionStorage.getItem("email"); console.log(logemail);
@@ -25,13 +27,11 @@ export default function Main(props) {
     return (
         <Container>
             <div className="Main">
+                <div>
+                    <img style={{ width:'90%', marginTop:'30px' }} alt="main" src={main}/>
+                </div>
                 <div className="Fortune">
                     <Fortune />
-                </div>
-                <div>
-                    심리상담의 사회적 편견에서 벗어나, <br/>
-                    자신의 고민을 말하는데 부담이 없고 <br/>
-                    심리상담의 허들을 낮출 수 있는 곳
                 </div>
                 <Chip icon={<FaceIcon />} label="실시간 상담 가능 의사"
                     style={{position: 'relative', top: '68px', left: '-74px', background: 'lemonchiffon', border:'1px solid black'}} />

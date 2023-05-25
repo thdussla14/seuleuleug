@@ -24,14 +24,28 @@ export default function Login(props){
         if(inputMemail.current.value == 'admin' && inputMphone.current.value === "admin" ){
             sessionStorage.setItem('email', "admin");
             sessionStorage.setItem('loginType', "admin");
-            window.location.href="/";
+            window.location.href = '/';
         }else{
             let loginForm = document.querySelectorAll(".user")[0];
             let loginFormData = new FormData(loginForm);
             axios.post("/member/login", loginFormData ).then( r=>{
                 if(r.data !== false){
                     alert('로그인 성공');
-                    window.location.href="/";
+                    axios.get("/member/info").then( r => {console.log(r);
+                        if( r.data !== ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
+                            // js 로컬 스토리지에 저장
+                            if(r.data.split(' ')[0] === 'DOCTOR'){
+                                sessionStorage.setItem("email" , r.data.split(' ')[1] );
+                                sessionStorage.setItem('loginType', "doctor");
+                            }else{
+                                sessionStorage.setItem("email" , r.data );
+                                sessionStorage.setItem('loginType', "normal");
+                            }
+                            window.location.href = '/';
+                        }
+
+                    })
+
                 }else{
                     alert('동일한 회원정보가 없습니다.');
                 }
@@ -40,12 +54,12 @@ export default function Login(props){
     }
 
     return(<Container>
-
             <form className="user" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <div style={{display:'flex', marginTop:'20px'}}>
                     <div>
                         <TextField name="email"      label="이메일"   variant="outlined"  inputRef={inputMemail} margin="none" size="small"/> <br/>
-                        <TextField name="password"   label="비밀번호" variant="outlined"  inputRef={inputMphone} margin="normal" size="small"/>
+                        <TextField name="password"   label="비밀번호" variant="outlined"  inputRef={inputMphone}
+                            type="password" margin="normal" size="small"/>
                     </div>
                     <div >
                         <Button variant="contained" onClick={mlogin}
