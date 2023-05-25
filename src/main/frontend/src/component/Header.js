@@ -23,7 +23,27 @@ export default function Header(props) {
     let websocket = useContext(WebSocketContext);
 
     console.log(sessionStorage)
+    // 로그인
+    useEffect( ()=>{
 
+        axios.get("/member/info").then( r => {console.log(r);
+            if( r.data !== ''){ // 로그인되어 있으면 // 서비스에서 null 이면 js에서 ''이다.
+                // js 로컬 스토리지에 저장
+                if(r.data.split(' ')[0] === 'DOCTOR'){
+                    sessionStorage.setItem("email" , r.data.split(' ')[1] );
+                    sessionStorage.setItem('loginType', "doctor");
+                }else{
+                    sessionStorage.setItem("email" , r.data );
+                    sessionStorage.setItem('loginType', "normal");
+                }
+            }
+        })
+    }, [])
+    if(sessionStorage.length<=0){
+        sessionStorage.setItem('email', null);
+        sessionStorage.setItem('loginType', null);
+        sessionStorage.setItem('websocket',null)
+    }
     const email = sessionStorage.getItem('email');
     const loginType = sessionStorage.getItem('loginType');
     /*
@@ -42,11 +62,6 @@ export default function Header(props) {
     } , [])
     */
 
-    if(sessionStorage.length<=0){
-        sessionStorage.setItem('email', null);
-        sessionStorage.setItem('loginType', null);
-        sessionStorage.setItem('websocket',null)
-    }
 
     // 로그아웃
     const logOut = () => {
