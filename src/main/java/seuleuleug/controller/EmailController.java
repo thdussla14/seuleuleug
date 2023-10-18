@@ -31,7 +31,7 @@ public class EmailController {
 
 
         EmailMessage emailMessage = EmailMessage.builder()
-                .from("panda6209@naver.com")
+                .from("@naver.com")
                 .to(dto.getBemail())
                 .subject("[Seuleuleug] 고민글에 답변이 달렸습니다.")
                 .message(dto.getBtitle()+"<br/> 고민글에 답변이 달렸습니다. 확인해보세요~ <br/>"+"<a href="+url+"> 클릭 </a>")
