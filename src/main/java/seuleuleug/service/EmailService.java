@@ -21,7 +21,7 @@ public class EmailService {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-            mimeMessageHelper.setFrom("panda6209@naver.com");                    //  메일 발신자
+            mimeMessageHelper.setFrom("@naver.com");                    //  메일 발신자
             mimeMessageHelper.setTo(emailMessage.getTo());                        // 메일 수신자
             mimeMessageHelper.setSubject(emailMessage.getSubject());              // 메일 제목
             mimeMessageHelper.setText(emailMessage.getMessage(), true);    // 메일 본문 내용, HTML 여부
